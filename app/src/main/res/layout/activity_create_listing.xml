@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".CreateListing">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Full Name"
+            android:hint="Listing Name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -43,24 +43,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Username"
+            android:hint="Group Size"
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/editText9"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Upload Profile Pic"
-            android:inputType="textPersonName" />
+            android:hint="Description"
+            android:lines= "8"
+            android:maxLines="10"
+            android:inputType="textMultiLine" />
 
         <LinearLayout
             android:layout_width="match_parent"
