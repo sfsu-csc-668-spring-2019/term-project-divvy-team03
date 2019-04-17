@@ -8,7 +8,7 @@ node_modules
 
 # production
 /build
-/db.config.js
+config/db.config.js
 
 # misc
 .DS_STORE
