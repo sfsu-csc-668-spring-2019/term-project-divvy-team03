@@ -22,7 +22,9 @@
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
     "read-files-promise": "^1.1.1",
+    "ssh2": "^0.8.2",
     "type-of-is": "^3.5.1"
   },
   "devDependencies": {}
