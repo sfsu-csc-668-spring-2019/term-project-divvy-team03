@@ -8,7 +8,7 @@ node_modules
 
 # production
 /build
-/config
+/SavvyAPI/config
 
 # misc
 .DS_STORE
