@@ -8,8 +8,8 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'users_database'
+    password: '23@NsX44A062xMa',
+    database: 'CSC_668'
 
 })
 
