@@ -1,4 +1,4 @@
-package com.example.divvy.Activities;
+package com.example.divvy.Controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
