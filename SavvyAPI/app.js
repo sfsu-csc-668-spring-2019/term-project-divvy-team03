@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //important.. this line creates a connection to use static files such as html saved in the
 //folder public
 
-app.use(express.static('./uploads'));
+app.use(express.static('./images'));
 
 app.use(morgan('short'))
 
