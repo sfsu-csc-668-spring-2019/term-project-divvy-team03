@@ -1,4 +1,4 @@
-package com.example.divvy;
+package com.example.divvy.Controllers;
 
 import android.content.Intent;
 import android.os.PersistableBundle;
@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.divvy.R;
 
 public class CreateListing extends AppCompatActivity {
     private final int REQUEST_CODE_CANCEL = 0;
