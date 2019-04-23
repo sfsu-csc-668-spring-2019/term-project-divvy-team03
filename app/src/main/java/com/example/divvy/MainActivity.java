@@ -3,6 +3,8 @@ package com.example.divvy;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
