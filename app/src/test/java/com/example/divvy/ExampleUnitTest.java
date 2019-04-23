@@ -19,7 +19,7 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-  /*  @Test
+    @Test
     public void postData() throws IOException, JSONException {
         httprequest request = new httprequest();
         String json = registration();
@@ -29,18 +29,18 @@ public class ExampleUnitTest {
     }
 
     private String registration() throws JSONException {
-        String json = "{\"username\": \"antonn\",\"email\": \"a@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
+        String json = "{\"username\": \"antonnn\",\"email\": \"a@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
         System.out.println(json);
         return json;
 
-    }*/
+    }
 
 
-    @Test
+  /*  @Test
     public void getData() throws IOException {
         httprequest req = new httprequest();
         String response = req.get("http://localhost:3003/userinfo");
         System.out.println(response);
 
-    }
+    }*/
 }
