@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,21 +33,21 @@ public class CreateListing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //make request to send data to backend
+                EditText title = findViewById(R.id.create_list_name);
+                EditText desc = findViewById(R.id.create_list_desc);
+                EditText capacity = findViewById(R.id.create_grp_size);
+                Log.d("capacity", capacity.toString());
+                Integer size = Integer.parseInt(capacity.getText().toString());
+                listing = new Listing(
+                        title.getText().toString(),
+                        desc.getText().toString(),
+                        size,"owner",
+                        "status",
+                        01);
+                listing.sendData();
                 //if successful, go to next page
                 //else keep user here
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        EditText listName = findViewById(R.id.create_list_name);
-        EditText size = findViewById(R.id.create_grp_size);
-        EditText desc = findViewById(R.id.create_list_desc);
-
-        data.putExtra("name", listName.getText().toString());
-        data.putExtra("size", Integer.parseInt(size.getText().toString()));
-        data.putExtra("desc", desc.getText().toString());
     }
 }

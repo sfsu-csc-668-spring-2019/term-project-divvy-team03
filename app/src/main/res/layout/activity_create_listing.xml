@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Group Size"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/create_list_desc"

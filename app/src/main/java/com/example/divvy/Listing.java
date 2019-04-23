@@ -73,6 +73,7 @@ public class Listing {
         catch(JSONException e) {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
+        System.out.println(data.toString());
         return data.toString();
     }
 }
