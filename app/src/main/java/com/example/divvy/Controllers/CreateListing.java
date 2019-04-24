@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.divvy.Listing;
 import com.example.divvy.R;
 
 public class CreateListing extends AppCompatActivity {
