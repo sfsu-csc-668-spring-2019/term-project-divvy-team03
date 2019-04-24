@@ -1,15 +1,15 @@
-package com.example.divvy.Activities;
+package com.example.divvy.Controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.divvy.R;
 
-public class MainActivity extends AppCompatActivity {
+public class CreateListing extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_create_listing);
     }
 }
