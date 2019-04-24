@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controllers.CreateNewProfile"></activity>
         <activity android:name=".Controllers.CreateListing" />
+        <activity android:name=".Controllers.MessagingActivity" />
         <activity android:name=".Controllers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
