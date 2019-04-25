@@ -25,6 +25,8 @@ global.__basedir = __dirname;
 const router = require('./routes/users.js')
 app.use(router)
 
+const router = require('./routes/listing.js')
+app.use(router)
 
 //localhost:3003
 app.get('/', function(req, res) {
