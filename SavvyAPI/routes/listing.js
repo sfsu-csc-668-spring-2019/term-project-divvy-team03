@@ -27,13 +27,13 @@ router.use(cors());
  * 
  */
 router.post('/reg', (req, res) => {
-    const username = req.body.username
-    const email = req.body.email
-    const password = req.body.password
-    const first_name = req.body.first_name
-    const last_name = req.body.last_name
-    const city = req.body.city
-    const description = req.body.description
+    username = req.body.username
+    email = req.body.email
+    password = req.body.password
+    first_name = req.body.first_name
+    last_name = req.body.last_name
+    city = req.body.city
+    description = req.body.description
     var createProfile = "INSERT INTO User(username, email, password, first_name, last_name, city, description, profImage) VALUES (?, ?, ?, ?, ?, ?, ?)"
     db.query(createProfile, [username, email, password, first_name, last_name, city, description], (err, result) => {
         if (err) {
