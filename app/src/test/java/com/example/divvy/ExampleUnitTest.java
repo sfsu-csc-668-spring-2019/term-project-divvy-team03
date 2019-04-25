@@ -5,6 +5,9 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +22,7 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
+   /* @Test
     public void postData() throws IOException, JSONException {
         httprequest request = new httprequest();
         String json = registration();
@@ -33,14 +36,18 @@ public class ExampleUnitTest {
         System.out.println(json);
         return json;
 
-    }
+    }*/
 
 
-  /*  @Test
+    @Test
     public void getData() throws IOException {
         httprequest req = new httprequest();
-        String response = req.get("http://localhost:3003/userinfo");
+        Map<String,String> params = new LinkedHashMap<>();
+        params.put("name", "anton");
+        params.put("psw", "r12");
+
+        String response = req.get(params);
         System.out.println(response);
 
-    }*/
+    }
 }
