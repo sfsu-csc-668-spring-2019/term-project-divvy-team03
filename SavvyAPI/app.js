@@ -22,11 +22,11 @@ global.__basedir = __dirname;
 
 //create router
 //this is important because it creates a connection to the users folder and runs the users.js folder
-const router = require('./routes/users.js')
-app.use(router)
+const users = require('./routes/users.js')
+app.use(users)
 
-const router = require('./routes/listing.js')
-app.use(router)
+const listings = require('./routes/listing.js')
+app.use(listings)
 
 //localhost:3003
 app.get('/', function(req, res) {
