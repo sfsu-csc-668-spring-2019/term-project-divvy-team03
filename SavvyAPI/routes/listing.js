@@ -26,16 +26,13 @@ router.use(cors());
  * @return
  * 
  */
-router.post('/reg', (req, res) => {
-    username = req.body.username
-    email = req.body.email
-    password = req.body.password
-    first_name = req.body.first_name
-    last_name = req.body.last_name
-    city = req.body.city
-    description = req.body.description
+router.post('/newListing', (req, res) => {
+    const username = req.body.username
+    const name = req.body.name
+    const status = req.body.status
+    const description = req.body.description
     var createProfile = "INSERT INTO User(username, email, password, first_name, last_name, city, description, profImage) VALUES (?, ?, ?, ?, ?, ?, ?)"
-    db.query(createProfile, [username, email, password, first_name, last_name, city, description], (err, result) => {
+    db.query(createProfile, [username, name, status, description], (err, result) => {
         if (err) {
             console.log("failed to insert new image: " + err)
             res.sendStatus(500)
@@ -47,7 +44,7 @@ router.post('/reg', (req, res) => {
     });
 });
 
-router.get('/login', (req, res) => {
+router.get('/searchBY', (req, res) => {
     //user id becomes the id number we want to look for 
     const username = req.body.username;
     const password = req.body.password;
