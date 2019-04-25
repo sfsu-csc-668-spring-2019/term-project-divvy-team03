@@ -49,10 +49,10 @@ router.post('/reg', (req, res) => {
 
 router.get('/login', (req, res) => {
     //user id becomes the id number we want to look for 
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.query.name;
+    const password = req.query.psw;
     //this code selcts all the user information by user id 
-    const queryString = "SELECT username password FROM user WHERE username = ?"
+    const queryString = "SELECT * FROM user WHERE username = ? AND password = ?"
     db.query(queryString, [username, password], (err, rows, fields) => {
         if (err) {
             console.log("failed to query for users " + err)
