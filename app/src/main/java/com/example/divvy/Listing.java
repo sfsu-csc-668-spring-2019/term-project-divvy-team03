@@ -11,11 +11,11 @@ public class Listing {
     String desc;
     int capacity;
     //change to User object when created
-    String owner;
+    User owner;
     String status;
     int listingid;
 
-    public Listing(String title, String desc, int capacity, String owner, String status, int listingid) {
+    public Listing(String title, String desc, int capacity, User owner, String status, int listingid) {
         this.title = title;
         this.desc = desc;
         this.capacity = capacity;
@@ -41,10 +41,10 @@ public class Listing {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
     public String getStatus() {
