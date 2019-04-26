@@ -10,6 +10,8 @@ import com.example.divvy.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String USERNAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

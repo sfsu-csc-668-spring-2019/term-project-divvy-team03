@@ -12,4 +12,16 @@ public class Message {
         this.sender = sender;
         this.imageUrl = imageUrl;
     }
+
+    public String getMessage(){
+        return this.text;
+    }
+
+    public String getSender(){
+        return this.sender;
+    }
+
+    public URL getImageUrl(){
+        return this.imageUrl;
+    }
 }
