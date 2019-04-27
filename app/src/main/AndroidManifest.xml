@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controllers.CreateNewProfile"></activity>
+        <activity android:name=".Controllers.CreateNewProfile"/>
         <activity android:name=".Controllers.CreateListing" />
         <activity android:name=".Controllers.MessagingActivity" />
         <activity android:name=".Controllers.MainActivity">
