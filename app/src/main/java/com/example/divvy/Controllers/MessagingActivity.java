@@ -1,6 +1,14 @@
 package com.example.divvy.Controllers;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.divvy.R;
+import com.example.divvy.Controllers.imageSelectorController.*;
 import com.example.divvy.models.ChatBoxAdapter;
 import com.example.divvy.models.Message;
+import com.example.divvy.models.imageMessage;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -22,10 +32,20 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import static com.example.divvy.Controllers.imageSelectorController.getBitmapForUri;
+import static com.example.divvy.Controllers.imageSelectorController.savePhotoImage;
+import static com.example.divvy.Controllers.imageSelectorController.scaleImage;
 
 
 public class MessagingActivity extends AppCompatActivity {
@@ -42,6 +62,7 @@ public class MessagingActivity extends AppCompatActivity {
     private List<Message> messageList;
     private ChatBoxAdapter chatBoxAdapter;
     private Emitter.Listener messageListener;
+    private double MAX_LINEAR_DIMENSION = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,29 +70,35 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversation);
         setUpUi();
         setUpListeners();
-        username = getIntent().getExtras().getString(MainActivity.USERNAME);
+        //setUpSocket();
+        //username = getIntent().getExtras().getString(MainActivity.USERNAME);
     }
 
     @Override
     protected void onDestroy() {
-        socket.disconnect();
-        socket.close();
+        //destroySocket();
         super.onDestroy();
     }
 
-    private boolean setUpSocket(){
-        try{
+    private void destroySocket(){
+        socket.disconnect();
+        socket.close();
+
+    }
+
+    private boolean setUpSocket() {
+        try {
             socket = IO.socket(uri);
             socket.connect();
             socket.on("message", messageListener);
             return true;
-        }catch(URISyntaxException e){
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    private void setUpUi(){
+    private void setUpUi() {
         textField = findViewById(R.id.text);
         sendButton = findViewById(R.id.send_button);
         recyclerView = findViewById(R.id.chat_box);
@@ -82,46 +109,60 @@ public class MessagingActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void setUpListeners(){
-        addImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("ADD IMAGE", "CLICKED");
+    private void setUpListeners() {
+        addImageButton.setOnClickListener(view ->{
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+        });
+
+        sendButton.setOnClickListener(view -> {
+            if (!textField.getText().toString().trim().equals("")) {
+                //socket.emit(listing_id, "message", textField.getText().toString().trim(), username);
+                textField.setText("");
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(textField.getText().toString().trim() != ""){
-                    socket.emit(listing_id, "message", textField.getText().toString().trim(), username);
-                    textField.setText("");
+        messageListener = args -> {
+            JSONObject data = (JSONObject) args[0];
+            try {
+                String username = data.getString("username");
+                String message = data.getString("message");
+                Message m;
+                if(data.has("imageUrl")){
+                    String imageUrl = data.getString("imageUrl");
+                    m = new imageMessage(message, username, imageUrl);
+                }else{
+                    m = new Message(message, username);
                 }
-            }
-        });
-
-        messageListener = new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try{
-                    String username = data.getString("username");
-                    String message = data.getString("message");
-                    URL imageUrl = new URL(data.getString("imageUrl"));
-                    Message m = new Message(message, username, imageUrl);
-                    messageList.add(m);
-                    chatBoxAdapter = new ChatBoxAdapter(messageList);
-                    chatBoxAdapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(chatBoxAdapter);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }catch (java.net.MalformedURLException e){
-                    e.printStackTrace();
-                }
+                messageList.add(m);
+                chatBoxAdapter = new ChatBoxAdapter(messageList);
+                chatBoxAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(chatBoxAdapter);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         };
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            if(data != null){
+                Uri uri = data.getData();
+                Bitmap bitmap = getBitmapForUri(this.getContentResolver(), uri);
+                Bitmap resizedBitmap = scaleImage(bitmap);
+                if(bitmap != resizedBitmap){
+                    savePhotoImage(resizedBitmap, this);
+                    bitmap = resizedBitmap;
+                }
+                addImageButton.setImageDrawable(new BitmapDrawable(getResources(), bitmap));
+            }else{
+                Log.d("ERROR: ", "Unable to get image for uploading");
+            }
 
+        }
+    }
 
 }

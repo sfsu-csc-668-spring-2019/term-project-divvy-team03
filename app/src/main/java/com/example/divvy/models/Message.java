@@ -3,14 +3,12 @@ package com.example.divvy.models;
 import java.net.URL;
 
 public class Message {
-    private String text;
-    private String sender;
-    private URL imageUrl;
+    protected String text;
+    protected String sender;
 
-    public Message(String text, String sender, URL imageUrl){
+    public Message(String text, String sender){
         this.text = text;
         this.sender = sender;
-        this.imageUrl = imageUrl;
     }
 
     public String getMessage(){
@@ -19,9 +17,5 @@ public class Message {
 
     public String getSender(){
         return this.sender;
-    }
-
-    public URL getImageUrl(){
-        return this.imageUrl;
     }
 }
