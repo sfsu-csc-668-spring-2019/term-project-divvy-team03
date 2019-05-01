@@ -46,6 +46,7 @@ import java.util.List;
 import static com.example.divvy.Controllers.imageSelectorController.getBitmapForUri;
 import static com.example.divvy.Controllers.imageSelectorController.savePhotoImage;
 import static com.example.divvy.Controllers.imageSelectorController.scaleImage;
+import static com.example.divvy.Controllers.imageSelectorController.selectImage;
 
 
 public class MessagingActivity extends AppCompatActivity {
@@ -111,9 +112,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     private void setUpListeners() {
         addImageButton.setOnClickListener(view ->{
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.setType("image/*");
-            startActivityForResult(intent, 1);
+            selectImage(this);
         });
 
         sendButton.setOnClickListener(view -> {
