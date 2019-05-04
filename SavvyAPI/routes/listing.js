@@ -27,14 +27,14 @@ router.use(cors());
  * 
  */
 router.post('/newListing', (req, res) => {
-    const username = req.body.username
     const name = req.body.name
-    const status = req.body.status
+    const status = "true"
     const description = req.body.description
-    var createProfile = "INSERT INTO User(username, email, password, first_name, last_name, city, description, profImage) VALUES (?, ?, ?, ?, ?, ?, ?)"
-    db.query(createProfile, [username, name, status, description], (err, result) => {
+    const username = req.body.username
+    var createProfile = "INSERT INTO Listing(listing_name, listing_status, listing_desc, listing_owner) VALUES (?, ?, ?, ?)"
+    db.query(createProfile, [name, status, description, username], (err, result) => {
         if (err) {
-            console.log("failed to insert new image: " + err)
+            console.log("failed to insert new listing " + err)
             res.sendStatus(500)
             return
         } else {
@@ -44,23 +44,32 @@ router.post('/newListing', (req, res) => {
     });
 });
 
-router.get('/searchBY', (req, res) => {
-    //user id becomes the id number we want to look for 
-    const username = req.body.username;
-    const password = req.body.password;
-    //this code selcts all the user information by user id 
-    const queryString = "SELECT username password FROM user WHERE username = ?"
-    db.query(queryString, [username, password], (err, rows, fields) => {
+router.get('/search', (req, res) => {
+    const like = req.body.like
+    var createquery = "SELECT * FROM Listing WHERE listing_name LIKE ? AND listing_status = true"
+    db.query(createquery, ['%' + like + '%'], (err, rows, fields) => {
         if (err) {
-            console.log("failed to query for users " + err)
+            console.log(err)
             res.sendStatus(500)
             return
+        } else {
+            console.log(result)
+            res.json(rows)
         }
-        const users = rows.map((row) => {
-                return { username: row.username, email: row.email, first_name: row.first_name, last_name: row.last_name, city: row.city, description: row.description }
-            })
-            //this line displays the user first name ans last name
-        res.json(users)
+    })
+})
+
+router.get('/getbyowner', (req, res) => {
+    const username = req.body.username
+    var createquery = "SELECT * FROM Listing WHERE listing_owner = ?"
+    db.query(createquery, [username], (err, rows, fields) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(500)
+            return
+        } else {
+            res.json(rows)
+        }
     })
 })
 

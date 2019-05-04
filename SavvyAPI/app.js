@@ -3,6 +3,9 @@ const express = require('express')
 var cors = require('cors')
 const app = express()
 const morgan = require('morgan')
+http = require('http'),
+    server = http.createServer(app),
+    io = require('socket.io').listen(server);
 
 const bodyParser = require('body-parser')
 
@@ -28,6 +31,20 @@ app.use(router)
 const listings = require('./routes/listing.js')
 app.use(listings)
 
+//socket config
+var nsp = io.of('main');
+nsp.on('connection', function(socekt) {
+    SocketIO.on('message', function(msg) {
+        console.log(msg);
+        nsp.emit('message', msg)
+    })
+})
+
+nsp.on('connection', function(socket) {
+    socket.on('disconnect', function() {
+        nsp.emit('new message', '*disconnected');
+    });
+});
 
 //localhost:3003
 app.get('/', function(req, res) {
