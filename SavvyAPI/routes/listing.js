@@ -44,7 +44,7 @@ router.post('/newListing', (req, res) => {
     });
 });
 
-router.get('/searchBY', (req, res) => {
+/*router.get('/searchBY', (req, res) => {
     //user id becomes the id number we want to look for 
     const username = req.body.username;
     const password = req.body.password;
@@ -62,7 +62,7 @@ router.get('/searchBY', (req, res) => {
             //this line displays the user first name ans last name
         res.json(users)
     })
-})
+})*/
 
 
 module.exports = router
