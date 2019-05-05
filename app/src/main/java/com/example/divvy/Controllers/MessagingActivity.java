@@ -71,13 +71,13 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversation);
         setUpUi();
         setUpListeners();
-        //setUpSocket();
-        //username = getIntent().getExtras().getString(MainActivity.USERNAME);
+        setUpSocket();
+        username = getIntent().getExtras().getString(MainActivity.USERNAME);
     }
 
     @Override
     protected void onDestroy() {
-        //destroySocket();
+        destroySocket();
         super.onDestroy();
     }
 
@@ -89,7 +89,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     private boolean setUpSocket() {
         try {
-            socket = IO.socket(uri);
+            socket = IO.socket("http://localhost:3003/main");
             socket.connect();
             socket.on("message", messageListener);
             return true;
@@ -117,7 +117,7 @@ public class MessagingActivity extends AppCompatActivity {
 
         sendButton.setOnClickListener(view -> {
             if (!textField.getText().toString().trim().equals("")) {
-                //socket.emit(listing_id, "message", textField.getText().toString().trim(), username);
+                socket.emit(listing_id, "message", textField.getText().toString().trim(), username);
                 textField.setText("");
             }
         });
