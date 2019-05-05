@@ -111,7 +111,7 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        addImageButton.setOnClickListener(view ->{
+        addImageButton.setOnClickListener(view -> {
             selectImage(this);
         });
 
