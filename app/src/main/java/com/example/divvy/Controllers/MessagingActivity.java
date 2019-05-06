@@ -57,7 +57,7 @@ public class MessagingActivity extends AppCompatActivity {
     private EditText textField;
     private Button sendButton;
     private RecyclerView recyclerView;
-    private ImageView addImageButton;
+    private ImageView addImageButton, cancelButton;
     private TextView listingName;
     private Socket socket;
     private String username = "username";
@@ -100,8 +100,6 @@ public class MessagingActivity extends AppCompatActivity {
 
 
 
-
-            Log.d("socket", Boolean.toString(socket.connected()));
             return true;
         } catch (Exception e) {
             Log.d("ERROR", e.toString());
@@ -115,18 +113,36 @@ public class MessagingActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.chat_box);
         addImageButton = findViewById(R.id.add_image_button);
         listingName = findViewById(R.id.listing_name);
+        cancelButton = findViewById(R.id.cancel_button);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        clearImageButton();
+    }
+
+    private void clearImageButton(){
+        addImageButton.setImageResource(R.drawable.add_icon);
+        cancelButton.setVisibility(View.INVISIBLE);
+        cancelButton.setClickable(false);
+
     }
 
     private void setUpListeners() {
-        addImageButton.setOnClickListener(view -> {
-            selectImage(this);
-        });
+        addImageButton.setOnClickListener(view ->
+            selectImage(this)
+        );
+
+        cancelButton.setOnClickListener(view ->
+            clearImageButton()
+        );
 
         sendButton.setOnClickListener(view -> {
+            if (cancelButton.getVisibility() == View.VISIBLE){
+                clearImageButton();
+                //send image
+            }
             if (!textField.getText().toString().trim().equals("")) {
+                //send normal message
                 socket.emit("messagedetection", textField.getText().toString().trim(), username);
                 textField.setText("");
             }
@@ -134,9 +150,7 @@ public class MessagingActivity extends AppCompatActivity {
 
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+            runOnUiThread( () -> {
                     try {
                         String username = data.getString("senderNickname");
                         String message = data.getString("message");
@@ -147,15 +161,17 @@ public class MessagingActivity extends AppCompatActivity {
                         }else{
                             m = new Message(message, username);
                         }
+
                         messageList.add(m);
                         chatBoxAdapter = new ChatBoxAdapter(messageList);
-                        chatBoxAdapter.notifyDataSetChanged();
-                        Log.d("New Message", username + " : " + message);
                         recyclerView.setAdapter(chatBoxAdapter);
+                        chatBoxAdapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(messageList.size() - 1);
+                        Log.d("new message", Integer.toString(messageList.size()));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
+
             });
         };
     }
@@ -172,7 +188,9 @@ public class MessagingActivity extends AppCompatActivity {
                     savePhotoImage(resizedBitmap, this);
                     bitmap = resizedBitmap;
                 }
-                addImageButton.setImageDrawable(new BitmapDrawable(getResources(), bitmap));
+                addImageButton.setImageBitmap(bitmap);
+                cancelButton.setVisibility(View.VISIBLE);
+                cancelButton.setClickable(true);
             }else{
                 Log.d("ERROR: ", "Unable to get image for uploading");
             }

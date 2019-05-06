@@ -1,7 +1,5 @@
 package com.example.divvy.models;
 
-import java.net.URL;
-
 public class Message {
     protected String text;
     protected String sender;
