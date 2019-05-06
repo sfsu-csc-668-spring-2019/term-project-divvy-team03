@@ -1,4 +1,5 @@
 
+
 /**
  * @class
  * this class serves as setup to connect to mysql and create mysql pools.
@@ -16,4 +17,3 @@ const db = mysql.createPool({
 
 
 module.exports = db
-
