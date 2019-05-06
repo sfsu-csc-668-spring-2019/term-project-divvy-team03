@@ -1,6 +1,8 @@
 package com.example.divvy;
 
+import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -62,7 +64,7 @@ public class Listing {
     public void setListingid(int listingid) {
         this.listingid = listingid;
     }
-    public void postData(){
+    public void postData(Context currentContext){
         JSONObject data = new JSONObject();
         try {
             data.put("name", title);
@@ -74,10 +76,10 @@ public class Listing {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
         System.out.println(data.toString());
-        /*try {
-            httprequest.post(httprequest.ROOT_ADD + "/newListing", data.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        Intent i = new Intent();
+        i.putExtra("data", data.toString());
+        i.putExtra("type", httprequest.POST_CODE);
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
+
     }
 }
