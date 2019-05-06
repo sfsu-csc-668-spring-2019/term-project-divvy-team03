@@ -9,8 +9,8 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
     user: 'root',
-    password: 'BzX3J#RgczvFxK3$',
-    database: 'users_database'
+    password: 'AA23@xla@VbQ239S1',
+    database: 'savvyAPP'
 
 })
 
