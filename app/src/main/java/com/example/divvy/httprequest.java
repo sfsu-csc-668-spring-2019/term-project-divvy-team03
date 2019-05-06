@@ -71,7 +71,7 @@ public class httprequest extends IntentService {
         int type = intent.getIntExtra("type",-1);
         if(type == GET_CODE){
             try {
-                get(intent.getParcelableExtra("data"));
+                get((Map<String, String>) intent.getSerializableExtra("data"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Listing {
@@ -76,10 +78,19 @@ public class Listing {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
         System.out.println(data.toString());
-        Intent i = new Intent();
+        Intent i = new Intent(currentContext,httprequest.class);
         i.putExtra("data", data.toString());
         i.putExtra("type", httprequest.POST_CODE);
         i.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
+        currentContext.startService(i);
 
+    }
+    void getListings(Context currentContext){
+        Intent i = new Intent(currentContext,httprequest.class);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("username","alex");
+        i.putExtra("data",map);
+        i.putExtra("type", httprequest.GET_CODE);
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/getbyowner");
     }
 }
