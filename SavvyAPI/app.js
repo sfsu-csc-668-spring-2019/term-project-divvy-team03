@@ -52,9 +52,9 @@ app.get('/', function(req, res) {
 });
 
 //for server uncomment this
-app.listen(8080, '172.31.90.190');
+//app.listen(8080, '172.31.90.190');
 
 //for local uncomment this 
-//app.listen(3003, () => {
-//    console.log("Server is up and listening on 3003...")
-//})
+app.listen(3003, () => {
+    console.log("Server is up and listening on 3003...")
+})
