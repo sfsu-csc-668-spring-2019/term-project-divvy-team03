@@ -12,10 +12,10 @@ import android.widget.EditText;
 
 import com.example.divvy.Listing;
 import com.example.divvy.R;
+import com.example.divvy.User;
+import com.example.divvy.httprequest;
 
 public class CreateListing extends AppCompatActivity {
-    private final int REQUEST_CODE_CANCEL = 0;
-    private final int REQUEST_CODE_SUBMIT = 1;
 
     Listing listing;
 
@@ -29,7 +29,6 @@ public class CreateListing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //just go back
-                finish();
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -44,10 +43,10 @@ public class CreateListing extends AppCompatActivity {
                 listing = new Listing(
                         title.getText().toString(),
                         desc.getText().toString(),
-                        size,"owner",
+                        size,new User(),
                         "status",
                         01);
-                listing.sendData();
+                listing.postData();
                 //if successful, go to next page
                 //else keep user here
             }

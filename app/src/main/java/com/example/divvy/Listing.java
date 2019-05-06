@@ -1,9 +1,12 @@
 package com.example.divvy;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 
 public class Listing {
@@ -59,21 +62,22 @@ public class Listing {
     public void setListingid(int listingid) {
         this.listingid = listingid;
     }
-    public String sendData(){
+    public void postData(){
         JSONObject data = new JSONObject();
         try {
-            data.put("listingid", listingid);
-            data.put("title", title);
-            data.put("desc", desc);
-            data.put("capacity",capacity);
+            data.put("name", title);
+            data.put("description", desc);
+            data.put("username", "alex");
             //change to owner_id
-            data.put("owner", owner);
-            data.put("status", status);
         }
         catch(JSONException e) {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
         System.out.println(data.toString());
-        return data.toString();
+        /*try {
+            httprequest.post(httprequest.ROOT_ADD + "/newListing", data.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 }

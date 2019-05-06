@@ -13,6 +13,7 @@ import okhttp3.Response;
 public class httprequest {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    public static final String ROOT_ADD = "http://ec2-34-226-139-149.compute-1.amazonaws.com";
     private static OkHttpClient client = new OkHttpClient();
 
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/login   (get)
@@ -38,13 +39,14 @@ public class httprequest {
 
     }
 
-    String post(String url, String json) throws IOException {
+    public static String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
+            System.out.println(response.body().string());
             return response.body().string();
         }
     }
