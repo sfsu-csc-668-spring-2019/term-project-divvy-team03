@@ -30,7 +30,7 @@ router.post('/newListing', (req, res) => {
     const status = "true"
     const description = req.body.description
     const username = req.body.username
-    var createProfile = "INSERT INTO Listing(name, status, description, owner) VALUES (?, ?, ?, ?)"
+    var createProfile = "INSERT INTO listing(name, status, description, owner) VALUES (?, ?, ?, ?)"
     db.query(createProfile, [name, status, description, username], (err, result) => {
         if (err) {
             console.log("failed to insert new listing " + err)
@@ -45,7 +45,7 @@ router.post('/newListing', (req, res) => {
 
 router.get('/search', (req, res) => {
     const like = req.query.like
-    var createquery = "SELECT * FROM Listing WHERE name LIKE ? AND status = true"
+    var createquery = "SELECT * FROM listing WHERE name LIKE ? AND status = true"
     db.query(createquery, ['%' + like + '%'], (err, rows, fields) => {
         if (err) {
             console.log(err)
@@ -59,7 +59,7 @@ router.get('/search', (req, res) => {
 
 router.get('/getbyowner', (req, res) => {
     const username = req.query.username
-    var createquery = "SELECT * FROM Listing WHERE owner = ?"
+    var createquery = "SELECT * FROM listing WHERE owner = ?"
     db.query(createquery, [username], (err, rows, fields) => {
         if (err) {
             console.log(err)
