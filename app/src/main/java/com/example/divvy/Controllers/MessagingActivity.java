@@ -26,7 +26,9 @@ import com.example.divvy.models.ChatBoxAdapter;
 import com.example.divvy.models.Message;
 import com.example.divvy.models.imageMessage;
 import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.engineio.client.Transport;
 import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Manager;
 import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
@@ -40,6 +42,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +60,7 @@ public class MessagingActivity extends AppCompatActivity {
     private ImageView addImageButton;
     private TextView listingName;
     private Socket socket;
-    private String username;
+    private String username = "username";
     private URI uri;
     private String listing_id;
     private List<Message> messageList;
@@ -71,13 +74,14 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversation);
         setUpUi();
         setUpListeners();
-        //setUpSocket();
+        setUpSocket();
+        messageList = new ArrayList<>();
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
     }
 
     @Override
     protected void onDestroy() {
-        //destroySocket();
+        destroySocket();
         super.onDestroy();
     }
 
@@ -89,12 +93,18 @@ public class MessagingActivity extends AppCompatActivity {
 
     private boolean setUpSocket() {
         try {
-            socket = IO.socket(uri);
-            socket.connect();
+            socket = IO.socket("http://34.226.139.149/");
+            socket = socket.connect();
+            socket.emit("join", username);
             socket.on("message", messageListener);
+
+
+
+
+            Log.d("socket", Boolean.toString(socket.connected()));
             return true;
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.d("ERROR", e.toString());
             return false;
         }
     }
@@ -117,30 +127,36 @@ public class MessagingActivity extends AppCompatActivity {
 
         sendButton.setOnClickListener(view -> {
             if (!textField.getText().toString().trim().equals("")) {
-                //socket.emit(listing_id, "message", textField.getText().toString().trim(), username);
+                socket.emit("messagedetection", textField.getText().toString().trim(), username);
                 textField.setText("");
             }
         });
 
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
-            try {
-                String username = data.getString("username");
-                String message = data.getString("message");
-                Message m;
-                if(data.has("imageUrl")){
-                    String imageUrl = data.getString("imageUrl");
-                    m = new imageMessage(message, username, imageUrl);
-                }else{
-                    m = new Message(message, username);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String username = data.getString("senderNickname");
+                        String message = data.getString("message");
+                        Message m;
+                        if(data.has("imageUrl")){
+                            String imageUrl = data.getString("imageUrl");
+                            m = new imageMessage(message, username, imageUrl);
+                        }else{
+                            m = new Message(message, username);
+                        }
+                        messageList.add(m);
+                        chatBoxAdapter = new ChatBoxAdapter(messageList);
+                        chatBoxAdapter.notifyDataSetChanged();
+                        Log.d("New Message", username + " : " + message);
+                        recyclerView.setAdapter(chatBoxAdapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-                messageList.add(m);
-                chatBoxAdapter = new ChatBoxAdapter(messageList);
-                chatBoxAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(chatBoxAdapter);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            });
         };
     }
 
