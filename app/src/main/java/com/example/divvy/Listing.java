@@ -71,7 +71,7 @@ public class Listing {
         try {
             data.put("name", title);
             data.put("description", desc);
-            data.put("username", "alex");
+            data.put("username", "alex3222");
             //change to owner_id
         }
         catch(JSONException e) {
@@ -85,12 +85,13 @@ public class Listing {
         currentContext.startService(i);
 
     }
-    void getListings(Context currentContext){
+    public void getListings(Context currentContext){
         Intent i = new Intent(currentContext,httprequest.class);
         HashMap<String,String> map = new HashMap<>();
-        map.put("username","alex");
+        map.put("username","jonh");
         i.putExtra("data",map);
         i.putExtra("type", httprequest.GET_CODE);
         i.putExtra("uri", httprequest.ROOT_ADDRESS + "/getbyowner");
+        currentContext.startService(i);
     }
 }

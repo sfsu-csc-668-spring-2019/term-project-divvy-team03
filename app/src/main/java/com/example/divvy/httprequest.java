@@ -3,7 +3,6 @@ package com.example.divvy;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class httprequest extends IntentService {
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/reg     (post)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/newListing  (post)
     public static String get(Map<String,String> params) throws IOException {
-        HttpUrl.Builder httpBuilder = HttpUrl.parse("http://ec2-34-226-139-149.compute-1.amazonaws.com/login").newBuilder();
+        HttpUrl.Builder httpBuilder = HttpUrl.parse("http://ec2-34-226-139-149.compute-1.amazonaws.com/getbyowner").newBuilder();
         if (params != null) {
             for(Map.Entry<String, String> param : params.entrySet()) {
                 httpBuilder.addQueryParameter(param.getKey(),param.getValue());
@@ -60,25 +59,25 @@ public class httprequest extends IntentService {
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            System.out.println(response.body().string());
             return response.body().string();
         }
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        intent.getStringExtra("data");
         int type = intent.getIntExtra("type",-1);
         if(type == GET_CODE){
             try {
-                get((Map<String, String>) intent.getSerializableExtra("data"));
+                System.out.println("Output: " + get((Map<String, String>) intent.getSerializableExtra("data")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         else if(type == POST_CODE){
+            System.out.println(intent.getStringExtra("uri"));
+            System.out.println(intent.getStringExtra("data"));
             try {
-                post(intent.getStringExtra("uri"), intent.getStringExtra("data"));
+                System.out.println("Output post: " + post(intent.getStringExtra("uri"), intent.getStringExtra("data")));
             } catch (IOException e) {
                 e.printStackTrace();
             }

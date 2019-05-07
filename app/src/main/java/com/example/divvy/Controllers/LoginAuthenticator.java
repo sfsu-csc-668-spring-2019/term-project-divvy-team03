@@ -2,17 +2,19 @@ package com.example.divvy.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+
 import com.example.divvy.User;
 
 //SINGLETON
 public class LoginAuthenticator {
     private final int LOGGED_IN = 1;
     private final int LOGGED_OUT = 0;
-    private int userid;
+    private String username;
     private int loggedIn;
     private static LoginAuthenticator instance = null;
     private LoginAuthenticator(){
-        userid = -1;
+        username = "";
         loggedIn = LOGGED_OUT;
     }
 
@@ -31,8 +33,12 @@ public class LoginAuthenticator {
             return false;
         }
     }
-    public void LogInUser(User user){
-        userid = 1; // change to user id
+    public void LogInUser(User user, Context context){
+        username = "loggedin-username"; // change to user id
         loggedIn = LOGGED_IN;
+        SharedPreferences.Editor editor =
+                context.getSharedPreferences("LoginState",Context.MODE_PRIVATE).edit();
+        editor.putInt("loggedIn", loggedIn);
+        editor.putString("username", "loggedin user");
     }
 }

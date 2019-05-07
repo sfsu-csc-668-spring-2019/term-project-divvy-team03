@@ -47,6 +47,7 @@ public class CreateListing extends AppCompatActivity {
                         "status",
                         01);
                 listing.postData(CreateListing.this);
+                listing.getListings(CreateListing.this);
                 //if successful, go to next page
                 //else keep user here
             }
