@@ -1,6 +1,6 @@
 package com.example.divvy.models;
 
-public class Message {
+public abstract class Message {
     protected String text;
     protected String sender;
 
@@ -16,4 +16,6 @@ public class Message {
     public String getSender(){
         return this.sender;
     }
+
+    public abstract void render(GraphicsContext gc);
 }

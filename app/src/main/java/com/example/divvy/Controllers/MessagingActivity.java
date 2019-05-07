@@ -24,12 +24,6 @@ import com.example.divvy.R;
 import com.example.divvy.Controllers.imageSelectorController.*;
 import com.example.divvy.models.ChatBoxAdapter;
 import com.example.divvy.models.Message;
-import com.example.divvy.models.imageMessage;
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.engineio.client.Transport;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Manager;
-import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,21 +46,22 @@ import static com.example.divvy.Controllers.imageSelectorController.scaleImage;
 import static com.example.divvy.Controllers.imageSelectorController.selectImage;
 
 
-public class MessagingActivity extends AppCompatActivity {
+public class MessagingActivity extends AppCompatActivity implements Observer {
 
     private EditText textField;
     private Button sendButton;
     private RecyclerView recyclerView;
     private ImageView addImageButton, cancelButton;
     private TextView listingName;
-    private Socket socket;
+
     private String username = "username";
     private URI uri;
     private String listing_id;
     private List<Message> messageList;
     private ChatBoxAdapter chatBoxAdapter;
-    private Emitter.Listener messageListener;
     private double MAX_LINEAR_DIMENSION = 500;
+
+    private Messenger messenger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +69,9 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversation);
         setUpUi();
         setUpListeners();
-        setUpSocket();
+
         messageList = new ArrayList<>();
+        messenger = new Messenger(username, this);
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
     }
 
@@ -86,25 +82,7 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     private void destroySocket(){
-        socket.disconnect();
-        socket.close();
-
-    }
-
-    private boolean setUpSocket() {
-        try {
-            socket = IO.socket("http://34.226.139.149/");
-            socket = socket.connect();
-            socket.emit("join", username);
-            socket.on("message", messageListener);
-
-
-
-            return true;
-        } catch (Exception e) {
-            Log.d("ERROR", e.toString());
-            return false;
-        }
+        messenger.endSession();
     }
 
     private void setUpUi() {
@@ -141,44 +119,32 @@ public class MessagingActivity extends AppCompatActivity {
                 clearImageButton();
                 //send image
             }
-            if (!textField.getText().toString().trim().equals("")) {
+
+            String message = textField.getText().toString().trim();
+
+            if (!message.equals("")) {
                 //send normal message
-                socket.emit("messagedetection", textField.getText().toString().trim(), username);
+                // TODO: This probably belongs in Messenger?
+                messenger.sendMessage(message);
                 textField.setText("");
             }
         });
+    }
 
-        messageListener = args -> {
-            JSONObject data = (JSONObject) args[0];
-            runOnUiThread( () -> {
-                    try {
-                        String username = data.getString("senderNickname");
-                        String message = data.getString("message");
-                        Message m;
-                        if(data.has("imageUrl")){
-                            String imageUrl = data.getString("imageUrl");
-                            m = new imageMessage(message, username, imageUrl);
-                        }else{
-                            m = new Message(message, username);
-                        }
+    public void update(Observable o, Object arg) {
+        messageList.add((Message) arg);
 
-                        messageList.add(m);
-                        chatBoxAdapter = new ChatBoxAdapter(messageList);
-                        recyclerView.setAdapter(chatBoxAdapter);
-                        chatBoxAdapter.notifyDataSetChanged();
-                        recyclerView.scrollToPosition(messageList.size() - 1);
-                        Log.d("new message", Integer.toString(messageList.size()));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-            });
-        };
+        chatBoxAdapter = new ChatBoxAdapter(messageList);
+        recyclerView.setAdapter(chatBoxAdapter);
+        chatBoxAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(messageList.size() - 1);
+        Log.d("new message", Integer.toString(messageList.size()));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // TODO: Create BitmapLoader class?
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
             if(data != null){
                 Uri uri = data.getData();

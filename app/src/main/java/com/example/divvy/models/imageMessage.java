@@ -1,14 +1,14 @@
 package com.example.divvy.models;
 
-public class imageMessage extends Message {
+public class ImageMessage extends Message {
 
     private String url;
 
-    public imageMessage() {
+    public ImageMessage() {
         super("", "");
     }
 
-    public imageMessage(String text, String sender, String url) {
+    public ImageMessage(String text, String sender, String url) {
         super(text, sender);
         this.url = url;
     }
@@ -17,5 +17,8 @@ public class imageMessage extends Message {
         return this.url;
     }
 
-
+    @Override
+    public void render(GraphicsContext gc) {
+        // Do rendering stuff
+    }
 }
