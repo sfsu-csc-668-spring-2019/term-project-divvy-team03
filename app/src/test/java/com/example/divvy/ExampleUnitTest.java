@@ -22,32 +22,31 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-   /* @Test
+    @Test
     public void postData() throws IOException, JSONException {
         httprequest request = new httprequest();
         String json = registration();
         System.out.println(json);
-        String response = request.post("http://localhost:3003/reg", json);
+        String response = request.post("http://ec2-34-226-139-149.compute-1.amazonaws.com/reg", json);
         assertEquals("OK", response);
     }
 
     private String registration() throws JSONException {
-        String json = "{\"username\": \"antonnn\",\"email\": \"a@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
+        String json = "{\"username\": \"alex3222\",\"email\": \"alex23@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
         System.out.println(json);
         return json;
 
-    }*/
+    }
 
 
-    @Test
+    /*@Test
     public void getData() throws IOException {
         httprequest req = new httprequest();
         Map<String,String> params = new LinkedHashMap<>();
         params.put("name", "anton");
-        params.put("psw", "r12");
 
         String response = req.get(params);
         System.out.println(response);
 
-    }
+    }*/
 }
