@@ -27,10 +27,9 @@ router.use(cors());
  */
 router.post('/newListing', (req, res) => {
     const name = req.body.name
-    const status = "true"
     const description = req.body.description
     const username = req.body.username
-    var createProfile = "INSERT INTO listing(name, status, description, owner) VALUES (?, ?, ?, ?)"
+    var createProfile = "INSERT INTO listing(name, description, owner) VALUES (?, ?, ?, ?)"
     db.query(createProfile, [name, status, description, username], (err, result) => {
         if (err) {
             console.log("failed to insert new listing " + err)
