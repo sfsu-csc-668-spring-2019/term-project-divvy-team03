@@ -74,13 +74,11 @@ socket.on('disconnect', function() {
 
 
 })
-//localhost:3003
+
 app.get('/', function(req, res) {
     res.send('SAVVY API');
 });
 
-//for server uncomment this
-//server.listen(8080, '172.31.90.190');
 
 //for local uncomment this 
 server.listen(3000, () => {
