@@ -34,7 +34,7 @@ router.post('/reg', (req, res) => {
     const last_name = req.body.last_name
     const city = req.body.city
     const description = req.body.description
-    var createProfile = "INSERT INTO User(username, email, password, first_name, last_name, city, description, profImage) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    var createProfile = "INSERT INTO user(username, email, password, first_name, last_name, city, description) VALUES (?, ?, ?, ?, ?, ?, ?)"
     db.query(createProfile, [username, email, password, first_name, last_name, city, description], (err, result) => {
         if (err) {
             console.log("failed to insert new image: " + err)
