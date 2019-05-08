@@ -1,5 +1,4 @@
 package com.example.divvy.models;
-import android.app.Activity;
 import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -19,8 +18,8 @@ public class Messenger extends Observable {
     public Messenger(String username, Observer observer) {
       this.username = username;
       this.addObserver(observer);
-      setUpSocket();
       setUpChannels();
+      setUpSocket();
     }
 
     public void endSession() {
@@ -39,15 +38,15 @@ public class Messenger extends Observable {
             socket.on("message", messageListener);
             return true;
         } catch (Exception e) {
-            Log.d("ERROR", e.toString());
+            e.printStackTrace();
             return false;
         }
     }
 
     private void setUpChannels() {
         messageListener = args -> {
-            Log.d("FUCK", "message received");
             JSONObject data = (JSONObject) args[0];
+            this.setChanged();
             this.notifyObservers(MessageFactory.create(data));
         };
     }

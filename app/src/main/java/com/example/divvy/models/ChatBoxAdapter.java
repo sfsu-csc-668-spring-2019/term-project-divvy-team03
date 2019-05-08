@@ -60,9 +60,6 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
     public void onBindViewHolder(final ChatBoxAdapter.MyViewHolder holder, final int position) {
 
         //binding the data from our ArrayList of object to the item.xml using the viewholder
-
-
-
         Message m = MessageList.get(position);
         holder.username.setText(m.getSender());
         holder.message.setText(m.getMessage());

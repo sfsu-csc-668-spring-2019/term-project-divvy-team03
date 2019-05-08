@@ -103,9 +103,10 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable observable, Object o) {
+        Log.d("FUCK", "NEW MESSAGE");
         runOnUiThread( () -> {
-            messageList.add((Message) arg);
+            messageList.add((Message) o);
             chatBoxAdapter = new ChatBoxAdapter(messageList);
             recyclerView.setAdapter(chatBoxAdapter);
             chatBoxAdapter.notifyDataSetChanged();
