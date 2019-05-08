@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class imageSelectorController {
+public class ImageSelector {
 
     private static double MAX_LINEAR_DIMENSION = 500;
 
@@ -84,5 +84,16 @@ public class imageSelectorController {
 
         File imageFile = File.createTempFile(imageFileNamePrefix, ".jpg", storageDir);
         return imageFile;
+    }
+
+    public static Bitmap getBitmap(Intent data, Activity activity){
+        Uri uri = data.getData();
+        Bitmap bitmap = getBitmapForUri(activity.getContentResolver(), uri);
+        Bitmap resizedBitmap = scaleImage(bitmap);
+        if(bitmap != resizedBitmap){
+            savePhotoImage(resizedBitmap, activity);
+            bitmap = resizedBitmap;
+        }
+        return bitmap;
     }
 }

@@ -17,8 +17,7 @@ public class ImageMessage extends Message {
         return this.url;
     }
 
-    @Override
-    public void render(GraphicsContext gc) {
+    public void render() {
         // Do rendering stuff
     }
 }

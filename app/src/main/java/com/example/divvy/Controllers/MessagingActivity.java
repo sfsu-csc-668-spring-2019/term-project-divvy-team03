@@ -2,12 +2,7 @@ package com.example.divvy.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,30 +16,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.divvy.R;
-import com.example.divvy.Controllers.imageSelectorController.*;
 import com.example.divvy.models.ChatBoxAdapter;
 import com.example.divvy.models.Message;
+import com.example.divvy.models.Messenger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-import static com.example.divvy.Controllers.imageSelectorController.getBitmapForUri;
-import static com.example.divvy.Controllers.imageSelectorController.savePhotoImage;
-import static com.example.divvy.Controllers.imageSelectorController.scaleImage;
-import static com.example.divvy.Controllers.imageSelectorController.selectImage;
-
+import static com.example.divvy.Controllers.ImageSelector.getBitmap;
+import static com.example.divvy.Controllers.ImageSelector.selectImage;
 
 public class MessagingActivity extends AppCompatActivity implements Observer {
 
@@ -54,12 +36,9 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     private ImageView addImageButton, cancelButton;
     private TextView listingName;
 
-    private String username = "username";
-    private URI uri;
-    private String listing_id;
+    private String username = "username", listing_id;
     private List<Message> messageList;
     private ChatBoxAdapter chatBoxAdapter;
-    private double MAX_LINEAR_DIMENSION = 500;
 
     private Messenger messenger;
 
@@ -69,7 +48,6 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         setContentView(R.layout.activity_conversation);
         setUpUi();
         setUpListeners();
-
         messageList = new ArrayList<>();
         messenger = new Messenger(username, this);
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
@@ -77,12 +55,8 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onDestroy() {
-        destroySocket();
-        super.onDestroy();
-    }
-
-    private void destroySocket(){
         messenger.endSession();
+        super.onDestroy();
     }
 
     private void setUpUi() {
@@ -107,23 +81,20 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
 
     private void setUpListeners() {
         addImageButton.setOnClickListener(view ->
-            selectImage(this)
+                selectImage(this)
         );
 
         cancelButton.setOnClickListener(view ->
-            clearImageButton()
+                clearImageButton()
         );
 
         sendButton.setOnClickListener(view -> {
-            if (cancelButton.getVisibility() == View.VISIBLE){
+            if (cancelButton.getVisibility() == View.VISIBLE) {
                 clearImageButton();
-                //send image
             }
 
             String message = textField.getText().toString().trim();
-
             if (!message.equals("")) {
-                //send normal message
                 // TODO: This probably belongs in Messenger?
                 messenger.sendMessage(message);
                 textField.setText("");
@@ -131,14 +102,15 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         });
     }
 
+    @Override
     public void update(Observable o, Object arg) {
-        messageList.add((Message) arg);
-
-        chatBoxAdapter = new ChatBoxAdapter(messageList);
-        recyclerView.setAdapter(chatBoxAdapter);
-        chatBoxAdapter.notifyDataSetChanged();
-        recyclerView.scrollToPosition(messageList.size() - 1);
-        Log.d("new message", Integer.toString(messageList.size()));
+        runOnUiThread( () -> {
+            messageList.add((Message) arg);
+            chatBoxAdapter = new ChatBoxAdapter(messageList);
+            recyclerView.setAdapter(chatBoxAdapter);
+            chatBoxAdapter.notifyDataSetChanged();
+            recyclerView.scrollToPosition(messageList.size() - 1);
+        });
     }
 
     @Override
@@ -147,14 +119,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         // TODO: Create BitmapLoader class?
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
             if(data != null){
-                Uri uri = data.getData();
-                Bitmap bitmap = getBitmapForUri(this.getContentResolver(), uri);
-                Bitmap resizedBitmap = scaleImage(bitmap);
-                if(bitmap != resizedBitmap){
-                    savePhotoImage(resizedBitmap, this);
-                    bitmap = resizedBitmap;
-                }
-                addImageButton.setImageBitmap(bitmap);
+                addImageButton.setImageBitmap(getBitmap(data, this));
                 cancelButton.setVisibility(View.VISIBLE);
                 cancelButton.setClickable(true);
             }else{
@@ -163,5 +128,6 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
 
         }
     }
+
 
 }
