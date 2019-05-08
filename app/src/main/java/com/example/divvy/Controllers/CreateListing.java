@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.example.divvy.Listing;
 import com.example.divvy.R;
-import com.example.divvy.User;
+import com.example.divvy.models.User;
 import com.example.divvy.httprequest;
 
 public class CreateListing extends AppCompatActivity {

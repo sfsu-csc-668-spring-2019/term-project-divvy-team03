@@ -1,16 +1,12 @@
 package com.example.divvy;
 
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
+import com.example.divvy.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class Listing {
@@ -71,7 +67,7 @@ public class Listing {
         try {
             data.put("name", title);
             data.put("description", desc);
-            data.put("username", "alex3222");
+            data.put("username", owner.getFullName());
             //change to owner_id
         }
         catch(JSONException e) {

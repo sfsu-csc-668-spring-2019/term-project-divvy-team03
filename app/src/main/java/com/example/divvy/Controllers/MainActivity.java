@@ -24,9 +24,20 @@ public class MainActivity extends AppCompatActivity {
                 startCreateListingActivity();
             }
         });
+        Button displayListings = findViewById(R.id.display_listings_btn);
+        createListingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDisplayListings();
+            }
+        });
     }
     private void startCreateListingActivity(){
         Intent i = new Intent(this, CreateListing.class);
+        startActivity(i);
+    }
+    private void startDisplayListings(){
+        Intent i = new Intent(this, DisplayListingsActivity.class);
         startActivity(i);
     }
 }
