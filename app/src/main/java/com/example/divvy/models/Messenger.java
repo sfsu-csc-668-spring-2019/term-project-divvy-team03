@@ -1,5 +1,4 @@
 package com.example.divvy.models;
-import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
