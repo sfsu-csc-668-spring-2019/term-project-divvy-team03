@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Button displayListings = findViewById(R.id.display_listings_btn);
-        createListingButton.setOnClickListener(new View.OnClickListener() {
+        displayListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startDisplayListings();

@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.divvy.Listing;
+import com.example.divvy.models.Listing;
 import com.example.divvy.R;
 
 import java.util.ArrayList;
 
 public class ListingListAdapter extends RecyclerView.Adapter<ListingListAdapter.ListingListViewHolder> {
-    private ArrayList<Listing> listings;
+    ArrayList<Listing> listings;
 
     public ListingListAdapter(ArrayList<Listing> listings){
         this.listings = listings;
@@ -33,7 +33,7 @@ public class ListingListAdapter extends RecyclerView.Adapter<ListingListAdapter.
         listingListViewHolder.owner.setText("Owner!");
         // listingListViewHolder.owner.setText(listings.get(position).getOwner().getFullName());
         listingListViewHolder.title.setText(listings.get(position).getTitle());
-    }
+}
 
     @Override
     public int getItemCount() {

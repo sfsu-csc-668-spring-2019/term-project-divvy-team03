@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.example.divvy.User;
+import com.example.divvy.models.User;
 
 //SINGLETON
 public class LoginAuthenticator {
