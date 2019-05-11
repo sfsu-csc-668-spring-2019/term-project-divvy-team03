@@ -28,4 +28,8 @@ public class ImageMessage extends Message {
         }
         return null;
     }
+
+    public String getImage(){
+        return this.image;
+    }
 }

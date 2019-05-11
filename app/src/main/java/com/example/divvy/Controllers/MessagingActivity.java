@@ -2,7 +2,6 @@ package com.example.divvy.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,10 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.divvy.R;
-import com.example.divvy.models.ChatBoxAdapter;
-import com.example.divvy.models.ImageMessage;
 import com.example.divvy.models.Message;
+import com.example.divvy.models.MessageFactory;
 import com.example.divvy.models.Messenger;
+import com.example.divvy.models.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
 
     private String username = "username", listing_id;
     private List<Message> messageList;
-    private ChatBoxAdapter chatBoxAdapter;
+    private RecyclerViewAdapter chatBoxAdapter;
 
     private Messenger messenger;
 
@@ -94,16 +93,15 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
 
         sendButton.setOnClickListener(view -> {
             String messageText = textField.getText().toString().trim();
-            Message message = null;
             if (cancelButton.getVisibility() == View.VISIBLE) {
+                messenger.sendMessage(MessageFactory.create(messageText, username, encodeImage(((BitmapDrawable)addImageButton.getDrawable()).getBitmap())));
                 clearImageButton();
-                message = new ImageMessage(messageText, username, encodeImage(((BitmapDrawable)addImageButton.getDrawable()).getBitmap()));
             }else if (!messageText.equals("")) {
                 // TODO: This probably belongs in Messenger?
-                message = new Message(messageText, username);
+                Log.d(username, messageText);
+                messenger.sendMessage(MessageFactory.create(messageText, username));
                 textField.setText("");
             }
-            messenger.sendMessage(message);
         });
     }
 
@@ -111,7 +109,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     public void update(Observable observable, Object o) {
         runOnUiThread( () -> {
             messageList.add((Message) o);
-            chatBoxAdapter = new ChatBoxAdapter(messageList);
+            chatBoxAdapter = new RecyclerViewAdapter(messageList);
             recyclerView.setAdapter(chatBoxAdapter);
             chatBoxAdapter.notifyDataSetChanged();
             recyclerView.scrollToPosition(messageList.size() - 1);
