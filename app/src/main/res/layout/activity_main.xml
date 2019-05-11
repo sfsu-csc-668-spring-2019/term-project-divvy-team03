@@ -64,6 +64,12 @@
             android:hint="Upload Profile Pic"
             android:inputType="textPersonName" />
 
+        <Button
+            android:id="@+id/go_to_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
