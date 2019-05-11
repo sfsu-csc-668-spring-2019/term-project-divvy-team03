@@ -2,6 +2,8 @@ package com.example.divvy.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.divvy.R;
 import com.example.divvy.models.ChatBoxAdapter;
+import com.example.divvy.models.ImageMessage;
 import com.example.divvy.models.Message;
 import com.example.divvy.models.Messenger;
 
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import static com.example.divvy.Controllers.ImageSelector.encodeImage;
 import static com.example.divvy.Controllers.ImageSelector.getBitmap;
 import static com.example.divvy.Controllers.ImageSelector.selectImage;
 
@@ -89,22 +93,22 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         );
 
         sendButton.setOnClickListener(view -> {
+            String messageText = textField.getText().toString().trim();
+            Message message = null;
             if (cancelButton.getVisibility() == View.VISIBLE) {
                 clearImageButton();
-            }
-
-            String message = textField.getText().toString().trim();
-            if (!message.equals("")) {
+                message = new ImageMessage(messageText, username, encodeImage(((BitmapDrawable)addImageButton.getDrawable()).getBitmap()));
+            }else if (!messageText.equals("")) {
                 // TODO: This probably belongs in Messenger?
-                messenger.sendMessage(message);
+                message = new Message(messageText, username);
                 textField.setText("");
             }
+            messenger.sendMessage(message);
         });
     }
 
     @Override
     public void update(Observable observable, Object o) {
-        Log.d("FUCK", "NEW MESSAGE");
         runOnUiThread( () -> {
             messageList.add((Message) o);
             chatBoxAdapter = new ChatBoxAdapter(messageList);

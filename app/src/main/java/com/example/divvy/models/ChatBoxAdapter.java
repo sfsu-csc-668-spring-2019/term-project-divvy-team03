@@ -20,8 +20,8 @@ public class ChatBoxAdapter extends RecyclerView.Adapter<ChatBoxAdapter.MyViewHo
         public MyViewHolder(View view) {
             super(view);
 
-            username = (TextView) view.findViewById(R.id.username);
-            message = (TextView) view.findViewById(R.id.message);
+            username = view.findViewById(R.id.username);
+            message = view.findViewById(R.id.message);
 
         }
     }

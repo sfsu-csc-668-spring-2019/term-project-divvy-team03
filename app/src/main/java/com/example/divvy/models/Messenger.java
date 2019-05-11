@@ -1,5 +1,7 @@
 package com.example.divvy.models;
 
+import android.util.Log;
+
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -22,12 +24,12 @@ public class Messenger extends Observable {
     }
 
     public void endSession() {
-      socket.disconnect();
-      socket.close();
+        socket.disconnect();
+        socket.close();
     }
 
-    public void sendMessage(String message) {
-      socket.emit("messagedetection", message, username);
+    public void sendMessage(Message message) {
+        if(message != null) socket.emit("messagedetection", message.toJsonFile());
     }
 
     private boolean setUpSocket() {
@@ -45,8 +47,13 @@ public class Messenger extends Observable {
     private void setUpChannels() {
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
-            this.setChanged();
-            this.notifyObservers(MessageFactory.create(data));
+            try {
+                this.setChanged();
+                this.notifyObservers(MessageFactory.create((JSONObject) data.get("senderNickname")));
+            }catch(Exception e){
+
+            }
+
         };
     }
 }
