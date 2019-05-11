@@ -1,34 +1,29 @@
-package com.example.divvy;
+package com.example.divvy.models;
 
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.divvy.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
 
-public class Listing {
+public class Listing implements Serializable {
     String title;
     String desc;
-    int capacity;
-    //change to User object when created
-    User owner;
-    String status;
-    int listingid;
+    String owner;
+    int status;
+    int listing_id;
 
-    public Listing(String title, String desc, int capacity, User owner, String status, int listingid) {
+    public Listing(String title, String desc, String owner, int status, int listingid) {
         this.title = title;
         this.desc = desc;
-        this.capacity = capacity;
         this.owner = owner;
         this.status = status;
-        this.listingid = listingid;
+        this.listing_id = listingid;
     }
     public String getTitle() {
         return title;
@@ -42,50 +37,44 @@ public class Listing {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    public int getCapacity() {
-        return capacity;
-    }
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
     public int getListingid() {
-        return listingid;
+        return listing_id;
     }
     public void setListingid(int listingid) {
-        this.listingid = listingid;
+        this.listing_id = listingid;
     }
     public void postData(Context currentContext){
         JSONObject data = new JSONObject();
         try {
             data.put("name", title);
             data.put("description", desc);
-            data.put("username", "alex3222");
+            data.put("username", getOwner());
             //change to owner_id
         }
         catch(JSONException e) {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
         System.out.println(data.toString());
-        Intent i = new Intent(currentContext,httprequest.class);
+        Intent i = new Intent(currentContext, httprequest.class);
         i.putExtra("data", data.toString());
         i.putExtra("type", httprequest.POST_CODE);
         i.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
         currentContext.startService(i);
 
     }
-    public void getListings(Context currentContext){
+    /*public void getListings(Context currentContext){
         Intent i = new Intent(currentContext,httprequest.class);
         HashMap<String,String> map = new HashMap<>();
         map.put("username","jonh");
@@ -93,5 +82,5 @@ public class Listing {
         i.putExtra("type", httprequest.GET_CODE);
         i.putExtra("uri", httprequest.ROOT_ADDRESS + "/getbyowner");
         currentContext.startService(i);
-    }
+    }*/
 }
