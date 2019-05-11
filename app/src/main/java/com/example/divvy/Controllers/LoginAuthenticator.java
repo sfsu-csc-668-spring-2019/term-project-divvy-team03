@@ -28,7 +28,7 @@ public class LoginAuthenticator {
         if(loggedIn == LOGGED_IN){
             return true;
         }else{
-            Intent i = new Intent(context, CreateListing.class);
+            Intent i = new Intent(context, CreateListingController.class);
             context.startActivity(i);
             return false;
         }

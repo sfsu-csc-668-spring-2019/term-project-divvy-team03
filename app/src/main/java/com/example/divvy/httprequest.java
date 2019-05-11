@@ -34,8 +34,8 @@ public class httprequest extends IntentService{
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/login   (get)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/reg     (post)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/newListing  (post)
-    public static String get(Map<String,String> params) throws IOException {
-        HttpUrl.Builder httpBuilder = HttpUrl.parse("http://ec2-34-226-139-149.compute-1.amazonaws.com/getbyowner").newBuilder();
+    public static String get(Map<String,String> params, String uri) throws IOException {
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(uri).newBuilder();
         if (params != null) {
             for(Map.Entry<String, String> param : params.entrySet()) {
                 httpBuilder.addQueryParameter(param.getKey(),param.getValue());
@@ -72,7 +72,7 @@ public class httprequest extends IntentService{
         Bundle bundle = new Bundle();
         if(type == GET_CODE){
             try {
-                String data = get((Map<String, String>) intent.getSerializableExtra("data"));
+                String data = get((Map<String, String>) intent.getSerializableExtra("data"), "http://ec2-34-226-139-149.compute-1.amazonaws.com/getbyowner");
                 bundle.putString("data", data);
                 receiver.send(1, bundle);
             } catch (IOException e) {

@@ -14,9 +14,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Controllers.DisplayListingsActivity"></activity>
+        <activity android:name=".Controllers.DisplayListingsController"></activity>
+        <activity android:name=".Controllers.SearchController" />
+        <activity android:name=".Controllers.MyListingsController" />
         <activity android:name=".Controllers.CreateNewProfile" />
-        <activity android:name=".Controllers.CreateListing" />
+        <activity android:name=".Controllers.CreateListingController" />
         <activity android:name=".Controllers.MessagingActivity" />
         <activity android:name=".Controllers.MainActivity">
             <intent-filter>
@@ -29,8 +31,7 @@
         <service
             android:name=".httprequest"
             android:exported="false" />
-        <service
-            android:name=".GetListingsService"
-            />
+        <service android:name=".GetListingsService" />
     </application>
+
 </manifest>
