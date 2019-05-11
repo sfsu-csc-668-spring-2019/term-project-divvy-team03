@@ -17,7 +17,6 @@ public class ListingListAdapter extends RecyclerView.Adapter<ListingListAdapter.
 
     public ListingListAdapter(ArrayList<Listing> listings){
         this.listings = listings;
-        System.out.println(listings.toString());
     }
     @NonNull
     @Override

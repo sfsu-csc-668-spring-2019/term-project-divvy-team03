@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 
-public class ListingsReceiver extends ResultReceiver {
+public class NetworkReceiver extends ResultReceiver {
     /**
      * Create a new ResultReceive to receive results.  Your
      * {@link #onReceiveResult} method will be called from the thread running
@@ -12,8 +12,8 @@ public class ListingsReceiver extends ResultReceiver {
      *
      * @param handler
      */
-    MyListingsReceiver receiver;
-    public ListingsReceiver(Handler handler, MyListingsReceiver receiver) {
+    GetListingReceiver receiver;
+    public NetworkReceiver(Handler handler, GetListingReceiver receiver) {
         super(handler);
         this.receiver = receiver;
     }
@@ -23,7 +23,7 @@ public class ListingsReceiver extends ResultReceiver {
         super.onReceiveResult(resultCode, resultData);
         receiver.onReceiveResult(resultCode,resultData);
     }
-    public interface MyListingsReceiver{
+    public interface GetListingReceiver {
          void onReceiveResult(int resultCode, Bundle resultData);
     }
 }

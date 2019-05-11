@@ -1,20 +1,22 @@
 package com.example.divvy.Controllers;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.divvy.GetListingsService;
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetworkReceiver.GetListingReceiver {
 
     public static String USERNAME;
-
+    public NetworkReceiver mReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mReceiver = new NetworkReceiver(null, this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button createListingButton = findViewById(R.id.create_listing_btn);
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         displayListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startDisplayListings();
+                GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver);
             }
         });
     }
@@ -38,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
     }
     private void startDisplayListings(){
         Intent i = new Intent(this, DisplayListingsActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        Intent i = new Intent(this, DisplayListingsActivity.class);
+        i.putExtra("data", resultData.getSerializable("data"));
         startActivity(i);
     }
 }

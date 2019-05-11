@@ -8,8 +8,10 @@ import com.example.divvy.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 
-public class Listing {
+
+public class Listing implements Serializable {
     String title;
     String desc;
     String owner;
