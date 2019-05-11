@@ -39,6 +39,8 @@ public class GetListingsService extends IntentService {
             e.printStackTrace();
         }
     }
+    //discrepancy in naming convention for keys in json. Use this for search by owner for now until
+    //raul refactors the column names.
     public static ArrayList<Listing> convertDataToListings(String s) throws JSONException {
         ArrayList<Listing> listings = new ArrayList<>();
         JSONArray array = new JSONArray(s);
@@ -54,6 +56,8 @@ public class GetListingsService extends IntentService {
         }
         return listings;
     }
+    //discrepancy in naming convention for keys in json. Use this for search by %like for now until
+    //raul refactors the column names.
     public static ArrayList<Listing> convertDataToListings2(String s) throws JSONException {
         ArrayList<Listing> listings = new ArrayList<>();
         JSONArray array = new JSONArray(s);
