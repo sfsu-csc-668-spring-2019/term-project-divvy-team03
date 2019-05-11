@@ -10,13 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
+import com.example.divvy.models.RecyclerViewAdapter;
+
 import java.util.ArrayList;
 
 public class DisplayListingsActivity extends AppCompatActivity implements NetworkReceiver.GetListingReceiver {
-
-    public DisplayListingsActivity(){
-
-    }
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
     @Override
@@ -30,11 +28,7 @@ public class DisplayListingsActivity extends AppCompatActivity implements Networ
             listings = (ArrayList<Listing>)savedInstanceState.getSerializable("data");
         }
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
-        ListingListAdapter adapter = new ListingListAdapter(listings);
-
-        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        UpdateListingsView();
     }
 
     @Override
@@ -46,8 +40,7 @@ public class DisplayListingsActivity extends AppCompatActivity implements Networ
 
     }
     public void UpdateListingsView(){
-        ListingListAdapter adapter = new ListingListAdapter(listings);
-
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
         RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
