@@ -33,6 +33,15 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
                 GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver);
             }
         });
+
+        Button cancel = findViewById(R.id.register_cancel_btn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMessagingActivity();
+            }
+        });
+
     }
     private void startCreateListingActivity(){
         Intent i = new Intent(this, CreateListing.class);
@@ -40,6 +49,11 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
     }
     private void startDisplayListings(){
         Intent i = new Intent(this, DisplayListingsActivity.class);
+        startActivity(i);
+    }
+
+    private void startMessagingActivity(){
+        Intent i = new Intent(this, MessagingActivity.class);
         startActivity(i);
     }
 
