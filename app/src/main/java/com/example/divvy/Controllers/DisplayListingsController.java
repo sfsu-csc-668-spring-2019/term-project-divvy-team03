@@ -40,6 +40,7 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         listings = (ArrayList<Listing>)resultData.getSerializable("data");
+        System.out.println("Array Size:" + listings.size());
         UpdateListingsView();
     }
 }

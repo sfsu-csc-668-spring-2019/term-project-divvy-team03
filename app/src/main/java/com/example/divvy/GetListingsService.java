@@ -29,6 +29,7 @@ public class GetListingsService extends IntentService {
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
         try {
             String data = get((HashMap<String, String>) intent.getSerializableExtra("data"),intent.getStringExtra("uri"));
+            System.err.println(data);
             ArrayList<Listing> listings = convertDataToListings(data);
             bundle.putSerializable("data", listings);
             receiver.send(1, bundle);
@@ -53,7 +54,21 @@ public class GetListingsService extends IntentService {
         }
         return listings;
     }
-
+    public static ArrayList<Listing> convertDataToListings2(String s) throws JSONException {
+        ArrayList<Listing> listings = new ArrayList<>();
+        JSONArray array = new JSONArray(s);
+        for(int i = 0; i < array.length();i++){
+            JSONObject jsonObject = (JSONObject)array.get(i);
+            Listing listing = new Listing(
+                    jsonObject.getString("title"),
+                    jsonObject.getString("desc"),
+                    jsonObject.getString("owner"),
+                    jsonObject.getInt("status"),
+                    jsonObject.getInt("listing_id"));
+            listings.add(listing);
+        }
+        return listings;
+    }
     // helper method to call this from any controller.
     public static void GetListingsByUsername(Context context, ResultReceiver receiver, String owner){
         Intent i = new Intent(context, GetListingsService.class);
