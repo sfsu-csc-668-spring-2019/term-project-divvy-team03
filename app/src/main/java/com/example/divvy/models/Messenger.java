@@ -1,8 +1,8 @@
 package com.example.divvy.models;
 
 
-import android.util.Log;
 
+import com.example.divvy.Factories.MessageFactory;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;

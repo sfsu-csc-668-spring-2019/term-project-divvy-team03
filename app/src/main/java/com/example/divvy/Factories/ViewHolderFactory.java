@@ -1,4 +1,4 @@
-package com.example.divvy.models;
+package com.example.divvy.Factories;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -6,13 +6,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.divvy.Controllers.ImageSelector;
 import com.example.divvy.R;
+import com.example.divvy.models.ImageMessage;
+import com.example.divvy.models.Listing;
+import com.example.divvy.models.Message;
+import com.example.divvy.models.Review;
+
+import java.util.Date;
 
 
-public class ViewHolderFactory {
+class ViewHolderFactory {
+
+    static MyViewHolder create(Object object, ViewGroup parent){
+        if(object.getClass().equals(Message.class)){
+            return new MessageViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.message, parent, false));
+        }else if(object.getClass().equals(ImageMessage.class)){
+            return new ImageMessageViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.image_message, parent, false));
+        }else if(object.getClass().equals(Listing.class)){
+            return new ListingListViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_listing, parent, false));
+        }else if(object.getClass().equals(Review.class)){
+            return new ReviewViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.review_view_holder, parent, false));
+        }
+        return null;
+    }
 
     public static abstract class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -60,8 +84,7 @@ public class ViewHolderFactory {
     }
 
     public static class ListingListViewHolder extends MyViewHolder {
-        TextView title;
-        TextView owner;
+        TextView title, owner;
 
         public ListingListViewHolder(@NonNull View listing) {
             super(listing);
@@ -76,18 +99,25 @@ public class ViewHolderFactory {
         }
     }
 
-    public static MyViewHolder create(Object object, ViewGroup parent){
+    public static class ReviewViewHolder extends MyViewHolder{
+        TextView username, date;
+        RatingBar ratingBar;
+        ImageView image;
 
-        if(object.getClass().equals(Message.class)){
-            return new MessageViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.message, parent, false));
-        }else if(object.getClass().equals(ImageMessage.class)){
-            return new ImageMessageViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.message, parent, false));
-        }else if(object.getClass().equals(Listing.class)){
-            return new ListingListViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_listing, parent, false));
+        public ReviewViewHolder(@NonNull View listing) {
+            super(listing);
+            username = listing.findViewById(R.id.review_username);
+            date = listing.findViewById(R.id.date);
         }
-        return null;
+
+        @Override public void setUpUi(Object o){
+            Review review = (Review) o;
+            this.username.setText(review.getOwner().getFullName());
+            this.date.setText(new Date().toString());
+            this.ratingBar.setRating((float)review.rating);
+        }
+
     }
+
+
 }

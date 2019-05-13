@@ -1,7 +1,10 @@
-package com.example.divvy.models;
+package com.example.divvy.Factories;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+
+import com.example.divvy.models.ImageMessage;
+import com.example.divvy.models.Message;
 
 import org.json.JSONException;
 import org.json.JSONObject;

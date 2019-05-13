@@ -3,6 +3,8 @@ package com.example.divvy.models;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.example.divvy.Factories.ViewHolderFactory;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolderFactory.MyViewHolder> {

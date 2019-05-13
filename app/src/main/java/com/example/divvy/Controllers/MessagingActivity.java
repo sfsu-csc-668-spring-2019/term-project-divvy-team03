@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.divvy.R;
 import com.example.divvy.models.Message;
-import com.example.divvy.models.MessageFactory;
+import com.example.divvy.Factories.MessageFactory;
 import com.example.divvy.models.Messenger;
 import com.example.divvy.models.RecyclerViewAdapter;
 
@@ -98,7 +98,6 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
                 clearImageButton();
             }else if (!messageText.equals("")) {
                 // TODO: This probably belongs in Messenger?
-                Log.d(username, messageText);
                 messenger.sendMessage(MessageFactory.create(messageText, username));
                 textField.setText("");
             }

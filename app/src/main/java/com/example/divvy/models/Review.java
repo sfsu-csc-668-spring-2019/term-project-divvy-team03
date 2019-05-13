@@ -1,6 +1,5 @@
-package com.example.divvy;
+package com.example.divvy.models;
 
-import com.example.divvy.models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
