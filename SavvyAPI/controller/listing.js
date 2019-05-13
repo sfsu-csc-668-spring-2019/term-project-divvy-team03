@@ -50,7 +50,6 @@ router.post('/newListing', (request, response) => {
 });
 
 router.get('/search', (request, response) => {
-    console.log(request.query.like);
     Listing.find(request.query.like, 1, function(err, result) {
         if (err) {
             response.send(err);

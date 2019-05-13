@@ -40,7 +40,6 @@ router.post('/rate', (request, response) => {
 });
 
 router.get('/searchRatingByUserRated', (request, response) => {
-    //var values = Object.keys(request.query).map(function(key) { return request.query[key]; });
     Rating.find(request.query.username, 1, function(err, result) {
         if (err) {
             response.send(err);
@@ -51,7 +50,6 @@ router.get('/searchRatingByUserRated', (request, response) => {
 })
 
 router.get('/searchRatingByUserRating', (request, response) => {
-    //var values = Object.keys(request.query).map(function(key) { return request.query[key]; });
     Rating.find(request.query.username, 2, function(err, result) {
         if (err) {
             response.send(err);
