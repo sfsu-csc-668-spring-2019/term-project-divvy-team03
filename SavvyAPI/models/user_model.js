@@ -6,7 +6,7 @@ export default class Users extends ActiveRecord {
     }
 
     static columns() {
-        return ['username', 'email', 'password', 'first_name', 'last_name', 'city', 'description'];
+        return ['username', 'email', 'password', 'first_name', 'last_name', 'city', 'descr'];
     }
 
     // Other Listing specific logic goes here
