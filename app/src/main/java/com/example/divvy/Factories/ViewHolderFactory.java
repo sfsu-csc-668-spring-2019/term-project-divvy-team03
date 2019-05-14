@@ -1,5 +1,6 @@
 package com.example.divvy.Factories;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.divvy.Controllers.ImageSelector;
+import com.example.divvy.Controllers.MyListingsController;
 import com.example.divvy.R;
 import com.example.divvy.models.ImageMessage;
 import com.example.divvy.models.Listing;
@@ -68,12 +70,21 @@ public class ViewHolderFactory {
     }
 
     public static class MessageViewHolder extends MyViewHolder{
-        private TextView message, username;
+        private TextView message, username, view_listing_text;
 
         public MessageViewHolder(View view){
             super(view);
             message = view.findViewById(R.id.message);
             username = view.findViewById(R.id.username);
+            view_listing_text = view.findViewById(R.id.view_listing_txt_btn);
+            view_listing_text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Intent intent = new Intent(view.getContext());
+                    //view.getContext().startActivity(intent);
+                    System.out.println("Go to detailed listing page");
+                }
+            });
         }
 
         @Override public void setUpUi(Object o){
