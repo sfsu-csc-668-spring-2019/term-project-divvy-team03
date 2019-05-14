@@ -27,26 +27,30 @@ router.use(cors());
  * @return
  * 
  */
-router.post('/newListing', (request, response) => {
-    var time = new Date();
-    var group_id = time.getTime();
-    var username = request.body.username;
-    var groupValues = [group_id, username];
-    var values = Object.keys(request.body).map(function(key) { return request.body[key]; });
-    values.push(group_id);
-    Listing.create(values, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            ListingG.create(groupValues, function(err, result) {
-                if (err) {
-                    response.send('Failed to create a listing group');
-                } else {
-                    response.sendStatus(result);
-                }
-            })
-        }
-    });
+router.post('/newListing', ({ body }, response) => {
+    const group_id = (new Date()).getTime();
+    const { username } = body;
+
+    // const values = Object.keys(body).reduce( 
+    //     (memo, key) => [ ...memo, body[key] ],
+    //     [group_id]
+    // );
+
+    const values = [
+        ...Object.keys(body).map(key => body[key]),
+        group_id
+    ];
+
+    const error = () => response.send('Failed to create a listing group').sendStatus(500);
+    const createListingGroup = () => ListingG.create( [group_id, username] )
+    const createRoom = () => Room.create([group_id, 'true']);
+    const respond = responseCode => response.sendState(responseCode);
+
+    Listing.create(values)
+        .then( createListingGroup )
+        .then( createRoom )
+        .then( respond )
+        .catch( error );
 });
 
 router.get('/search', (request, response) => {
