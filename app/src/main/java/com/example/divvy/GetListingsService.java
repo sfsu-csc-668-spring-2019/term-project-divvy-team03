@@ -39,34 +39,15 @@ public class GetListingsService extends IntentService {
             e.printStackTrace();
         }
     }
-    //discrepancy in naming convention for keys in json. Use this for search by owner for now until
-    //raul refactors the column names.
     public static ArrayList<Listing> convertDataToListings(String s) throws JSONException {
         ArrayList<Listing> listings = new ArrayList<>();
         JSONArray array = new JSONArray(s);
         for(int i = 0; i < array.length();i++){
             JSONObject jsonObject = (JSONObject)array.get(i);
             Listing listing = new Listing(
-                    jsonObject.getString("name"),
-                    jsonObject.getString("description"),
-                    jsonObject.getString("owner"),
-                    jsonObject.getInt("status"),
-                    jsonObject.getInt("listing_id"));
-            listings.add(listing);
-        }
-        return listings;
-    }
-    //discrepancy in naming convention for keys in json. Use this for search by %like for now until
-    //raul refactors the column names.
-    public static ArrayList<Listing> convertDataToListings2(String s) throws JSONException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        JSONArray array = new JSONArray(s);
-        for(int i = 0; i < array.length();i++){
-            JSONObject jsonObject = (JSONObject)array.get(i);
-            Listing listing = new Listing(
                     jsonObject.getString("title"),
-                    jsonObject.getString("desc"),
-                    jsonObject.getString("owner"),
+                    jsonObject.getString("descr"),
+                    jsonObject.getString("username"),
                     jsonObject.getInt("status"),
                     jsonObject.getInt("listing_id"));
             listings.add(listing);
@@ -80,7 +61,7 @@ public class GetListingsService extends IntentService {
         data.put("username", "alex");
         i.putExtra("data",data);
         i.putExtra("type", httprequest.GET_CODE);
-        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/getbyowner");
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchbyusername");
         i.putExtra("receiver", receiver);
         context.startService(i);
     }

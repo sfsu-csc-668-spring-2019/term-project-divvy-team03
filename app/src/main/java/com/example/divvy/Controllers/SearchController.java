@@ -48,7 +48,7 @@ public class SearchController extends DisplayListingsController {
         if(sharedPreferences.contains(SEARCH_RESULTS)){
            String search_results = sharedPreferences.getString(SEARCH_RESULTS,"");
             try {
-               listings = GetListingsService.convertDataToListings2(search_results);
+               listings = GetListingsService.convertDataToListings(search_results);
                System.out.println("retreived listings" + search_results);
                System.out.println("listings size:" + listings.size());
             } catch (JSONException e) {
