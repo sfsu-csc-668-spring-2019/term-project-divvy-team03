@@ -18,8 +18,8 @@ public class httprequest {
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/login   (get)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/reg     (post)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/newListing  (post)
-    public static String get(Map<String,String> params) throws IOException {
-        HttpUrl.Builder httpBuider = HttpUrl.parse("http://ec2-34-226-139-149.compute-1.amazonaws.com/login").newBuilder();
+    public static String get(Map<String,String> params, String uri) throws IOException {
+        HttpUrl.Builder httpBuider = HttpUrl.parse(uri).newBuilder();
         if (params != null) {
             for(Map.Entry<String, String> param : params.entrySet()) {
                 httpBuider.addQueryParameter(param.getKey(),param.getValue());
