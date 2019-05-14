@@ -7,20 +7,20 @@ import android.util.Log;
 import com.example.divvy.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.example.divvy.Factories.*;
+
 import java.io.Serializable;
 
 
 public class Listing implements Serializable {
     String title;
-    String desc;
+    String descr;
     String owner;
     int status;
     int listing_id;
 
     public Listing(String title, String desc, String owner, int status, int listingid) {
         this.title = title;
-        this.desc = desc;
+        this.descr = desc;
         this.owner = owner;
         this.status = status;
         this.listing_id = listingid;
@@ -31,11 +31,11 @@ public class Listing implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getDesc() {
-        return desc;
+    public String getDescr() {
+        return descr;
     }
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescr(String descr) {
+        this.descr = descr;
     }
     public String getOwner() {
         return owner;
@@ -58,8 +58,8 @@ public class Listing implements Serializable {
     public void postData(Context currentContext){
         JSONObject data = new JSONObject();
         try {
-            data.put("name", title);
-            data.put("description", desc);
+            data.put("title", title);
+            data.put("descr", descr);
             data.put("username", getOwner());
             //change to owner_id
         }
@@ -67,20 +67,10 @@ public class Listing implements Serializable {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
         System.out.println(data.toString());
-        Intent i = new Intent(currentContext, httprequest.class);
-        i.putExtra("data", data.toString());
-        i.putExtra("type", httprequest.POST_CODE);
-        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
-        currentContext.startService(i);
-
+        Intent intent = new Intent(currentContext, httprequest.class);
+        intent.putExtra("data", data.toString());
+        intent.putExtra("type", httprequest.POST_CODE);
+        intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
+        currentContext.startService(intent);
     }
-    /*public void getListings(Context currentContext){
-        Intent i = new Intent(currentContext,httprequest.class);
-        HashMap<String,String> map = new HashMap<>();
-        map.put("username","jonh");
-        i.putExtra("data",map);
-        i.putExtra("type", httprequest.GET_CODE);
-        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/getbyowner");
-        currentContext.startService(i);
-    }*/
 }
