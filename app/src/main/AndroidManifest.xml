@@ -14,18 +14,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Controllers.DisplayListingsController"></activity>
+        <activity android:name=".Controllers.UserLoginController">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Controllers.DisplayListingsController" />
         <activity android:name=".Controllers.SearchController" />
         <activity android:name=".Controllers.MyListingsController" />
         <activity android:name=".Controllers.CreateNewProfile" />
         <activity android:name=".Controllers.CreateListingController" />
         <activity android:name=".Controllers.MessagingActivity" />
         <activity android:name=".Controllers.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
