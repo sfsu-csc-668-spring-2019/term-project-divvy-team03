@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import java.util.ArrayList;
 
-public abstract class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver{
+public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver{
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
     @Override
@@ -26,7 +26,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
         super.onCreate(savedInstanceState);
         listings = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
-        UpdateListingsView();
     }
 
     @Override
@@ -38,10 +37,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
 
     }
     public void UpdateListingsView(){
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
         finish();
         startActivity(getIntent());
     }

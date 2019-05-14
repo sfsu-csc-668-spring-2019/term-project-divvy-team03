@@ -21,8 +21,8 @@ public class SearchController extends DisplayListingsController {
     public static final String SEARCH_RESULTS = "search_results";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_search_controller);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_controller);
         EditText queryView = findViewById(R.id.query_editText);
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -31,11 +31,11 @@ public class SearchController extends DisplayListingsController {
                 String query = queryView.getText().toString();
                 System.out.println(query);
                 GetListingsService.GetListingsBySearch(SearchController.this,mReceiver,query);
-                InputMethodManager inputManager = (InputMethodManager)
+                /*InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                        InputMethodManager.HIDE_NOT_ALWAYS);*/
             }
         });
 
@@ -55,9 +55,9 @@ public class SearchController extends DisplayListingsController {
                 e.printStackTrace();
             }
         }
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
         RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
         recyclerView.setAdapter(adapter);
     }
 
