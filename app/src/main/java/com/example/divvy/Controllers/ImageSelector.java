@@ -115,7 +115,9 @@ public class ImageSelector {
             Drawable d = Drawable.createFromStream(is, "src name");
             return d;
         } catch (Exception e) {
+            Log.d("ERROR: ", e.toString());
             return null;
         }
+
     }
 }

@@ -3,7 +3,6 @@ package com.example.divvy.Controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,7 +10,7 @@ import com.example.divvy.GetListingsService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 
-public class MainActivity extends AppCompatActivity implements NetworkReceiver.GetListingReceiver {
+public class MainActivity extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver {
 
     public static String USERNAME;
     public NetworkReceiver mReceiver;
@@ -31,8 +30,15 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
         displayListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("yes", "yes");
-                GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver);
+                GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver,"alex");
+            }
+        });
+        Button search = findViewById(R.id.go_to_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchController.class);
+                startActivity(intent);
             }
         });
 
@@ -40,17 +46,18 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startMessagingActivity();
+                startDisplayUser();
             }
         });
 
     }
     private void startCreateListingActivity(){
-        Intent i = new Intent(this, CreateListing.class);
+        Intent i = new Intent(this, CreateListingController.class);
         startActivity(i);
     }
+
     private void startDisplayListings(){
-        Intent i = new Intent(this, DisplayListingsActivity.class);
+        Intent i = new Intent(this, MyListingsController.class);
         startActivity(i);
     }
 
@@ -59,9 +66,14 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
         startActivity(i);
     }
 
+    private void startDisplayUser(){
+        Intent i = new Intent(this, UserProfileActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        Intent i = new Intent(this, DisplayListingsActivity.class);
+        Intent i = new Intent(this, MyListingsController.class);
         i.putExtra("data", resultData.getSerializable("data"));
         startActivity(i);
     }

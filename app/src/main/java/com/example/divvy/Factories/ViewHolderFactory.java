@@ -19,9 +19,9 @@ import com.example.divvy.models.Review;
 import java.util.Date;
 
 
-class ViewHolderFactory {
+public class ViewHolderFactory {
 
-    static MyViewHolder create(Object object, ViewGroup parent){
+    public static MyViewHolder create(Object object, ViewGroup parent){
         if(object.getClass().equals(Message.class)){
             return new MessageViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message, parent, false));
@@ -94,8 +94,8 @@ class ViewHolderFactory {
 
         @Override public void setUpUi(Object o){
             Listing listing = (Listing) o;
-            this.title.setText(listing.title);
-            this.owner.setText(listing.owner);
+            this.title.setText(listing.getTitle());
+            this.owner.setText(listing.getOwner());
         }
     }
 
@@ -114,7 +114,7 @@ class ViewHolderFactory {
             Review review = (Review) o;
             this.username.setText(review.getOwner().getFullName());
             this.date.setText(new Date().toString());
-            this.ratingBar.setRating((float)review.rating);
+            this.ratingBar.setRating((float)review.getRating());
         }
 
     }

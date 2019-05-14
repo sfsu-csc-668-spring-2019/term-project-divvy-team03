@@ -1,8 +1,5 @@
 package com.example.divvy.Controllers;
 
-import android.app.IntentService;
-import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +9,8 @@ import android.widget.EditText;
 
 import com.example.divvy.models.Listing;
 import com.example.divvy.R;
-import com.example.divvy.models.User;
 
-public class CreateListing extends AppCompatActivity {
+public class CreateListingController extends AppCompatActivity {
 
     Listing listing;
 
@@ -45,7 +41,7 @@ public class CreateListing extends AppCompatActivity {
                         "alex",
                         1,
                         01);
-                listing.postData(CreateListing.this);
+                listing.postData(CreateListingController.this);
                 //if successful, go to next page
                 //else keep user here
             }
