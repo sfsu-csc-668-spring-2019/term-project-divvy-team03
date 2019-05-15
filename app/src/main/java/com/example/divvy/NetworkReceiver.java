@@ -26,4 +26,7 @@ public class NetworkReceiver extends ResultReceiver {
     public interface GetListingsReceiver {
          void onReceiveResult(int resultCode, Bundle resultData);
     }
+    public interface GetListingReceiver {
+        void onReceiveResult(int resultCode, Bundle resultData);
+    }
 }

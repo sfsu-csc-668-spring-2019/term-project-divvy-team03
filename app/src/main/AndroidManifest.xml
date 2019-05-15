@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetailedListingsController"></activity>
+        <activity android:name=".Controllers.DetailedListingController"></activity>
         <activity android:name=".Controllers.DisplayListingsController" />
         <activity android:name=".Controllers.SearchController" />
         <activity android:name=".Controllers.MyListingsController" />
