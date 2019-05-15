@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.example.divvy.User;
+import com.example.divvy.models.User;
 
 //SINGLETON
 public class LoginAuthenticator {
@@ -28,7 +28,7 @@ public class LoginAuthenticator {
         if(loggedIn == LOGGED_IN){
             return true;
         }else{
-            Intent i = new Intent(context, CreateListing.class);
+            Intent i = new Intent(context, CreateListingController.class);
             context.startActivity(i);
             return false;
         }

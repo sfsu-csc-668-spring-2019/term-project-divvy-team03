@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.divvy">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,9 +14,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Controllers.CreateNewProfile"></activity>
-        <activity android:name=".Controllers.CreateListing" />
+        <activity android:name=".DetailedListingsController"></activity>
+        <activity android:name=".Controllers.DisplayListingsController" />
+        <activity android:name=".Controllers.SearchController" />
+        <activity android:name=".Controllers.MyListingsController" />
+        <activity android:name=".Controllers.CreateNewProfile" />
+        <activity android:name=".Controllers.CreateListingController" />
         <activity android:name=".Controllers.MessagingActivity" />
+        <activity android:name=".Controllers.UserProfileActivity" />
         <activity android:name=".Controllers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-            <service
-                android:name=".httprequest"
-                android:exported="false"/>
+
+        <service
+            android:name=".httprequest"
+            android:exported="false" />
+        <service android:name=".GetListingsService" />
     </application>
 
 </manifest>

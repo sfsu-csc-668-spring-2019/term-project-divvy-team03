@@ -1,8 +1,5 @@
 package com.example.divvy.Controllers;
 
-import android.content.Intent;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.divvy.Listing;
+import com.example.divvy.models.Listing;
 import com.example.divvy.R;
-import com.example.divvy.User;
-import com.example.divvy.httprequest;
 
-public class CreateListing extends AppCompatActivity {
+public class CreateListingController extends AppCompatActivity {
 
     Listing listing;
 
@@ -43,14 +38,14 @@ public class CreateListing extends AppCompatActivity {
                 listing = new Listing(
                         title.getText().toString(),
                         desc.getText().toString(),
-                        size,new User(),
-                        "status",
+                        "alex",
+                        1,
                         01);
-                listing.postData(CreateListing.this);
-                listing.getListings(CreateListing.this);
+                listing.postData(CreateListingController.this);
                 //if successful, go to next page
                 //else keep user here
             }
         });
     }
+
 }

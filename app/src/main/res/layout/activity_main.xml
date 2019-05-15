@@ -64,6 +64,12 @@
             android:hint="Upload Profile Pic"
             android:inputType="textPersonName" />
 
+        <Button
+            android:id="@+id/go_to_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -76,7 +82,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="GoToCreateListing" />
+                android:text="GoToCreateListing"
+                android:textSize="12dp" />
+
+            <Button
+                android:id="@+id/display_listings_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Listings"
+                android:textSize="12dp" />
 
             <Button
                 android:id="@+id/register_cancel_btn"
