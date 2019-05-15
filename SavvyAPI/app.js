@@ -39,9 +39,12 @@ app.use(rating)
 //socket config
 io.on('connection', (socket) => {
     console.log('user connected')
+
+       var room = socket.handshake.query.room;
+       socket.join(room);
     socket.on('join', function(userNickname) {
-        console.log(userNickname + " : has joined the chat ");
-        socket.broadcast.emit('user joined the chat', userNickname + " : has joined the chat ");
+        console.log(userNickname + " : has joined " + socket.room);
+        io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
     })
 
     socket.on('messagedetection', (senderNickname, messageContent) => {
@@ -50,12 +53,12 @@ io.on('connection', (socket) => {
             //create a message object 
         let message = { "message": messageContent, "senderNickname": senderNickname }
             // send the message to all users including the sender  using io.emit() 
-        io.emit('message', message)
+        io.to(room).emit('message', message)
     })
 
     socket.on('disconnect', function() {
         console.log('user has left ')
-        socket.broadcast.emit("userdisconnect", ' user has left')
+        io.to(room).emit("userdisconnect", ' user has left')
     })
 })
 
