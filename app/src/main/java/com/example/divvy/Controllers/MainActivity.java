@@ -50,6 +50,14 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.R
             }
         });
 
+        Button messaging = findViewById(R.id.go_to_msg_btn);
+        messaging.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMessagingActivity();
+            }
+        });
+
     }
     private void startCreateListingActivity(){
         Intent i = new Intent(this, CreateListingController.class);
