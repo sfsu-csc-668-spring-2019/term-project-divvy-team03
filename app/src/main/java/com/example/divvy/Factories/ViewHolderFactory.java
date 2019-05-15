@@ -112,7 +112,7 @@ public class ViewHolderFactory {
 
         @Override public void setUpUi(Object o){
             Review review = (Review) o;
-            this.username.setText(review.getOwner().getFullName());
+            this.username.setText(review.getOwner());
             this.date.setText(new Date().toString());
             this.ratingBar.setRating((float)review.getRating());
         }

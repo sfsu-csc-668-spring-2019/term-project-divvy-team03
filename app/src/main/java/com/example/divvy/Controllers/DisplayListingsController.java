@@ -16,9 +16,8 @@ import com.example.divvy.models.RecyclerViewAdapter;
 import java.util.ArrayList;
 
 
-import java.util.ArrayList;
 
-public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver{
+public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.Receiver{
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
     @Override
