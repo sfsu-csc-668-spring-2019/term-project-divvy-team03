@@ -63,9 +63,10 @@ public class GetRatingsService extends IntentService {
     public static void GetReviewsByUsername(Context context, ResultReceiver receiver, String owner){
         Intent i = new Intent(context, GetRatingsService.class);
         HashMap<String,String> data = new HashMap<>();
+        data.put("username", owner);
         i.putExtra("data",data);
         i.putExtra("type", httprequest.GET_CODE);
-        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchRatingByUserRating?=" + owner);
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchRatingByUserRating");
         i.putExtra("receiver", receiver);
         context.startService(i);
     }

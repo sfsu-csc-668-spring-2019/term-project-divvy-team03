@@ -9,9 +9,10 @@ import com.example.divvy.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Review {
+public class Review implements Serializable {
     int reviewid;
     double rating;
     String owner;

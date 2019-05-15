@@ -44,7 +44,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         reviewsList = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
-        GetRatingsService.GetReviewsByUsername(this, mReceiver, "antonio");
+        GetRatingsService.GetReviewsByUsername(this, mReceiver, "anton");
     }
 
     @Override
@@ -71,9 +71,10 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         startActivity(getIntent());
     }
 
-
+    
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        Log.d("FUCK", resultData.toString());
+        ArrayList<Review> reviews = (ArrayList<Review>)resultData.getSerializable("data");
+        Log.d("reviewData", reviews.get(0).getOwner());
     }
 }
