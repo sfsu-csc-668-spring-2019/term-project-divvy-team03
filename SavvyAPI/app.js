@@ -7,8 +7,6 @@ import http from 'http'
 const server = http.createServer(app),
     io = require('socket.io').listen(server);
 import bodyParser from 'body-parser'
-const pool = require('../SavvyAPI/config/db.config');
-var room = [];
 app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -40,7 +38,9 @@ app.use(rating)
 //socket config
 io.on('connection', (socket) => {
     console.log('user connected')
-    socket.join(room);
+        // var room = socket.handshake.query.room;
+        // socket.join(room);
+
     socket.on('join', function(userNickname) {
         console.log(userNickname + " : has joined the chat ");
         socket.broadcast.emit('user joined the chat', userNickname + " : has joined the chat ");
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', function() {
         console.log('user has left ')
-        socket.broadcast.emit("userdisconnect", ' user has left')
+        coekct.broadcast.emit("userdisconnect", ' user has left')
     })
 })
 
@@ -68,17 +68,5 @@ app.get('/', function(req, res) {
 
 //for local uncomment this 
 server.listen(3000, () => {
-    const queryString = "SELECT * FROM chat_rooms WHERE status = true"
-    pool.query(queryString, (error, rows) => {
-        if (error) {
-            console.log(error);
-        } else {
-            for (var i = 0; i < rows.length; i++) {
-                room.push(rows[i].chatID)
-            }
-            console.log(room)
-        }
-
-    })
     console.log("Server is up and listening on 3000...")
 })

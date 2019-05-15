@@ -15,6 +15,8 @@ export default class Listing extends ActiveRecord {
             return [`title LIKE '%${name}%' AND status = true`];
         } else if (num == 2) {
             return [`username = '${name}'`]
+        } else if (num == 3) {
+            return [`listing_id = '${name}'`]
         }
 
     }
