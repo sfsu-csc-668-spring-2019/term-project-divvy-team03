@@ -16,9 +16,8 @@ import com.example.divvy.models.RecyclerViewAdapter;
 import java.util.ArrayList;
 
 
-import java.util.ArrayList;
 
-public abstract class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver{
+public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.Receiver{
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
     @Override
@@ -26,7 +25,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
         super.onCreate(savedInstanceState);
         listings = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
-        UpdateListingsView();
     }
 
     @Override
@@ -38,10 +36,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
 
     }
     public void UpdateListingsView(){
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
         finish();
         startActivity(getIntent());
     }
@@ -49,7 +43,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         listings = (ArrayList<Listing>)resultData.getSerializable("data");
-        System.out.println("Array Size:" + listings.size());
         UpdateListingsView();
     }
 }

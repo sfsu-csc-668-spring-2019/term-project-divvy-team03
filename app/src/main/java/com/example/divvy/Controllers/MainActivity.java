@@ -10,7 +10,7 @@ import com.example.divvy.GetListingsService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 
-public class MainActivity extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver {
+public class MainActivity extends AppCompatActivity implements NetworkReceiver.Receiver {
 
     public static String USERNAME;
     public NetworkReceiver mReceiver;
@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
 
         Button cancel = findViewById(R.id.register_cancel_btn);
         cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMessagingActivity();
+            }
+        });
+
+        Button messaging = findViewById(R.id.go_to_msg_btn);
+        messaging.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startMessagingActivity();
