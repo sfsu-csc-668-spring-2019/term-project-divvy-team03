@@ -76,15 +76,6 @@ public class ViewHolderFactory {
             super(view);
             message = view.findViewById(R.id.message);
             username = view.findViewById(R.id.username);
-            view_listing_text = view.findViewById(R.id.view_listing_txt_btn);
-            view_listing_text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Intent intent = new Intent(view.getContext());
-                    //view.getContext().startActivity(intent);
-                    System.out.println("Go to detailed listing page");
-                }
-            });
         }
 
         @Override public void setUpUi(Object o){
