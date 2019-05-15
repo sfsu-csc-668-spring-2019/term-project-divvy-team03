@@ -8,7 +8,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import ListingG from "../models/listing_group_model";
+import ListingGroup from "../models/listing_group_model";
 
 //create router
 const router = express.Router()
@@ -26,37 +26,28 @@ router.use(cors());
  * @return
  * 
  */
-router.post('/newMember', (request, response) => {
-    var values = Object.keys(request.body).map(function(key) { return request.body[key]; });
-    console.log(values)
-    ListingG.create(values, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            response.sendStatus(result);
-        }
-    });
+router.post('/newMember', ({ body }, response) => {
+    const values = [
+        ...Object.keys(body).map(key => body[key]),
+    ];
+    ListingGroup.create(values)
+        .then(_ => {
+            response.sendStatus(200)
+        }, _ => response.sendStatus(422));
 });
 
 router.get('/getGroupByListingID', (request, response) => {
-    ListingG.find(request.query.groupID, 1, function(err, result) {
-        if (err) {
-            response.send(err);
-        } else {
-            response.send(result);
-        }
-    });
+    ListingGroup.find(request.query.groupID, 1)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
 })
 
 router.get('/searchGroupByUsername', (request, response) => {
-    const username = request.query.username
-    ListingG.find(username, 2, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            response.send(result);
-        }
-    })
+    ListingGroup.find(request.query.username, 2)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
 })
 
 
