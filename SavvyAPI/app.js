@@ -7,7 +7,6 @@ import http from 'http'
 const server = http.createServer(app),
     io = require('socket.io').listen(server);
 import bodyParser from 'body-parser'
-
 app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -24,8 +23,8 @@ global.__basedir = __dirname;
 
 //create router
 //this is important because it creates a connection to the users folder and runs the users.js folder
-const router = require('./controller/users.js')
-app.use(router)
+const user = require('./controller/users.js')
+app.use(user)
 
 const listings = require('./controller/listing.js')
 app.use(listings)
@@ -39,9 +38,15 @@ app.use(rating)
 //socket config
 io.on('connection', (socket) => {
     console.log('user connected')
+<<<<<<< HEAD
 
        var room = socket.handshake.query.room;
        socket.join(room);
+=======
+        // var room = socket.handshake.query.room;
+        // socket.join(room);
+
+>>>>>>> 5772d3e404a42dd187a7c31f3052b46f7e0fcda2
     socket.on('join', function(userNickname) {
         console.log(userNickname + " : has joined " + socket.room);
         io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
@@ -58,7 +63,11 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', function() {
         console.log('user has left ')
+<<<<<<< HEAD
         io.to(room).emit("userdisconnect", ' user has left')
+=======
+        coekct.broadcast.emit("userdisconnect", ' user has left')
+>>>>>>> 5772d3e404a42dd187a7c31f3052b46f7e0fcda2
     })
 })
 

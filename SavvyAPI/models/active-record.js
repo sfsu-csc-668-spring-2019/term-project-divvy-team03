@@ -1,32 +1,21 @@
-const db = require('../config/db.config.js');
-
+// const db = require('../config/db.config.js');
+const pool = require('../config/db.config.js');
 
 export default class ActiveRecord {
-    static find(conditions, num, callback) {
-        const queryString = `SELECT * FROM ${this.tableName()} WHERE ${this.findBy(conditions, num)}`;
-        console.log(queryString);
-        db.query(queryString, function(err, result) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, JSON.stringify(result));
-            }
-        })
+    static find(conditions, num) {
+        return this.promisify(this.findQueryString(conditions, num));
     }
 
-    static create(values, callback) {
-        console.log("at 18 on active records");
-        const queryString = `INSERT INTO ${this.tableName()} (${this.columns().join(', ')}) VALUES ("${values.join('", "')}")`;
-        console.log(queryString);
-        db.query(queryString, function(err, result) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
-                console.log("inserted");
-                callback(null, 200);
-            }
-        })
+    static findQueryString(conditions, num) {
+        return `SELECT * FROM ${this.tableName()} WHERE ${this.findBy(conditions, num)}`;
+    }
+
+    static create(values) {
+        return this.promisify(this.insertQueryString(values));
+    }
+
+    static insertQueryString(values) {
+        return `INSERT INTO ${this.tableName()} (${this.columns().join(', ')}) VALUES ("${values.join('", "')}")`;
     }
 
     update(values, callback) {
@@ -35,5 +24,15 @@ export default class ActiveRecord {
 
     delete() {
 
+    }
+    static promisify(querystring) {
+        return new Promise(function(resolve, reject) {
+            pool.query(querystring, function(error, rows, fields) {
+                if (error) {
+                    return reject("failed to save query");
+                }
+                return resolve(rows);
+            })
+        })
     }
 }

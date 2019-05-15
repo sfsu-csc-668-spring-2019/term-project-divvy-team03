@@ -27,36 +27,30 @@ router.use(cors());
  * @return
  * 
  */
-router.post('/rate', (request, response) => {
-    var values = Object.keys(request.body).map(function(key) { return request.body[key]; });
-    Rating.create(values, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            response.sendStatus(result);
-        }
-    });
+router.post('/rate', ({ body }, response) => {
+    const values = [
+        ...Object.keys(body).map(key => body[key]),
+        group_id
+    ];
+    Rating.create(values)
+        .then(_ => {
+            response.sendStatus(200)
+        }, _ => response.sendStatus(422));
 
 });
 
 router.get('/searchRatingByUserRated', (request, response) => {
-    Rating.find(request.query.username, 1, function(err, result) {
-        if (err) {
-            response.send(err);
-        } else {
-            response.send(result);
-        }
-    });
+    Rating.find(request.query.username, 1)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
 })
 
 router.get('/searchRatingByUserRating', (request, response) => {
-    Rating.find(request.query.username, 2, function(err, result) {
-        if (err) {
-            response.send(err);
-        } else {
-            response.send(result);
-        }
-    });
+    Rating.find(request.query.username, 2)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
 })
 
 

@@ -26,27 +26,25 @@ router.use(cors());
  * @return
  * 
  */
-router.post('/reg', (request, response) => {
-    var values = Object.keys(request.body).map(function(key) { return request.body[key]; });
-    User.create(values, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            response.sendStatus(result);
-        }
-    });
+router.post('/reg', ({ body }, response) => {
+    const values = [
+        ...Object.keys(body).map(key => body[key]),
+    ];
+    User.create(values)
+        .then(_ => {
+            response.sendStatus(200)
+        }, _ => response.sendStatus(422));
 
 });
 
-router.get('/login', (request, response) => {
-    var values = Object.keys(request.query).map(function(key) { return request.query[key]; });
-    User.find(values, 1, function(err, result) {
-        if (err) {
-            response.send(err);
-        } else {
-            response.send(result);
-        }
-    });
+router.get('/login', ({ query }, response) => {
+    const values = [
+        ...Object.keys(query).map(key => query[key]),
+    ];
+    User.find(values, 1)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
 })
 
 

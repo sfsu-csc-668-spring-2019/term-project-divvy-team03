@@ -1,6 +1,6 @@
 import ActiveRecord from './active-record';
 
-export default class Listing extends ActiveRecord {
+export default class ListingGroup extends ActiveRecord {
     static tableName() {
         return 'listing_group';
     }
@@ -16,6 +16,5 @@ export default class Listing extends ActiveRecord {
         } else if (num == 2) {
             return [`username = '${name}'`]
         }
-
     }
 }

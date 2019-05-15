@@ -10,7 +10,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import Listing from "../models/listing_model";
 import ListingG from "../models/listing_group_model";
-
+import Room from "../models/chat_rooms_model"
 //create router
 const router = express.Router()
     /** bodyParser.urlencoded(options)
@@ -27,47 +27,51 @@ router.use(cors());
  * @return
  * 
  */
-router.post('/newListing', (request, response) => {
-    var time = new Date();
-    var group_id = time.getTime();
-    var username = request.body.username;
-    var groupValues = [group_id, username];
-    var values = Object.keys(request.body).map(function(key) { return request.body[key]; });
-    values.push(group_id);
-    Listing.create(values, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            ListingG.create(groupValues, function(err, result) {
-                if (err) {
-                    response.send('Failed to create a listing group');
-                } else {
-                    response.sendStatus(result);
-                }
-            })
-        }
-    });
+router.post('/newListing', ({ body }, response) => {
+    const time = (new Date())
+    const group_id = time.getTime();
+    const { username } = body;
+
+    // const values = Object.keys(body).reduce( 
+    //     (memo, key) => [ ...memo, body[key] ],
+    //     [group_id]
+    // );
+
+    const values = [
+        ...Object.keys(body).map(key => body[key]),
+        group_id
+    ];
+    Listing.create(values)
+        .then(_ => {
+            ListingG.create([group_id, username])
+        }, error => response.sendStatus(422))
+        .then(_ => {
+            Room.create([group_id, '1'])
+        }, error => response.sendStatus(422))
+        .then(row => {
+            response.sendStatus(200)
+        }, error => response.sendStatus(422));
 });
 
 router.get('/search', (request, response) => {
-    Listing.find(request.query.like, 1, function(err, result) {
-        if (err) {
-            response.send(err);
-        } else {
-            response.send(result);
-        }
-    });
-})
+    Listing.find(request.query.like, 1)
+        .then(rows => {
+            response.send(rows)
+        }, error => response.sendStatus(422));
+});
 
 router.get('/searchbyusername', (request, response) => {
-    const username = request.query.username
-    Listing.find(username, 2, function(err, result) {
-        if (err) {
-            response.sendStatus(500);
-        } else {
-            response.send(result);
-        }
-    })
+    Listing.find(request.query.username, 2)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
+})
+
+router.get('/searchbyID', (request, response) => {
+    Listing.find(request.query.id, 3)
+        .then(rows => {
+            response.send(rows)
+        }, _ => response.sendStatus(422));
 })
 
 
