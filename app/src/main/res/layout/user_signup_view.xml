@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_firstName" />
 
     <Button
-        android:id="@+id/button_signUp"
+        android:id="@+id/button_LogInLink"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

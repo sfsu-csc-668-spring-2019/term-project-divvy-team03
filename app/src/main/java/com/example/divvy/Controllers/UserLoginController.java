@@ -1,5 +1,6 @@
 package com.example.divvy.Controllers;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,12 @@ import com.example.divvy.httprequest;
 public class UserLoginController extends AppCompatActivity {
 
     private Button btnLogin; //login in button
-    private Button btnLinkToRegister; 
+    private Button btnLinkToRegister;
     private EditText inputEmail;
     private EditText inputPassword;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,7 @@ public class UserLoginController extends AppCompatActivity {
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.user_signup_view);
+                switchToSignUpView();
             }
         });
         inputEmail = (EditText) findViewById(R.id.editText_login);
@@ -52,10 +56,19 @@ public class UserLoginController extends AppCompatActivity {
         httprequest webRequester  = new httprequest();
         //set up to create new web request.
 
-
-
         return false;
     }
+
+    private void switchToSignUpView(){
+        Intent intent = new Intent(this, UserSignUpController.class);
+
+        startActivity(intent);
+
+    }
+
+
+
+
 
 
 
