@@ -1,5 +1,6 @@
 package com.example.divvy.Controllers;
 
+import android.content.Intent;
 import android.media.Rating;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.example.divvy.models.RecyclerViewAdapter;
 import com.example.divvy.models.Review;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +34,8 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private TextView usernameView;
     private ImageView image;
     private RatingBar ratingBar;
+    private Button review_button;
+
     private String username = "username", listing_id;
     private List<Review> reviewsList;
     private RecyclerViewAdapter reviewAdapter;
@@ -41,6 +46,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         setUpUi();
+        setUpListeners();
         reviewsList = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
@@ -56,6 +62,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         recyclerView = findViewById(R.id.reviews);
         usernameView = findViewById(R.id.username);
         image = findViewById(R.id.user_image);
+        review_button = findViewById(R.id.review_button);
         AsyncTask i = new ImageSelector.ImageRetrieverTask(image);
         String[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
         i.execute(images);
@@ -66,23 +73,35 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
 
     }
 
+    private void setUpListeners(){
+        review_button.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CreateReviewActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
+    }
+
 
 
     
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         reviewsList = (ArrayList<Review>)resultData.getSerializable("data");
+        for(int i = 0; i < 25; i++){
+            reviewsList.add(new Review(0, Math.random() * 5 + 1, "John", "he's awsomem", "", new Date().toString()));
+        }
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(reviewsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        setAverageRating();
     }
 
-    public void setRating(){
-        float i = 0;
+    public void setAverageRating(){
+        float total = 0;
         for(Review review: reviewsList){
-            i += review.getRating();
+            total += review.getRating();
         }
-        ratingBar.setRating(i/reviewsList.size());
+        ratingBar.setRating(total/reviewsList.size());
     }
 
 
