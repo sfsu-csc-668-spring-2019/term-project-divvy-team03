@@ -39,7 +39,7 @@ app.use(rating)
 function image(data){
 //const json = Object.keys(data).forEach((key) => (data[key] == '') && delete data[key]);
   //  var jsonContent = JSON.parse(json);
-const path = `${__dirname}/images/test.png`;
+const path = `${__dirname}/images/t.jpg`;
 var result = Buffer.from([data], 'base64')
 fs.writeFile(path, result, (error) => { console.log(error) })
 console.log(result)
