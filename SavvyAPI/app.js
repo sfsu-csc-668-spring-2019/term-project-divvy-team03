@@ -1,5 +1,6 @@
 //load our app server using express
 import express from 'express'
+var fs = require('fs');
 import cors from 'cors'
 const app = express()
 import morgan from 'morgan'
@@ -35,6 +36,15 @@ app.use(listingGroup)
 const rating = require('./controller/rating')
 app.use(rating)
 
+function image(data){
+//const json = Object.keys(data).forEach((key) => (data[key] == '') && delete data[key]);
+  //  var jsonContent = JSON.parse(json);
+const path = `${__dirname}/images/test.png`;
+var result = Buffer.from([data], 'base64')
+fs.writeFile(path, result, (error) => { console.log(error) })
+console.log(result)
+}
+
 //socket config
 io.on('connection', (socket) => {
     console.log('user connected')
@@ -42,19 +52,40 @@ io.on('connection', (socket) => {
     socket.join(room);
 
     socket.on('join', function(userNickname) {
-        console.log(userNickname + " : has joined " + socket.room);
+//        console.log(userNickname + " : has joined " + socket.room);
         io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
     })
 
     socket.on('messagedetection', (senderNickname, messageContent) => {
         //log the message in console 
-        console.log(senderNickname + " : " + messageContent)
+  //      console.log(senderNickname + " : " + messageContent)
             //create a message object 
+//console.log(messageContent)
+//console.log(senderNickname)
+        image(senderNickname)
         let message = { "message": messageContent, "senderNickname": senderNickname }
+//        const json = Object.keys(data).forEach((key) => (data[key] == '') && delete messageContent[key]);
+        //image(json.image)
             // send the message to all users including the sender  using io.emit() 
         io.to(room).emit('message', message)
+       // console.log("this is the message " + message);
     })
 
+
+   // socket.on('imagedetection', (senderNickname, messageContent) => {
+        //log the message in console 
+     //   console.log(senderNickname + " : " + messageContent)
+            //create a message object 
+//console.log(messageContent)
+//console.log(senderNickname)
+       // image(messageContent)
+       // let message = { "message": messageContent, "senderNickname": senderNickname }
+//        const json = Object.keys(data).forEach((key) => (data[key] == '') && delete messageContent[key]);
+        //image(json.image)
+            // send the message to all users including the sender  using io.emit() 
+       // io.to(room).emit('message', message)
+       // console.log("this is the message " + message);
+//})
     socket.on('disconnect', function() {
         console.log('user has left ')
         io.to(room).emit("userdisconnect", ' user has left')
