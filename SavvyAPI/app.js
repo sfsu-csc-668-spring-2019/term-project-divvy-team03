@@ -36,14 +36,27 @@ app.use(listingGroup)
 const rating = require('./controller/rating')
 app.use(rating)
 
-function image(data){
+//function image(data){
 //const json = Object.keys(data).forEach((key) => (data[key] == '') && delete data[key]);
   //  var jsonContent = JSON.parse(json);
-const path = `${__dirname}/images/t.jpg`;
-var result = Buffer.from([data], 'base64')
-fs.writeFile(path, result, (error) => { console.log(error) })
-console.log(result)
+//const path = `${__dirname}/images/copy.jpg`;
+//var result = Buffer.from([data], 'base64')
+//fs.writeFile(path, result, (error) => { console.log(error) })
+//console.log(result)
+// function to create file from base64 encoded string
+function base64_decode(base64str) {
+console.log(base64str.image)
+   const path = `${__dirname}/images/copy.jpg`;  
+  // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+    var bitmap = new Buffer([base64str.image], 'base64');
+    // write buffer to file
+    fs.writeFileSync(path, bitmap);
+    console.log('******** File created from base64 encoded string ********');
 }
+
+// convert base64 string back to image 
+//base64_decode(base64str, 'copy.jpg');
+//}
 
 //socket config
 io.on('connection', (socket) => {
@@ -62,7 +75,7 @@ io.on('connection', (socket) => {
             //create a message object 
 //console.log(messageContent)
 //console.log(senderNickname)
-        image(senderNickname)
+        base64_decode(senderNickname)
         let message = { "message": messageContent, "senderNickname": senderNickname }
 //        const json = Object.keys(data).forEach((key) => (data[key] == '') && delete messageContent[key]);
         //image(json.image)
