@@ -32,8 +32,8 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private ImageView image;
     private RatingBar ratingBar;
     private String username = "username", listing_id;
-    private List reviewsList;
-    private RecyclerViewAdapter chatBoxAdapter;
+    private List<Review> reviewsList;
+    private RecyclerViewAdapter reviewAdapter;
     private NetworkReceiver mReceiver;
 
     @Override
@@ -66,15 +66,24 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
 
     }
 
-    public void UpdateListingsView(){
-        finish();
-        startActivity(getIntent());
-    }
+
 
     
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        ArrayList<Review> reviews = (ArrayList<Review>)resultData.getSerializable("data");
-        Log.d("reviewData", reviews.get(0).getOwner());
+        reviewsList = (ArrayList<Review>)resultData.getSerializable("data");
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(reviewsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
+
+    public void setRating(){
+        float i = 0;
+        for(Review review: reviewsList){
+            i += review.getRating();
+        }
+        ratingBar.setRating(i/reviewsList.size());
+    }
+
+
 }

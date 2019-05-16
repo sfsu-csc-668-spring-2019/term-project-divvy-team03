@@ -102,21 +102,23 @@ public class ViewHolderFactory {
     }
 
     public static class ReviewViewHolder extends MyViewHolder{
-        TextView username, date;
+        TextView username, date, comment;
         RatingBar ratingBar;
-        ImageView image;
 
         public ReviewViewHolder(@NonNull View listing) {
             super(listing);
             username = listing.findViewById(R.id.review_username);
             date = listing.findViewById(R.id.date);
+            ratingBar = listing.findViewById(R.id.rating_bar);
+            comment = listing.findViewById(R.id.comment);
         }
 
         @Override public void setUpUi(Object o){
             Review review = (Review) o;
             this.username.setText(review.getOwner());
-            this.date.setText(new Date().toString());
+            this.date.setText(review.getDate());
             this.ratingBar.setRating((float)review.getRating());
+            this.comment.setText(review.getComment());
         }
 
     }

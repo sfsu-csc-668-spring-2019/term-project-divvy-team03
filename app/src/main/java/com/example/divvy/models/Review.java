@@ -26,6 +26,7 @@ public class Review implements Serializable {
         this.owner = owner;
         this.comment = comment;
         this.targetUser = targetUser;
+        this.date = date;
     }
 
     public int getReviewid() {
@@ -67,6 +68,8 @@ public class Review implements Serializable {
     public void setTargetUser(String targetUser) {
         this.targetUser = targetUser;
     }
+
+    public String getDate(){ return this.date;}
 
     public String sendData(Context currentContext){
         JSONObject data = new JSONObject();

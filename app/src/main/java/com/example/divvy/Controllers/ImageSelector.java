@@ -137,6 +137,7 @@ public class ImageSelector {
         protected void onPostExecute(Drawable drawable) {
             super.onPostExecute(drawable);
             imageView.setImageDrawable(drawable);
+            this.cancel(true);
         }
     }
 }

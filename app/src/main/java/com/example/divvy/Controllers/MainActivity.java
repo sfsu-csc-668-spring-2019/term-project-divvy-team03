@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.R
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startMessagingActivity();
+                startDisplayUser();
             }
         });
 

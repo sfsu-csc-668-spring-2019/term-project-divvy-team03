@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:screenOrientation="portrait">
         <activity android:name=".DetailedListingsController"></activity>
         <activity android:name=".Controllers.DisplayListingsController" />
         <activity android:name=".Controllers.SearchController" />
