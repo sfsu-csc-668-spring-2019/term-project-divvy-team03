@@ -39,6 +39,7 @@ public class Messenger extends Observable {
            // "http://34.226.139.149/
             socket = IO.socket("http://34.226.139.149?"+ params).connect();
             System.out.println("http://127.0.0.1?" + params);
+
             socket.emit("join", username);
             socket.on("message", messageListener);
             return true;
