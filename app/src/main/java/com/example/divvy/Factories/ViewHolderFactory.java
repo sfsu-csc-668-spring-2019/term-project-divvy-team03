@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.divvy.Controllers.DetailedListingController;
 import com.example.divvy.Controllers.ImageSelector;
-import com.example.divvy.Controllers.MyListingsController;
 import com.example.divvy.GetListingsService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
@@ -90,19 +89,20 @@ public class ViewHolderFactory {
         }
     }
 
-    public static class ListingListViewHolder extends MyViewHolder{
+    public static class ListingListViewHolder extends MyViewHolder implements NetworkReceiver.DataReceiver {
         TextView title, owner, view_listing_text;
-
+        NetworkReceiver mReceiver;
+        int listing_id;
         public ListingListViewHolder(@NonNull View listing) {
             super(listing);
+            mReceiver = new NetworkReceiver(null ,this);
             title = listing.findViewById(R.id.listing_frag_title);
             owner = listing.findViewById(R.id.listing_frag_owner);
             view_listing_text = listing.findViewById(R.id.view_listing_txt_btn);
             view_listing_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent intent = new Intent(view.getContext(),);
-                    //view.getContext().startActivity(intent);
+                    GetListingsService.GetListingById(v.getContext(),mReceiver,listing_id);
                 }
             });
         }
@@ -111,6 +111,15 @@ public class ViewHolderFactory {
             Listing listing = (Listing) o;
             this.title.setText(listing.getTitle());
             this.owner.setText(listing.getOwner());
+            listing_id = listing.getListingid();
+        }
+        // DataReceiver
+        @Override
+        public void onReceiveResult(int resultCode, Bundle resultData) {
+            //Go to new activity
+            Intent intent = new Intent(this.title.getContext(),DetailedListingController.class);
+            intent.putExtra("data", resultData.getSerializable("data"));
+            this.title.getContext().startActivity(intent);
         }
     }
 
