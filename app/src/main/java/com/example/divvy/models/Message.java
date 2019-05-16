@@ -1,8 +1,11 @@
 package com.example.divvy.models;
 
-import java.net.URL;
+import android.util.Log;
 
-public class Message {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public  class Message {
     protected String text;
     protected String sender;
 
@@ -18,4 +21,19 @@ public class Message {
     public String getSender(){
         return this.sender;
     }
+
+    public JSONObject toJsonFile(){
+        JSONObject json = new JSONObject();
+        try{
+            json.put("message", this.text);
+            json.put("senderNickname", this.sender);
+            return json;
+        }catch(JSONException e){
+            Log.d("ERROR: ", e.toString());
+        }
+        return null;
+    }
+
+
+
 }

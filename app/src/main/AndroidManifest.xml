@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailedListingsController"></activity>
         <activity android:name=".Controllers.DisplayListingsController" />
         <activity android:name=".Controllers.SearchController" />
         <activity android:name=".Controllers.MyListingsController" />
@@ -28,6 +29,10 @@
         <activity android:name=".Controllers.CreateListingController" />
         <activity android:name=".Controllers.MessagingActivity" />
         <activity android:name=".Controllers.UserSignUpController" />
+        <activity android:name=".Controllers.UserProfileActivity" />
+        <activity android:name=".Controllers.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
         <activity android:name=".Controllers.MainActivity">
         </activity>

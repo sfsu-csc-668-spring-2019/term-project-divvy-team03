@@ -11,10 +11,14 @@ import android.support.v7.widget.RecyclerView;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
+import com.example.divvy.models.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public abstract class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver{
+
+import java.util.ArrayList;
+
+public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver{
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
     @Override
@@ -40,7 +44,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         listings = (ArrayList<Listing>)resultData.getSerializable("data");
-        System.out.println("Array Size:" + listings.size());
         UpdateListingsView();
     }
 }

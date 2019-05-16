@@ -41,13 +41,41 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.G
                 startActivity(intent);
             }
         });
+
+        Button cancel = findViewById(R.id.register_cancel_btn);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDisplayUser();
+            }
+        });
+
+        Button messaging = findViewById(R.id.go_to_msg_btn);
+        messaging.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMessagingActivity();
+            }
+        });
+
     }
     private void startCreateListingActivity(){
         Intent i = new Intent(this, CreateListingController.class);
         startActivity(i);
     }
+
     private void startDisplayListings(){
         Intent i = new Intent(this, MyListingsController.class);
+        startActivity(i);
+    }
+
+    private void startMessagingActivity(){
+        Intent i = new Intent(this, MessagingActivity.class);
+        startActivity(i);
+    }
+
+    private void startDisplayUser(){
+        Intent i = new Intent(this, UserProfileActivity.class);
         startActivity(i);
     }
 
