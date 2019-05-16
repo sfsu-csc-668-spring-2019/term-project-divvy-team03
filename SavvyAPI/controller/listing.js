@@ -10,7 +10,6 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import Listing from "../models/listing_model";
 import ListingG from "../models/listing_group_model";
-import Room from "../models/chat_rooms_model"
 //create router
 const router = express.Router()
     /** bodyParser.urlencoded(options)
@@ -44,9 +43,6 @@ router.post('/newListing', ({ body }, response) => {
     Listing.create(values)
         .then(_ => {
             ListingG.create([group_id, username])
-        }, error => response.sendStatus(422))
-        .then(_ => {
-            Room.create([group_id, '1'])
         }, error => response.sendStatus(422))
         .then(row => {
             response.sendStatus(200)
