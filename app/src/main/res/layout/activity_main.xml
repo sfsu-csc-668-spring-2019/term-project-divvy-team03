@@ -13,10 +13,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,11 +64,27 @@
             android:hint="Upload Profile Pic"
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/go_to_search"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/go_to_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Search" />
+
+            <Button
+                android:id="@+id/go_to_msg_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:elevation="0dp"
+                android:text="Messaging" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

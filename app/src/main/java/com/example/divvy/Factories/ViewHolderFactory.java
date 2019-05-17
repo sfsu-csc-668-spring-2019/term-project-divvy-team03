@@ -79,7 +79,6 @@ public class ViewHolderFactory {
             super(view);
             message = view.findViewById(R.id.message);
             username = view.findViewById(R.id.username);
-
         }
 
         @Override public void setUpUi(Object o){

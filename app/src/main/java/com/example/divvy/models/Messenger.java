@@ -35,7 +35,8 @@ public class Messenger extends Observable {
 
     private boolean setUpSocket() {
         try {
-            socket = IO.socket("http://34.226.139.149/").connect();
+            String params = "room=1557901128718";
+            socket = IO.socket("http://34.226.139.149?" + params).connect();
             socket.emit("join", username);
             socket.on("message", messageListener);
             return true;
