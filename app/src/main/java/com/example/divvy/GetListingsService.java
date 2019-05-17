@@ -54,21 +54,6 @@ public class GetListingsService extends IntentService {
         }
         return listings;
     }
-    public static ArrayList<Listing> convertDataToListings2(String s) throws JSONException {
-        ArrayList<Listing> listings = new ArrayList<>();
-        JSONArray array = new JSONArray(s);
-        for(int i = 0; i < array.length();i++){
-            JSONObject jsonObject = (JSONObject)array.get(i);
-            Listing listing = new Listing(
-                    jsonObject.getString("title"),
-                    jsonObject.getString("descr"),
-                    jsonObject.getString("owner"),
-                    jsonObject.getInt("status"),
-                    jsonObject.getLong("listing_id"));
-            listings.add(listing);
-        }
-        return listings;
-    }
     // helper method to call this from any controller.
     public static void GetListingsByUsername(Context context, ResultReceiver receiver, String owner){
         Intent i = new Intent(context, GetListingsService.class);
