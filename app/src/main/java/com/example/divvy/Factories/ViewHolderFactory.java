@@ -92,7 +92,7 @@ public class ViewHolderFactory {
     public static class ListingListViewHolder extends MyViewHolder implements NetworkReceiver.DataReceiver {
         TextView title, owner, view_listing_text;
         NetworkReceiver mReceiver;
-        int listing_id;
+        long listing_id;
         public ListingListViewHolder(@NonNull View listing) {
             super(listing);
             mReceiver = new NetworkReceiver(null ,this);
