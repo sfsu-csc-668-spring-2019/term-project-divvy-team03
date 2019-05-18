@@ -38,8 +38,6 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     private RecyclerView recyclerView;
     private ImageView addImageButton, cancelButton;
     private TextView listingName;
-    private Long listingId;
-
     private String username = "username";
     private List<Message> messageList;
     private RecyclerViewAdapter chatBoxAdapter;

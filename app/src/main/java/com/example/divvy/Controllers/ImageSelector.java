@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -121,6 +122,13 @@ public class ImageSelector {
             Log.d("ERROR: ", e.toString());
             return null;
         }
+    }
+
+    public static Bitmap decodeImage(String data)
+    {
+        byte[] b = Base64.decode(data,Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(b,0,b.length);
+        return bmp;
     }
 
     public static class ImageRetrieverTask extends AsyncTask<Object, Void, Drawable>{

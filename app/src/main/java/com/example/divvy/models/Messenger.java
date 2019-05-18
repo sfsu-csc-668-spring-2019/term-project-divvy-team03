@@ -2,6 +2,8 @@ package com.example.divvy.models;
 
 
 
+import android.util.Log;
+
 import com.example.divvy.Factories.MessageFactory;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -55,6 +57,7 @@ public class Messenger extends Observable {
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
             try {
+                Log.d("FUCK", data.toString());
                 this.setChanged();
                 this.notifyObservers(MessageFactory.create((JSONObject) data.get("senderNickname")));
             }catch(Exception e){

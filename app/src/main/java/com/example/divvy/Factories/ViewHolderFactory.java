@@ -66,7 +66,7 @@ public class ViewHolderFactory {
             ImageMessage message = (ImageMessage) imageMessage;
             this.username.setText(message.getSender());
             this.message.setText(message.getMessage());
-            this.image.setImageDrawable(ImageSelector.LoadImageFromWebOperations(""));
+            this.image.setImageBitmap(ImageSelector.decodeImage(message.getImage()));
         }
     }
 
