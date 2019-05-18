@@ -21,9 +21,10 @@ public class Messenger extends Observable {
     private Long listing_id;
 
     public Messenger(String username, Observer observer, Long listing_id) {
-      this.username = username;
+      this.username = "LORENZO";
       this.addObserver(observer);
       this.listing_id = listing_id;
+      Log.d("ASS", Long.toString(this.listing_id));
       setUpChannels();
       setUpSocket();
     }

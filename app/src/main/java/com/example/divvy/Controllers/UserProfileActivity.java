@@ -36,7 +36,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private RatingBar ratingBar;
     private Button review_button;
 
-    private String username = "username", listing_id;
+    private String username = "username";
     private List<Review> reviewsList;
     private RecyclerViewAdapter reviewAdapter;
     private NetworkReceiver mReceiver;
@@ -87,9 +87,6 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         reviewsList = (ArrayList<Review>)resultData.getSerializable("data");
-        for(int i = 0; i < 25; i++){
-            reviewsList.add(new Review(0, Math.random() * 5 + 1, "John", "he's awsomem", "", new Date().toString()));
-        }
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(reviewsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
