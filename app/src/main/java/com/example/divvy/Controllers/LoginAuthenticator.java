@@ -24,21 +24,27 @@ public class LoginAuthenticator {
         }
         return instance;
     }
-    public boolean VerifyLoginState(Context context){
-        if(loggedIn == LOGGED_IN){
-            return true;
-        }else{
-            Intent i = new Intent(context, CreateListingController.class);
-            context.startActivity(i);
-            return false;
-        }
+    public void LogoutUser(Context context){
+        username = "";
+        loggedIn = LOGGED_OUT;
+        SharedPreferences.Editor editor =
+                context.getSharedPreferences("LoginState",Context.MODE_PRIVATE).edit();
+        editor.putInt("loggedIn", LOGGED_OUT);
+        editor.putString("username", username);
+        editor.apply();
+        Intent i = new Intent(context, UserLoginController.class);
+        context.startActivity(i);
     }
-    public void LogInUser(User user, Context context){
-        username = "loggedin-username"; // change to user id
+    public void LogInUser(String user, Context context){
         loggedIn = LOGGED_IN;
         SharedPreferences.Editor editor =
                 context.getSharedPreferences("LoginState",Context.MODE_PRIVATE).edit();
         editor.putInt("loggedIn", loggedIn);
-        editor.putString("username", "loggedin user");
+        editor.putString("username", user);
+        editor.apply();
+    }
+    public String getUser(Context context){
+     SharedPreferences pref = context.getSharedPreferences("LoginState",Context.MODE_PRIVATE);
+        return pref.getString("username","");
     }
 }
