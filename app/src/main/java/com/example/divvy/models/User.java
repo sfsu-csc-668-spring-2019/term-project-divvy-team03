@@ -4,6 +4,16 @@ public class User {
         private int userId;
         private String userFirstName;
         private String userLastName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    private String userName;
         private String fullName;
         private String userCity;
         private String emailAddress;
@@ -28,6 +38,12 @@ public class User {
             }
             return userLastName;
         }
+        public void setUserFirstName(String userFirstName){
+            this.userFirstName = userFirstName;
+        }
+        public void setUserLastName(String userLastName){
+            this.userLastName = userLastName;
+        }
         public String getFullName(){
             return getUserFirstName()+" "+getUserLastName();
         }
@@ -36,6 +52,19 @@ public class User {
                 return emailAddress;
             }
             return "";
+        }
+        public void setUserCity(String cityName){
+            this.fullName = cityName;
+        }
+        public String getUserCity(){
+            if(userCity!=null){
+                return this.userCity;
+
+            }
+            return "";
+        }
+        public void setUserEmail(String newEmailAddress){
+            this.emailAddress = newEmailAddress;
         }
         
 

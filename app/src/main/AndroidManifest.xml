@@ -14,26 +14,33 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Controllers.DetailedListingController"></activity>
-        <activity android:name=".Controllers.DisplayListingsController" />
-        <activity android:name=".Controllers.SearchController" />
-        <activity android:name=".Controllers.MyListingsController" />
-        <activity android:name=".Controllers.CreateNewProfile" />
-        <activity android:name=".Controllers.CreateListingController" />
-        <activity android:name=".Controllers.MessagingActivity" />
-        <activity android:name=".Controllers.UserProfileActivity" />
-        <activity android:name=".Controllers.MainActivity">
+        <activity android:name=".Controllers.UserLoginController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Controllers.DetailedListingController"></activity>
+        <activity android:name=".Controllers.DisplayListingsController" />
+        <activity android:name=".Controllers.SearchController" />
+        <activity android:name=".Controllers.MyListingsController" />
+
+        <activity android:name=".Controllers.CreateListingController" />
+        <activity android:name=".Controllers.MessagingActivity" />
+        <activity android:name=".Controllers.UserSignUpController" />
+        <activity android:name=".Controllers.UserProfileActivity" />
+        <activity android:name=".Controllers.MainActivity"/>
+
 
         <service
             android:name=".httprequest"
             android:exported="false" />
         <service android:name=".GetListingsService" />
+        <service
+            android:name=".RegService"/>
+        <service
+            android:name=".LoginService"/>
     </application>
 
 </manifest>
