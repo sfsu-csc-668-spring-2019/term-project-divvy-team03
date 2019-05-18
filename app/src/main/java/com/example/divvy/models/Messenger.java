@@ -43,11 +43,15 @@ public class Messenger extends Observable {
     }
     private boolean setUpSocket() {
         try {
-            String params = "room=" + Long.toString(listing_id);
-            System.out.println(params);
+            IO.Options opts = new IO.Options();
+            opts.forceNew = true;
+            opts.query = "room=" + Long.toString(listing_id);;
+            socket = IO.socket("http://34.226.139.149", opts).connect();
+            //String params = "room=" + Long.toString(listing_id);
+           // System.out.println(params);
            // "http://34.226.139.149/
-            socket = IO.socket("http://127.0.0.1?"+ params).connect();
-            System.out.println("http://34.226.139.149?" + params);
+            //socket = IO.socket("http://34.226.139.149:3000?"+ params).connect();
+           // System.out.println("http://34.226.139.149?" + params);
 
             socket.emit("join", username);
             socket.on("message", messageListener);
