@@ -14,8 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class LoginService extends IntentService {
 
@@ -28,13 +30,12 @@ public class LoginService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         Bundle bundle = new Bundle();
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
+        LinkedHashMap<String,String> hashMap =
+                convertListToLinkedHashMap(
+                        (ArrayList< ArrayList<String>>)intent.getSerializableExtra("data"));
         try {
-            String data = httprequest.get(
-                    (LinkedHashMap<String,String>)intent.getSerializableExtra("data"),
-                    intent.getStringExtra("uri"));
-            System.out.println("data:" + data);
+            String data = httprequest.get( hashMap, intent.getStringExtra("uri"));
             String username = convertDataToUsername(data);
-            System.out.println(username);
             bundle.putString("response",username);
             receiver.send(1, bundle);
         } catch (IOException e) {
@@ -45,7 +46,7 @@ public class LoginService extends IntentService {
     }
     public static void getData(Context context, ResultReceiver receiver, LinkedHashMap<String,String> data){
         Intent i = new Intent(context, LoginService.class);
-        i.putExtra("data", data);
+        i.putExtra("data", convertLinkedHashMapToList(data));
         i.putExtra("type", httprequest.GET_CODE);
         i.putExtra("uri", (httprequest.ROOT_ADDRESS + "/login"));
         i.putExtra("receiver", receiver);
@@ -58,5 +59,26 @@ public class LoginService extends IntentService {
             return jsonObject.getString("username");
         }
         return "FAIL";
+    }
+    public static ArrayList<ArrayList<String>> convertLinkedHashMapToList(LinkedHashMap<String,String> map){
+        ArrayList<String> keys = new ArrayList<>();
+        ArrayList<String> values = new ArrayList<>();
+        for (Map.Entry<String,String> entry: map.entrySet()){
+            keys.add(entry.getKey());
+            values.add(entry.getValue());
+        }
+        ArrayList<ArrayList<String>> keyvalues = new ArrayList<>();
+        keyvalues.add(keys);
+        keyvalues.add(values);
+        return keyvalues;
+    }
+    public static LinkedHashMap<String,String> convertListToLinkedHashMap(ArrayList<ArrayList<String>> keyvalues){
+        LinkedHashMap<String,String> linkedmap = new LinkedHashMap<>();
+        ArrayList<String> keys = keyvalues.get(0);
+        ArrayList<String> values = keyvalues.get(1);
+        for(int i =0; i < keys.size(); i++){
+            linkedmap.put(keys.get(i),values.get(i));
+        }
+        return linkedmap;
     }
 }
