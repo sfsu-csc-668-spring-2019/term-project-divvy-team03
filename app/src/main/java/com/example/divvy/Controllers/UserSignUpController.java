@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class UserSignUpController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
     // Buttons specific to sign up view
-    private final String rootUrl = "ec2-34-226-139-149.compute-1.amazonaws.com";
+    private final String rootUrl = "http://ec2-34-226-139-149.compute-1.amazonaws.com";
     //
     private Button btnCreateAccount;
     private EditText editTextFirstName;
@@ -83,7 +83,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
         createdUser.setUserLastName(editTextLastName.getText().toString());
         createdUser.setUserEmail(editTextRegisterEmail.getText().toString());
         createdUser.setUserName(editTextUserName.getText().toString());
-        createdUser.setUserCity("");
+        createdUser.setUserCity("San Francisco");
         return createdUser;
     }
     public JSONObject createSignUpJSON(User newUser){
@@ -96,7 +96,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
                 json.put("first_name", newUser.getUserFirstName());
                 json.put("last_name", newUser.getUserLastName());
                 json.put("city", newUser.getUserCity());
-                json.put("descr", "");
+                json.put("descr", "spicy");
 
                 return json;
             }catch(JSONException e){
@@ -165,17 +165,21 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
         if(validateForm()){
             User createdUser = createNewUserObject();
             JSONObject createdJson = createSignUpJSON(createdUser);
+            System.out.println("json: " + createdJson.toString());
             RegService.postData(this,mReceiver,createdJson.toString());
-            //if(attemptToSignUp(createdJson)){
-            //    Toast.makeText(getApplicationContext(),"Success?!.", Toast.LENGTH_SHORT).show();
-
-           // }
         }
 
     }
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        System.out.println("Reg result: " + resultData.getString("data"));
+        System.out.println("Reg result: " + resultData.getString("response"));
+        String response = resultData.getString("resposne");
+        if(response != null && response.equals("OK")){
+            //SUCCESS DO STUFF HERE
+            Toast.makeText(getApplicationContext(),"Success!.", Toast.LENGTH_SHORT).show();
+        }else{
+            //REGISTRATION FAILED
+        }
     }
 }

@@ -30,9 +30,9 @@ public class RegService extends IntentService {
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
         System.out.println("URI: " + intent.getStringExtra("uri"));
         try {
-            String data = httprequest.post(intent.getStringExtra("data"),intent.getStringExtra("uri"));
+            String data = httprequest.post(intent.getStringExtra("uri"),intent.getStringExtra("data"));
             System.out.println("Reg post: " + data);
-            bundle.putString(data,"");
+            bundle.putString("response",data);
             receiver.send(1, bundle);
         } catch (IOException e) {
             e.printStackTrace();
