@@ -39,6 +39,8 @@
         <service android:name=".GetListingsService" />
         <service
             android:name=".RegService"/>
+        <service
+            android:name=".LoginService"/>
     </application>
 
 </manifest>

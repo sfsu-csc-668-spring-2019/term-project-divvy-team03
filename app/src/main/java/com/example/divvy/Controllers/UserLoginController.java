@@ -8,29 +8,43 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.divvy.LoginService;
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.httprequest;
 
-public class UserLoginController extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+public class UserLoginController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
 
     private Button btnLogin; //login in button
     private Button btnLinkToRegister;
-    private EditText inputEmail;
+    private EditText inputUsername;
     private EditText inputPassword;
 
-
+    private NetworkReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login_view);
+        mReceiver = new NetworkReceiver(null,this);
+        inputUsername = (EditText) findViewById(R.id.editText_login);
+        inputPassword = (EditText) findViewById(R.id.editText_password);
+
         // Set up the references here.
         btnLogin = findViewById(R.id.button_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("INFO","Hello, Button was clicked");
-
+                try {
+                    AttemptLogin();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -42,19 +56,14 @@ public class UserLoginController extends AppCompatActivity {
                 switchToSignUpView();
             }
         });
-        inputEmail = (EditText) findViewById(R.id.editText_login);
-        inputPassword = (EditText) findViewById(R.id.editText_password);
 
         // End setting up references here.
     }
 
     private boolean submitLoginRequest(){
         // Get the text from the views,
-        String email = inputEmail.getText().toString();
+        String username = inputUsername.getText().toString();
         String password = inputPassword.getText().toString();
-
-        httprequest webRequester  = new httprequest();
-        //set up to create new web request.
 
         return false;
     }
@@ -63,13 +72,23 @@ public class UserLoginController extends AppCompatActivity {
         Intent intent = new Intent(this, UserSignUpController.class);
 
         startActivity(intent);
+    }
 
+    private void AttemptLogin() throws JSONException {
+        String username = inputUsername.getText().toString();
+        String password = inputPassword.getText().toString();
+
+        HashMap<String,String> data = new HashMap<>();
+        data.put("username",username);
+        data.put("psw", password);
+
+        LoginService.postData(this, mReceiver, data);
     }
 
 
-
-
-
-
-
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        String response = resultData.getString("response");
+        System.out.println("Login response:" + response);
+    }
 }
