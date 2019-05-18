@@ -22,8 +22,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.MyListingsController"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.CreateNewProfile"
-            android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.CreateListingController"
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.MessagingActivity"
@@ -32,12 +30,11 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.CreateReviewActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.MainActivity"
+        <activity android:name=".Controllers.UserLoginController"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -46,6 +43,10 @@
             android:exported="false" />
         <service android:name=".GetListingsService" />
         <service android:name = ".GetRatingsService"/>
+        <service
+            android:name=".RegService"/>
+        <service
+            android:name=".LoginService"/>
     </application>
 
 </manifest>
