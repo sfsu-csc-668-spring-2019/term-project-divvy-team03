@@ -27,12 +27,13 @@ public class ExampleUnitTest {
         httprequest request = new httprequest();
         String json = registration();
         System.out.println(json);
-        String response = request.post("http://ec2-34-226-139-149.compute-1.amazonaws.com/reg", json);
+        String response = request.post("http://ec2-34-226-139-149.compute-1.amazonaws.com/newListing", json);
         assertEquals("OK", response);
     }
 
     private String registration() throws JSONException {
-        String json = "{\"username\": \"alex3222\",\"email\": \"alex23@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
+        //String json = "{\"username\": \"alex3222\",\"email\": \"alex23@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
+        String json = "{\"username\": \"antonio\",\"descr\": \"new test from android\", \"title\": \"testing from android\"}";
         System.out.println(json);
         return json;
 

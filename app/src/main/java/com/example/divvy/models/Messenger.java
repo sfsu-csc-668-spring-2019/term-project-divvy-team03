@@ -33,6 +33,9 @@ public class Messenger extends Observable {
         if(message != null) socket.emit("messagedetection", message.toJsonFile());
     }
 
+    public void sendImage(Message image){
+        if(image != null) socket.emit("imagedetection", image.toJsonFile());
+    }
     private boolean setUpSocket() {
         try {
             String params = "room=1557827582659";
