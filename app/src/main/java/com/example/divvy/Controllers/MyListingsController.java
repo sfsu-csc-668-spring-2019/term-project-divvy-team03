@@ -20,18 +20,20 @@ import java.util.ArrayList;
 public class MyListingsController extends DisplayListingsController implements NetworkReceiver.DataReceiver{
     private NetworkReceiver mReceiver;
     public final String MY_LISTING_CODE = "mylistings";
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         super.onCreate(savedInstanceState);
         mReceiver = new NetworkReceiver(null,this);
         setContentView(R.layout.listings_view);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
         if(intent.getSerializableExtra("data") != null) {
             listings = (ArrayList<Listing>) intent.getSerializableExtra("data");
         }
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
+        recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
@@ -47,7 +49,12 @@ public class MyListingsController extends DisplayListingsController implements N
     public void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
         listings = (ArrayList<Listing>)resultData.get("data");
-        finish();
-        startActivity(getIntent());
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        runOnUiThread(new Runnable(){
+            public void run() {
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
     }
 }

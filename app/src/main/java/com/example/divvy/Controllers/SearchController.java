@@ -25,6 +25,7 @@ public class SearchController extends DisplayListingsController {
         setContentView(R.layout.activity_search_controller);
         EditText queryView = findViewById(R.id.query_editText);
         Button searchButton = findViewById(R.id.btn_search);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

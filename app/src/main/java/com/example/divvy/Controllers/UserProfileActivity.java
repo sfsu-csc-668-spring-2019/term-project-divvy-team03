@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private ImageView image;
     private RatingBar ratingBar;
     private Button review_button;
+    private BottomNavigationView navigation;
 
     private String username = "username";
     private List<Review> reviewsList;
@@ -63,6 +65,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         usernameView = findViewById(R.id.username);
         image = findViewById(R.id.user_image);
         review_button = findViewById(R.id.review_button);
+        navigation = findViewById(R.id.navigation);
         AsyncTask i = new ImageSelector.ImageRetrieverTask(image);
         Object[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
         i.execute(images);
@@ -79,6 +82,8 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
             intent.putExtra("username", username);
             startActivity(intent);
         });
+
+        NavBarController.setUpListners(navigation, this);
     }
 
 

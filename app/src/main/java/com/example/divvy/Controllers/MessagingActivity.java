@@ -68,6 +68,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         addImageButton = findViewById(R.id.add_image_button);
         listingName = findViewById(R.id.listing_name);
         cancelButton = findViewById(R.id.cancel_button);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

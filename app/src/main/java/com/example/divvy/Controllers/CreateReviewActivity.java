@@ -46,6 +46,7 @@ public class CreateReviewActivity extends AppCompatActivity{
         review_title = findViewById(R.id.review_title);
         rating_bar = findViewById(R.id.rating_bar);
         review_title.setText("Create Review for " + username );
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
     }
 
     private void setUpListeners() {

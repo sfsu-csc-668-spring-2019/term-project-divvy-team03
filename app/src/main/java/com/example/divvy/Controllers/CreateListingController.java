@@ -1,5 +1,6 @@
 package com.example.divvy.Controllers;
 
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ public class CreateListingController extends AppCompatActivity {
         setContentView(R.layout.activity_create_listing);
         Button submit = findViewById(R.id.create_list_submit);
         Button cancel = findViewById(R.id.create_list_cancel);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
