@@ -1,5 +1,7 @@
 package com.example.divvy.Factories;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.divvy.Controllers.DetailedListingController;
 import com.example.divvy.Controllers.ImageSelector;
+import com.example.divvy.GetListingsService;
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.ImageMessage;
 import com.example.divvy.models.Listing;
@@ -66,7 +71,7 @@ public class ViewHolderFactory {
     }
 
     public static class MessageViewHolder extends MyViewHolder{
-        private TextView message, username, view_listing_text;
+        private TextView message, username;
 
         public MessageViewHolder(View view){
             super(view);
@@ -81,19 +86,37 @@ public class ViewHolderFactory {
         }
     }
 
-    public static class ListingListViewHolder extends MyViewHolder {
-        TextView title, owner;
-
+    public static class ListingListViewHolder extends MyViewHolder implements NetworkReceiver.DataReceiver {
+        TextView title, owner, view_listing_text;
+        NetworkReceiver mReceiver;
+        long listing_id;
         public ListingListViewHolder(@NonNull View listing) {
             super(listing);
+            mReceiver = new NetworkReceiver(null ,this);
             title = listing.findViewById(R.id.listing_frag_title);
             owner = listing.findViewById(R.id.listing_frag_owner);
+            view_listing_text = listing.findViewById(R.id.view_listing_txt_btn);
+            view_listing_text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GetListingsService.GetListingById(v.getContext(),mReceiver,listing_id);
+                }
+            });
         }
 
         @Override public void setUpUi(Object o){
             Listing listing = (Listing) o;
             this.title.setText(listing.getTitle());
-            this.owner.setText(listing.getUsername());
+            this.owner.setText(listing.getOwner());
+            listing_id = listing.getListingid();
+        }
+        // DataReceiver
+        @Override
+        public void onReceiveResult(int resultCode, Bundle resultData) {
+            //Go to new activity
+            Intent intent = new Intent(this.title.getContext(),DetailedListingController.class);
+            intent.putExtra("data", resultData.getSerializable("data"));
+            this.title.getContext().startActivity(intent);
         }
     }
 

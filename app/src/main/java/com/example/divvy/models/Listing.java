@@ -16,9 +16,10 @@ public class Listing implements Serializable {
     String descr;
     String username;
     int status;
-    int listing_id;
+    long listing_id;
 
-    public Listing(String title, String desc, String username, int status, int listingid) {
+
+    public Listing(String title, String desc, String username, int status, long listingid) {
         this.title = title;
         this.descr = desc;
         this.username = username;
@@ -37,10 +38,10 @@ public class Listing implements Serializable {
     public void setDescr(String descr) {
         this.descr = descr;
     }
-    public String getUsername() {
+    public String getOwner() {
         return username;
     }
-    public void setUsername(String username) {
+    public void setOwner(String username) {
         this.username = username;
     }
     public int getStatus() {
@@ -49,7 +50,7 @@ public class Listing implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-    public int getListingid() {
+    public long getListingid() {
         return listing_id;
     }
     public void setListingid(int listingid) {
@@ -58,9 +59,9 @@ public class Listing implements Serializable {
     public void postData(Context currentContext){
         JSONObject data = new JSONObject();
         try {
-            data.put("title", title);
+            data.put("username", getOwner());
             data.put("descr", descr);
-            data.put("username", getUsername());
+            data.put("title", title);
             //change to owner_id
         }
         catch(JSONException e) {
@@ -72,5 +73,8 @@ public class Listing implements Serializable {
         intent.putExtra("type", httprequest.POST_CODE);
         intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
         currentContext.startService(intent);
+    }
+    public String toString(){
+       return "{\"username\": " + getOwner() + ",\"descr\": " + getDescr() + ",\"title\":" + getTitle()+ "}" ;
     }
 }
