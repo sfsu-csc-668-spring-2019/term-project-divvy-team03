@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class LoginService extends IntentService {
 
@@ -29,7 +30,7 @@ public class LoginService extends IntentService {
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
         try {
             String data = httprequest.get(
-                    (HashMap<String,String>)intent.getSerializableExtra("data"),
+                    (LinkedHashMap<String,String>)intent.getSerializableExtra("data"),
                     intent.getStringExtra("uri"));
             System.out.println("data:" + data);
             String username = convertDataToUsername(data);
@@ -42,7 +43,7 @@ public class LoginService extends IntentService {
             e.printStackTrace();
         }
     }
-    public static void postData(Context context, ResultReceiver receiver, HashMap<String,String> data){
+    public static void getData(Context context, ResultReceiver receiver, LinkedHashMap<String,String> data){
         Intent i = new Intent(context, LoginService.class);
         i.putExtra("data", data);
         i.putExtra("type", httprequest.GET_CODE);

@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class UserLoginController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
 
@@ -78,13 +79,13 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
         String username = inputUsername.getText().toString();
         String password = inputPassword.getText().toString();
 
-        HashMap<String,String> data = new HashMap<>();
+        LinkedHashMap<String,String> data = new LinkedHashMap<>();
         data.put("username",username);
         data.put("psw", password);
 
         System.out.println("Hashmap: " + data.toString());
 
-        LoginService.postData(this, mReceiver, data);
+        LoginService.getData(this, mReceiver, data);
     }
 
 
