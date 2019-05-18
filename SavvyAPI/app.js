@@ -61,6 +61,7 @@ app.use(rating)
 io.on('connection', (socket) => {
     console.log('user connected')
     var room = socket.handshake.query.room;
+console.log("room=" + room)
     socket.join(room);
 
     socket.on('join', function(userNickname) {
@@ -78,7 +79,7 @@ io.on('connection', (socket) => {
         let message = { "message": messageContent, "senderNickname": senderNickname }
 //        const json = Object.keys(data).forEach((key) => (data[key] == '') && delete messageContent[key]);
         //image(json.image)
-           console.log(room);
+          // console.log(room);
             // send the message to all users including the sender  using io.emit() 
         io.to(room).emit('message', message)
        // console.log("this is the message " + message);
@@ -101,6 +102,7 @@ io.on('connection', (socket) => {
 //})
     socket.on('disconnect', function() {
         console.log('user has left ')
+        socket.leave(room)
         io.to(room).emit("userdisconnect", ' user has left')
 
     })
