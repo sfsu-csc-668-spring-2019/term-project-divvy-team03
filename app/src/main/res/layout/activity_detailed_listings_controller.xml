@@ -7,7 +7,7 @@
     tools:context=".Controllers.DetailedListingController">
 
     <TextView
-        android:id="@+id/detailed_lst_title"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/detailed_owner_img"
+        android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/ic_face" />
 
     <TextView
-        android:id="@+id/detailed_owner"
+        android:id="@+id/owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -42,10 +42,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_owner_img" />
+        app:layout_constraintTop_toBottomOf="@+id/image" />
 
     <TextView
-        android:id="@+id/detailed_desc"
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -54,10 +54,10 @@
         android:text="description..."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_lst_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/messaging_button" />
 
     <Button
-        android:id="@+id/detailed_lst_btn"
+        android:id="@+id/messaging_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -67,6 +67,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_owner" />
+        app:layout_constraintTop_toBottomOf="@+id/owner" />
 
 </android.support.constraint.ConstraintLayout>

@@ -10,7 +10,9 @@ import com.example.divvy.models.Listing;
 
 import java.util.ArrayList;
 
+
 public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
+
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
     @Override

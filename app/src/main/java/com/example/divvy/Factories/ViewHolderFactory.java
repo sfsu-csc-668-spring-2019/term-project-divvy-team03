@@ -21,8 +21,6 @@ import com.example.divvy.models.Listing;
 import com.example.divvy.models.Message;
 import com.example.divvy.models.Review;
 
-import java.util.Date;
-
 
 public class ViewHolderFactory {
 
@@ -68,7 +66,7 @@ public class ViewHolderFactory {
             ImageMessage message = (ImageMessage) imageMessage;
             this.username.setText(message.getSender());
             this.message.setText(message.getMessage());
-            this.image.setImageDrawable(ImageSelector.LoadImageFromWebOperations(""));
+            this.image.setImageBitmap(ImageSelector.decodeImage(message.getImage()));
         }
     }
 
@@ -123,21 +121,23 @@ public class ViewHolderFactory {
     }
 
     public static class ReviewViewHolder extends MyViewHolder{
-        TextView username, date;
+        TextView username, date, comment;
         RatingBar ratingBar;
-        ImageView image;
 
         public ReviewViewHolder(@NonNull View listing) {
             super(listing);
             username = listing.findViewById(R.id.review_username);
             date = listing.findViewById(R.id.date);
+            ratingBar = listing.findViewById(R.id.rating_bar);
+            comment = listing.findViewById(R.id.comment);
         }
 
         @Override public void setUpUi(Object o){
             Review review = (Review) o;
-            this.username.setText(review.getOwner().getFullName());
-            this.date.setText(new Date().toString());
+            this.username.setText(review.getOwner());
+            this.date.setText(review.getDate());
             this.ratingBar.setRating((float)review.getRating());
+            this.comment.setText(review.getComment());
         }
 
     }

@@ -12,6 +12,7 @@ public class NetworkReceiver extends ResultReceiver {
      *
      * @param handler
      */
+
     DataReceiver receiver;
     public NetworkReceiver(Handler handler, DataReceiver receiver) {
         super(handler);
@@ -23,7 +24,9 @@ public class NetworkReceiver extends ResultReceiver {
         super.onReceiveResult(resultCode, resultData);
         receiver.onReceiveResult(resultCode,resultData);
     }
+
     public interface DataReceiver {
          void onReceiveResult(int resultCode, Bundle resultData);
     }
+
 }

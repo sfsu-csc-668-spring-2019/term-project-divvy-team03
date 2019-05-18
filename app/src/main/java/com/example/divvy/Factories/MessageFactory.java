@@ -14,8 +14,8 @@ public class MessageFactory {
 
     public static Message create(JSONObject data){
         try {
-            if (data.has("imageUrl")) {
-                return new ImageMessage(data.getString("message"), data.getString("senderNickname"), data.getString("imageUrl"));
+            if (data.has("image")) {
+                return new ImageMessage(data.getString("message"), data.getString("senderNickname"), data.getString("image"));
             }else{
                 return new Message(data.getString("message"), data.getString("senderNickname"));
             }

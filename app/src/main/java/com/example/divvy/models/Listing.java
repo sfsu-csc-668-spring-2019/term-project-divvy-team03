@@ -18,6 +18,7 @@ public class Listing implements Serializable {
     int status;
     long listing_id;
 
+
     public Listing(String title, String desc, String username, int status, long listingid) {
         this.title = title;
         this.descr = desc;

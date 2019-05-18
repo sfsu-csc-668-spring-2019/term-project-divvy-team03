@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -113,11 +116,36 @@ public class ImageSelector {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, "src name");
+            is.close();
             return d;
         } catch (Exception e) {
             Log.d("ERROR: ", e.toString());
             return null;
         }
+    }
 
+    public static Bitmap decodeImage(String data)
+    {
+        byte[] b = Base64.decode(data,Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(b,0,b.length);
+        return bmp;
+    }
+
+    public static class ImageRetrieverTask extends AsyncTask<Object, Void, Drawable>{
+        private ImageView imageView;
+        public ImageRetrieverTask(ImageView imageView){
+            this.imageView = imageView;
+        }
+        @Override
+        protected Drawable doInBackground(Object... url) {
+            return LoadImageFromWebOperations((String) url[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            imageView.setImageDrawable(drawable);
+            this.cancel(true);
+        }
     }
 }
