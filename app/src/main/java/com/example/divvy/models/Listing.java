@@ -14,14 +14,14 @@ import java.io.Serializable;
 public class Listing implements Serializable {
     String title;
     String descr;
-    String owner;
+    String username;
     int status;
     int listing_id;
 
-    public Listing(String title, String desc, String owner, int status, int listingid) {
+    public Listing(String title, String desc, String username, int status, int listingid) {
         this.title = title;
         this.descr = desc;
-        this.owner = owner;
+        this.username = username;
         this.status = status;
         this.listing_id = listingid;
     }
@@ -37,11 +37,11 @@ public class Listing implements Serializable {
     public void setDescr(String descr) {
         this.descr = descr;
     }
-    public String getOwner() {
-        return owner;
+    public String getUsername() {
+        return username;
     }
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setUsername(String username) {
+        this.username = username;
     }
     public int getStatus() {
         return status;
@@ -60,7 +60,7 @@ public class Listing implements Serializable {
         try {
             data.put("title", title);
             data.put("descr", descr);
-            data.put("username", getOwner());
+            data.put("username", getUsername());
             //change to owner_id
         }
         catch(JSONException e) {

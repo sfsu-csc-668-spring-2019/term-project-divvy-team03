@@ -1,6 +1,5 @@
 package com.example.divvy.Factories;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,14 +10,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.divvy.Controllers.ImageSelector;
-import com.example.divvy.Controllers.MyListingsController;
 import com.example.divvy.R;
 import com.example.divvy.models.ImageMessage;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.Message;
 import com.example.divvy.models.Review;
-
-import java.util.Date;
 
 
 public class ViewHolderFactory {
@@ -97,7 +93,7 @@ public class ViewHolderFactory {
         @Override public void setUpUi(Object o){
             Listing listing = (Listing) o;
             this.title.setText(listing.getTitle());
-            this.owner.setText(listing.getOwner());
+            this.owner.setText(listing.getUsername());
         }
     }
 
