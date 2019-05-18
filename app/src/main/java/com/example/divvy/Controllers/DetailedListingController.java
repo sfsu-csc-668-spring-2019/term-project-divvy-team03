@@ -3,6 +3,7 @@ package com.example.divvy.Controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import java.util.ArrayList;
 public class DetailedListingController extends AppCompatActivity {
 
     Listing listing;
+    TextView titleText, descText, ownerText;
+    ImageView ownerImg;
+    Button messagingButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -22,17 +27,28 @@ public class DetailedListingController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_listings_controller);
         setUI();
+        setUpListeners();
     }
 
     public void setUI(){
-        TextView titleText = findViewById(R.id.title);
-        TextView descText = findViewById(R.id.description);
-        TextView ownerText = findViewById(R.id.owner);
-        ImageView ownerImg = findViewById(R.id.image_view);
+        titleText = findViewById(R.id.title);
+        descText = findViewById(R.id.description);
+        ownerText = findViewById(R.id.owner);
+        ownerImg = findViewById(R.id.image);
+        messagingButton = findViewById(R.id.messaging_button);
+
         if(listing != null){
             titleText.setText(listing.getTitle());
             descText.setText(listing.getDescr());
             ownerText.setText(listing.getOwner());
         }
+    }
+
+    public void setUpListeners(){
+        messagingButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MessagingActivity.class);
+            intent.putExtra("id", listing.getListingid());
+            startActivity(intent);
+        });
     }
 }

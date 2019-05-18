@@ -16,10 +16,12 @@ public class Messenger extends Observable {
     private Socket socket;
     private String username;
     private Emitter.Listener messageListener;
+    private Long listing_id;
 
-    public Messenger(String username, Observer observer) {
+    public Messenger(String username, Observer observer, Long listing_id) {
       this.username = username;
       this.addObserver(observer);
+      this.listing_id = listing_id;
       setUpChannels();
       setUpSocket();
     }
@@ -35,7 +37,7 @@ public class Messenger extends Observable {
 
     private boolean setUpSocket() {
         try {
-            String params = "room=1557827582659";
+            String params = "room=" + Long.toString(listing_id);
            // "http://34.226.139.149/
             socket = IO.socket("http://34.226.139.149?"+ params).connect();
             System.out.println("http://127.0.0.1?" + params);

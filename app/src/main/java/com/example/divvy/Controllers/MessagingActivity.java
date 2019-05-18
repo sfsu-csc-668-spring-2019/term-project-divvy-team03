@@ -38,8 +38,9 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     private RecyclerView recyclerView;
     private ImageView addImageButton, cancelButton;
     private TextView listingName;
+    private Long listingId;
 
-    private String username = "username", listing_id;
+    private String username = "username";
     private List<Message> messageList;
     private RecyclerViewAdapter chatBoxAdapter;
 
@@ -52,7 +53,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         setUpUi();
         setUpListeners();
         messageList = new ArrayList<>();
-        messenger = new Messenger(username, this);
+        messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
     }
 
