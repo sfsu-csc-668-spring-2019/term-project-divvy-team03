@@ -123,14 +123,14 @@ public class ImageSelector {
         }
     }
 
-    public static class ImageRetrieverTask extends AsyncTask<String, Void, Drawable>{
+    public static class ImageRetrieverTask extends AsyncTask<Object, Void, Drawable>{
         private ImageView imageView;
         public ImageRetrieverTask(ImageView imageView){
             this.imageView = imageView;
         }
         @Override
-        protected Drawable doInBackground(String... url) {
-            return LoadImageFromWebOperations(url[0]);
+        protected Drawable doInBackground(Object... url) {
+            return LoadImageFromWebOperations((String) url[0]);
         }
 
         @Override
