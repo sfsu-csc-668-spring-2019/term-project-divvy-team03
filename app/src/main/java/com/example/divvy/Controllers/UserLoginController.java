@@ -82,6 +82,8 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
         data.put("username",username);
         data.put("psw", password);
 
+        System.out.println("Hashmap: " + data.toString());
+
         LoginService.postData(this, mReceiver, data);
     }
 
