@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class UserProfileActivity extends AppCompatActivity implements NetworkReceiver.Receiver{
+public class UserProfileActivity extends AppCompatActivity implements NetworkReceiver.DataReceiver{
 
     private RecyclerView recyclerView;
     private TextView usernameView;
@@ -64,7 +64,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         image = findViewById(R.id.user_image);
         review_button = findViewById(R.id.review_button);
         AsyncTask i = new ImageSelector.ImageRetrieverTask(image);
-        String[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
+        Object[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
         i.execute(images);
         ratingBar = findViewById(R.id.ratingBar);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -103,6 +103,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         }
         ratingBar.setRating(total/reviewsList.size());
     }
+
 
 
 }

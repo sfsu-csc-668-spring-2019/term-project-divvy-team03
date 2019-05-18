@@ -49,7 +49,7 @@ public class GetListingsService extends IntentService {
                     jsonObject.getString("descr"),
                     jsonObject.getString("username"),
                     jsonObject.getInt("status"),
-                    jsonObject.getInt("listing_id"));
+                    jsonObject.getLong("listing_id"));
             listings.add(listing);
         }
         return listings;
@@ -72,6 +72,16 @@ public class GetListingsService extends IntentService {
         i.putExtra("data",data);
         i.putExtra("type", httprequest.GET_CODE);
         i.putExtra("uri", httprequest.ROOT_ADDRESS + "/search");
+        i.putExtra("receiver", receiver);
+        context.startService(i);
+    }
+    public static void GetListingById(Context context, ResultReceiver receiver, Long listing_id){
+        Intent i = new Intent(context, GetListingsService.class);
+        HashMap<String,String> data = new HashMap<>();
+        data.put("id", listing_id.toString());
+        i.putExtra("data",data);
+        i.putExtra("type", httprequest.GET_CODE);
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchbyID");
         i.putExtra("receiver", receiver);
         context.startService(i);
     }
