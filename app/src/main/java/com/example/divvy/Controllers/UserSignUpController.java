@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
+import com.example.divvy.RegService;
 import com.example.divvy.httprequest;
 import com.example.divvy.models.User;
 
@@ -18,7 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class UserSignUpController extends AppCompatActivity {
+public class UserSignUpController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
     // Buttons specific to sign up view
     private final String rootUrl = "ec2-34-226-139-149.compute-1.amazonaws.com";
     //
@@ -30,6 +32,8 @@ public class UserSignUpController extends AppCompatActivity {
     private EditText editTextMakePassword;
     private Button btnLinkToLoginPage;
     //
+
+    private NetworkReceiver mReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,7 @@ public class UserSignUpController extends AppCompatActivity {
         btnLinkToLoginPage = findViewById(R.id.button_LogInLink);
         editTextUserName = findViewById(R.id.editText_UserName);
 
+        mReceiver = new NetworkReceiver(null,this);
 
         createListeners();
         //
@@ -91,7 +96,7 @@ public class UserSignUpController extends AppCompatActivity {
                 json.put("first_name", newUser.getUserFirstName());
                 json.put("last_name", newUser.getUserLastName());
                 json.put("city", newUser.getUserCity());
-                json.put("description", "");
+                json.put("descr", "");
 
                 return json;
             }catch(JSONException e){
@@ -160,11 +165,17 @@ public class UserSignUpController extends AppCompatActivity {
         if(validateForm()){
             User createdUser = createNewUserObject();
             JSONObject createdJson = createSignUpJSON(createdUser);
-            if(attemptToSignUp(createdJson)){
-                Toast.makeText(getApplicationContext(),"Success?!.", Toast.LENGTH_SHORT).show();
+            RegService.postData(this,mReceiver,createdJson.toString());
+            //if(attemptToSignUp(createdJson)){
+            //    Toast.makeText(getApplicationContext(),"Success?!.", Toast.LENGTH_SHORT).show();
 
-            }
+           // }
         }
 
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        System.out.println("Reg result: " + resultData.getString("data"));
     }
 }

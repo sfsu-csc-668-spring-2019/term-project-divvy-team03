@@ -10,7 +10,7 @@ import com.example.divvy.GetListingsService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 
-public class MainActivity extends AppCompatActivity implements NetworkReceiver.GetListingsReceiver {
+public class MainActivity extends AppCompatActivity implements NetworkReceiver.DataReceiver {
 
     public static String USERNAME;
     public NetworkReceiver mReceiver;

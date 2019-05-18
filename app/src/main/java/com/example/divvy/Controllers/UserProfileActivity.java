@@ -52,6 +52,4 @@ public class UserProfileActivity extends AppCompatActivity{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
-
-
 }

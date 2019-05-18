@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailedListingsController"></activity>
+        <activity android:name=".Controllers.DetailedListingController"></activity>
         <activity android:name=".Controllers.DisplayListingsController" />
         <activity android:name=".Controllers.SearchController" />
         <activity android:name=".Controllers.MyListingsController" />
@@ -37,6 +37,8 @@
             android:name=".httprequest"
             android:exported="false" />
         <service android:name=".GetListingsService" />
+        <service
+            android:name=".RegService"/>
     </application>
 
 </manifest>
