@@ -38,7 +38,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     private RecyclerView recyclerView;
     private ImageView addImageButton, cancelButton;
     private TextView listingName;
-    private String username = "Lorenzo";
+    private String username;
     private List<Message> messageList;
     private RecyclerViewAdapter chatBoxAdapter;
 
@@ -51,8 +51,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         setUpUi();
         setUpListeners();
         messageList = new ArrayList<>();
-
-        //username = getIntent().getExtras().getString(MainActivity.USERNAME);
+        username = LoginAuthenticator.getInstance().getUser(this);
     }
 
     @Override
@@ -118,8 +117,11 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
-        Log.d("FUCK THIS SHIT",  Long.toString(getIntent().getExtras().getLong("id")));
+        try{
+            messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
+        }catch (Exception e){
+            messenger = new Messenger(username, this, new Long("3"));
+        }
     }
 
     @Override

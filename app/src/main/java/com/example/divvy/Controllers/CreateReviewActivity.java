@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.divvy.R;
+import com.example.divvy.RatingService;
 import com.example.divvy.models.Review;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +58,7 @@ public class CreateReviewActivity extends AppCompatActivity{
                     comment_text_field.getText().toString(),
                     username,
                     format.format(new Date()));
-            review.sendData(this);
+            RatingService.createReviewByUsername(this, review);
             finish();
         });
 

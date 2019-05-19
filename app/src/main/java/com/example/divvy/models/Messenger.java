@@ -24,7 +24,6 @@ public class Messenger extends Observable {
       this.username = "LORENZO";
       this.addObserver(observer);
       this.listing_id = listing_id;
-      Log.d("ASS", Long.toString(this.listing_id));
       setUpChannels();
       setUpSocket();
     }
@@ -45,7 +44,7 @@ public class Messenger extends Observable {
         try {
             IO.Options opts = new IO.Options();
             opts.forceNew = true;
-            opts.query = "room=" + Long.toString(listing_id);;
+            opts.query = "room=" + Long.toString(listing_id);
             socket = IO.socket("http://34.226.139.149", opts).connect();
             //String params = "room=" + Long.toString(listing_id);
            // System.out.println(params);
