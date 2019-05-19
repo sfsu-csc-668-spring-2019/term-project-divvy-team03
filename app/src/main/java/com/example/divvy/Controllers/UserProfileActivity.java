@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.divvy.RatingService;
+import com.example.divvy.GetRatingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.RecyclerViewAdapter;
@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         reviewsList = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
-        RatingService.GetReviewsByUsername(this, mReceiver, "anton");
+        GetRatingService.GetReviewsByUsername(this, mReceiver, "anton");
     }
 
     @Override

@@ -53,19 +53,19 @@ public class ViewHolderFactory {
 
 
     public static class ImageMessageViewHolder extends MyViewHolder{
-        private TextView message, username;
+        private TextView messageText, username;
         private ImageView image;
 
         public ImageMessageViewHolder(View view){
             super(view);
-            message = view.findViewById(R.id.message);
+            messageText = view.findViewById(R.id.message);
             username = view.findViewById(R.id.username);
             image = view.findViewById(R.id.imageView);
         }
         @Override public void setUpUi(Object imageMessage){
             ImageMessage message = (ImageMessage) imageMessage;
             this.username.setText(message.getSender());
-            this.message.setText(message.getMessage());
+            this.messageText.setText(message.getMessage());
             this.image.setImageBitmap(ImageSelector.decodeImage(message.getImage()));
         }
     }

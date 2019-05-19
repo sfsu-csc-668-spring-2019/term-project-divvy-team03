@@ -95,6 +95,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
             if (cancelButton.getVisibility() == View.VISIBLE) {
                 messenger.sendMessage(MessageFactory.create(messageText, username, encodeImage(((BitmapDrawable)addImageButton.getDrawable()).getBitmap())));
                 clearImageButton();
+                textField.setText("");
             }else if (!messageText.equals("")) {
                 // TODO: This probably belongs in Messenger?
                 messenger.sendMessage(MessageFactory.create(messageText, username));
@@ -120,7 +121,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         try{
             messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
         }catch (Exception e){
-            messenger = new Messenger(username, this, new Long("3"));
+            messenger = new Messenger(username, this, new Long("1"));
         }
     }
 

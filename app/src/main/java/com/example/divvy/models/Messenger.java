@@ -65,7 +65,6 @@ public class Messenger extends Observable {
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
             try {
-                Log.d("FUCK", data.toString());
                 this.setChanged();
                 this.notifyObservers(MessageFactory.create((JSONObject) data.get("senderNickname")));
             }catch(Exception e){
