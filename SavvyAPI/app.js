@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
         })*/
 
     socket.on('messagedetection', (message) => {
-        console.log(JSON.stringify(message))
+        //console.log(JSON.stringify(message))
         Chat.create([room, message["senderNickname"], message["message"]])
             //let message = { "message": messageContent, "senderNickname": senderNickname }
         io.to(room).emit('message', message)
