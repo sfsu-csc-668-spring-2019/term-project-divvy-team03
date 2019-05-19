@@ -18,17 +18,19 @@ export default class ActiveRecord {
         return `INSERT INTO ${this.tableName()} (${this.columns().join(', ')}) VALUES ("${values.join('", "')}")`;
     }
 
-    update(values, callback) {
+    update() {
 
     }
 
     delete() {
 
     }
+
     static promisify(querystring) {
         return new Promise(function(resolve, reject) {
             pool.query(querystring, function(error, rows, fields) {
                 if (error) {
+                    console.log(error);
                     return reject("failed to save query");
                 }
                 return resolve(rows);

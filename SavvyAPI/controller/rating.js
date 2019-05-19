@@ -30,7 +30,6 @@ router.use(cors());
 router.post('/rate', ({ body }, response) => {
     const values = [
         ...Object.keys(body).map(key => body[key]),
-        group_id
     ];
     Rating.create(values)
         .then(_ => {
@@ -52,6 +51,7 @@ router.get('/searchRatingByUserRating', (request, response) => {
             response.send(rows)
         }, _ => response.sendStatus(422));
 })
+
 
 
 module.exports = router
