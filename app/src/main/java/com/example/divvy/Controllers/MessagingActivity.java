@@ -38,7 +38,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     private RecyclerView recyclerView;
     private ImageView addImageButton, cancelButton;
     private TextView listingName;
-    private String username = "Lorenzo";
+    private String username;
     private List<Message> messageList;
     private RecyclerViewAdapter chatBoxAdapter;
 
@@ -51,8 +51,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         setUpUi();
         setUpListeners();
         messageList = new ArrayList<>();
-
-        //username = getIntent().getExtras().getString(MainActivity.USERNAME);
+        username = LoginAuthenticator.getInstance().getUser(this);
     }
 
     @Override
@@ -68,6 +67,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         addImageButton = findViewById(R.id.add_image_button);
         listingName = findViewById(R.id.listing_name);
         cancelButton = findViewById(R.id.cancel_button);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -95,6 +95,7 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
             if (cancelButton.getVisibility() == View.VISIBLE) {
                 messenger.sendMessage(MessageFactory.create(messageText, username, encodeImage(((BitmapDrawable)addImageButton.getDrawable()).getBitmap())));
                 clearImageButton();
+                textField.setText("");
             }else if (!messageText.equals("")) {
                 // TODO: This probably belongs in Messenger?
                 messenger.sendMessage(MessageFactory.create(messageText, username));
@@ -117,8 +118,11 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
-        Log.d("FUCK THIS SHIT",  Long.toString(getIntent().getExtras().getLong("id")));
+        try{
+            messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
+        }catch (Exception e){
+            messenger = new Messenger(username, this, new Long("1"));
+        }
     }
 
     @Override

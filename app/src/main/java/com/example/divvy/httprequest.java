@@ -23,6 +23,8 @@ public class httprequest{
     public static final String ROOT_ADDRESS = "http://ec2-34-226-139-149.compute-1.amazonaws.com";
     public static final int GET_CODE = 1;
     public static final int POST_CODE = 2;
+    public static final int SUCCESS_CODE = 1;
+    public static final int FAIL_CODE = -1;
     private static OkHttpClient client = new OkHttpClient();
 
     /**

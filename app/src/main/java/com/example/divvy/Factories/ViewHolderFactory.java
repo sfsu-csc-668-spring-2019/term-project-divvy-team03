@@ -16,7 +16,6 @@ import com.example.divvy.Controllers.ImageSelector;
 import com.example.divvy.ListingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
-import com.example.divvy.models.ImageMessage;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.Message;
 import com.example.divvy.models.Review;
@@ -28,10 +27,7 @@ public class ViewHolderFactory {
         if(object.getClass().equals(Message.class)){
             return new MessageViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message, parent, false));
-        }else if(object.getClass().equals(ImageMessage.class)){
-            return new ImageMessageViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.image_message, parent, false));
-        }else if(object.getClass().equals(Listing.class)){
+        } else if(object.getClass().equals(Listing.class)){
             return new ListingListViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_listing, parent, false));
         }else if(object.getClass().equals(Review.class)){
@@ -52,37 +48,25 @@ public class ViewHolderFactory {
     }
 
 
-    public static class ImageMessageViewHolder extends MyViewHolder{
-        private TextView message, username;
-        private ImageView image;
 
-        public ImageMessageViewHolder(View view){
-            super(view);
-            message = view.findViewById(R.id.message);
-            username = view.findViewById(R.id.username);
-            image = view.findViewById(R.id.imageView);
-        }
-        @Override public void setUpUi(Object imageMessage){
-            ImageMessage message = (ImageMessage) imageMessage;
-            this.username.setText(message.getSender());
-            this.message.setText(message.getMessage());
-            this.image.setImageBitmap(ImageSelector.decodeImage(message.getImage()));
-        }
-    }
+
 
     public static class MessageViewHolder extends MyViewHolder{
         private TextView message, username;
+        private ImageView image;
 
         public MessageViewHolder(View view){
             super(view);
             message = view.findViewById(R.id.message);
             username = view.findViewById(R.id.username);
+            this.image = view.findViewById(R.id.image);
         }
 
         @Override public void setUpUi(Object o){
             Message message = (Message) o;
             this.username.setText(message.getSender());
             this.message.setText(message.getMessage());
+            this.image.setImageBitmap(ImageSelector.decodeImage(message.getImage()));
         }
     }
 

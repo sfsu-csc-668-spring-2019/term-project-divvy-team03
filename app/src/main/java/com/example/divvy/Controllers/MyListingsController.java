@@ -12,22 +12,27 @@ import com.example.divvy.models.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class MyListingsController extends DisplayListingsController implements NetworkReceiver.DataReceiver{
-    private NetworkReceiver mReceiver;
+public class MyListingsController extends DisplayListingsController{
     public final String MY_LISTING_CODE = "mylistings";
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = getIntent();
         super.onCreate(savedInstanceState);
-        if(listings == null) {
-            listings = new ArrayList<>();
-        }
-        mReceiver = new NetworkReceiver(null,this);
+        Intent intent = getIntent();
         setContentView(R.layout.listings_view);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
         if(intent.getSerializableExtra("data") != null) {
             listings = (ArrayList<Listing>) intent.getSerializableExtra("data");
         }
         UpdateListings();
+
+
+    }
+
+    @Override
+    public void UpdateListingsView() {
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -35,13 +40,16 @@ public class MyListingsController extends DisplayListingsController implements N
         super.onResume();
         LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
         ListingService.GetListingsByUsername(this,mReceiver,authenticator.getUser(this));
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        recyclerView = findViewById(R.id.listings_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        super.onReceiveResult(resultCode, resultData);
         listings = (ArrayList<Listing>)resultData.get("data");
-        UpdateListings();
+        UpdateListingsView();
     }
 
     private void UpdateListings(){

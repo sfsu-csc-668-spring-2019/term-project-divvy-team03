@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.example.divvy.models.Review;
 
@@ -20,17 +19,18 @@ import java.util.HashMap;
 
 import static com.example.divvy.httprequest.get;
 
-public class GetRatingsService extends IntentService {
-    public GetRatingsService(){
-        super("getRatings");
+public class GetRatingService extends IntentService {
+
+    public GetRatingService() {
+        super("GetRatingService");
     }
+
     @Override
-    protected void onHandleIntent( @Nullable Intent intent) {
-        Log.d("FUCK: ", "HANDLING INTENT");
+    protected void onHandleIntent(@Nullable Intent intent) {
         Bundle bundle = new Bundle();
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
         try {
-            String data = get((HashMap<String, String>) intent.getSerializableExtra("data"),intent.getStringExtra("uri"));
+            String data = get((HashMap<String, String>) intent.getSerializableExtra("data"), intent.getStringExtra("uri"));
             System.err.println(data);
             ArrayList<Review> reviews = convertDataToRating(data);
             bundle.putSerializable("data", reviews);
@@ -42,14 +42,17 @@ public class GetRatingsService extends IntentService {
         }
     }
 
+
+
+
     public static ArrayList<Review> convertDataToRating(String s) throws JSONException {
         ArrayList<Review> reviews = new ArrayList<>();
         JSONArray array = new JSONArray(s);
-        for(int i = 0; i < array.length();i++){
-            JSONObject jsonObject = (JSONObject)array.get(i);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject jsonObject = (JSONObject) array.get(i);
             Review review = new Review(
                     jsonObject.getInt("rating_id"),
-                    jsonObject.getDouble("rating"),
+                    (float)jsonObject.getDouble("rating"),
                     jsonObject.getString("user_rating"),
                     jsonObject.getString("comments"),
                     jsonObject.getString("user_rated"),
@@ -60,15 +63,17 @@ public class GetRatingsService extends IntentService {
     }
 
     // helper method to call this from any controller.
-    public static void GetReviewsByUsername(Context context, ResultReceiver receiver, String owner){
-        Intent i = new Intent(context, GetRatingsService.class);
-        HashMap<String,String> data = new HashMap<>();
+    public static void GetReviewsByUsername(Context context, ResultReceiver receiver, String owner) {
+        Intent i = new Intent(context, GetRatingService.class);
+        HashMap<String, String> data = new HashMap<>();
         data.put("username", owner);
-        i.putExtra("data",data);
+        i.putExtra("data", data);
         i.putExtra("type", httprequest.GET_CODE);
-        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchRatingByUserRating");
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchRatingByUserRated");
         i.putExtra("receiver", receiver);
         context.startService(i);
     }
+
+
 
 }

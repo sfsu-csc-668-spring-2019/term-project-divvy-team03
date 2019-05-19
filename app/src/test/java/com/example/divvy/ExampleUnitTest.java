@@ -32,7 +32,9 @@ public class ExampleUnitTest {
     }
 
     private String registration() throws JSONException {
-        String json = "{\"username\": \"alex\",\"descr\":\"test description\",\"title\": \"test title\"}" ;
+        //String json = "{\"username\": \"alex3222\",\"email\": \"alex23@g.com\", \"password\": \"1234\",\"first_name\":\"anton\", \"last_name\": \"blade\", \"city\":\"LA\",\"description\":\"crazy\"}";
+        String json = "{\"username\": \"antonio\",\"descr\": \"new test from android\", \"title\": \"testing from android\"}";
+
         System.out.println(json);
         return json;
 
