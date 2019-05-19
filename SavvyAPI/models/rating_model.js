@@ -11,9 +11,9 @@ export default class Rating extends ActiveRecord {
 
     static findBy(name, num) {
         if (num == 1) {
-            return [`user_rated = '${name}'`]
+            return [`user_rated = '${name}' ORDER BY date ASC`]
         } else if (num == 2) {
-            return [`user_rating = '${name}'`]
+            return [`user_rating = '${name}'ORDER BY date ASC`]
         }
     }
 }
