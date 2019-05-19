@@ -3,24 +3,28 @@ package com.example.divvy.models;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.httprequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Review implements Serializable {
     int reviewid;
-    double rating;
+    float rating;
     String owner;
     String comment;
     String targetUser;
     private String date;
 
-    public Review(int reviewid, double rating, String owner, String comment, String targetUser, String date){
+    public Review(int reviewid, float rating, String owner, String comment, String targetUser, String date){
         this.reviewid = reviewid;
         this.rating = rating;
         this.owner = owner;
@@ -41,7 +45,7 @@ public class Review implements Serializable {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -71,22 +75,26 @@ public class Review implements Serializable {
 
     public String getDate(){ return this.date;}
 
-    public String sendData(Context currentContext){
+    public String postData(Context currentContext, NetworkReceiver receiver){
         JSONObject data = new JSONObject();
         try{
-        data.put("comments", comment);
-        data.put("user_rating", owner);
-        data.put("user_rated",targetUser);
-        data.put("rating",rating);
+            data.put("rating",rating);
+            data.put("user_rated",targetUser);
+            data.put("user_rating", owner);
+            data.put("comments", comment);
         }
         catch(JSONException e){
-
+            System.err.println("Error constructing review JSON");
         }
         System.out.println(data.toString());
         Intent intent = new Intent(currentContext, httprequest.class);
         intent.putExtra("data", data.toString());
         intent.putExtra("type", httprequest.POST_CODE);
         intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/rate");
+        intent.putExtra("receiver",receiver);
+        currentContext.startService(intent);
         return data.toString();
     }
+
+
 }

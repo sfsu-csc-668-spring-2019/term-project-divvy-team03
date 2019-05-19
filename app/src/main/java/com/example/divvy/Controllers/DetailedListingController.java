@@ -36,6 +36,7 @@ public class DetailedListingController extends AppCompatActivity {
         ownerText = findViewById(R.id.owner);
         ownerImg = findViewById(R.id.image);
         messagingButton = findViewById(R.id.messaging_button);
+        NavBarController.setUpListners(findViewById(R.id.navigation), this);
 
         if(listing != null){
             titleText.setText(listing.getTitle());

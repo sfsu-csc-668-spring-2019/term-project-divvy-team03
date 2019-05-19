@@ -58,7 +58,7 @@ public class GetListingsService extends IntentService {
     public static void GetListingsByUsername(Context context, ResultReceiver receiver, String owner){
         Intent i = new Intent(context, GetListingsService.class);
         HashMap<String,String> data = new HashMap<>();
-        data.put("username", "alex");
+        data.put("username", owner);
         i.putExtra("data",data);
         i.putExtra("type", httprequest.GET_CODE);
         i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchbyusername");

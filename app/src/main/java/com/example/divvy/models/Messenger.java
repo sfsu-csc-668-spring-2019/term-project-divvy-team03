@@ -24,7 +24,6 @@ public class Messenger extends Observable {
       this.username = "LORENZO";
       this.addObserver(observer);
       this.listing_id = listing_id;
-      Log.d("ASS", Long.toString(this.listing_id));
       setUpChannels();
       setUpSocket();
     }
@@ -35,15 +34,20 @@ public class Messenger extends Observable {
     }
 
     public void sendMessage(Message message) {
-        if(message != null) socket.emit("messagedetection", message.toJsonFile());
+        if(message != null) socket.emit("messagedetection", MessageFactory.toJsonFile(message));
     }
 
     private boolean setUpSocket() {
         try {
-            String params = "room=" + Long.toString(listing_id);
+            IO.Options opts = new IO.Options();
+            opts.forceNew = true;
+            opts.query = "room=" + Long.toString(listing_id);
+            socket = IO.socket("http://34.226.139.149", opts).connect();
+            //String params = "room=" + Long.toString(listing_id);
+           // System.out.println(params);
            // "http://34.226.139.149/
-            socket = IO.socket("http://34.226.139.149?"+ params).connect();
-            System.out.println("http://127.0.0.1?" + params);
+            //socket = IO.socket("http://34.226.139.149:3000?"+ params).connect();
+           // System.out.println("http://34.226.139.149?" + params);
 
             socket.emit("join", username);
             socket.on("message", messageListener);
@@ -58,7 +62,6 @@ public class Messenger extends Observable {
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
             try {
-                Log.d("FUCK", data.toString());
                 this.setChanged();
                 this.notifyObservers(MessageFactory.create((JSONObject) data.get("senderNickname")));
             }catch(Exception e){

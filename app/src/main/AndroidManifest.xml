@@ -16,7 +16,9 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Controllers.DetailedListingController"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.DisplayListingsController"
+        <activity android:name=".Controllers.UserSignUpController"
+        android:screenOrientation="portrait"/>
+        <activity android:name=".Controllers.UserLoginController"
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.SearchController"
             android:screenOrientation="portrait"/>
@@ -30,7 +32,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.CreateReviewActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.UserLoginController"
+        <activity android:name=".Controllers.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +44,8 @@
             android:name=".httprequest"
             android:exported="false" />
         <service android:name=".GetListingsService" />
-        <service android:name = ".GetRatingsService"/>
+        <service android:name = "CreateRatingService"/>
+        <service android:name=".GetRatingService"/>
         <service
             android:name=".RegService"/>
         <service

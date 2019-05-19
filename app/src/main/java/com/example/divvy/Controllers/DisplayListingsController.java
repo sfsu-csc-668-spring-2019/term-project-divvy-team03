@@ -6,12 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.divvy.NetworkReceiver;
+import com.example.divvy.R;
 import com.example.divvy.models.Listing;
 
 import java.util.ArrayList;
 
 
-public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
+public abstract class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
 
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
@@ -22,22 +23,8 @@ public class DisplayListingsController extends AppCompatActivity implements Netw
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Bundle savedState = new Bundle();
-        savedState.putSerializable("data",listings);
-        this.onSaveInstanceState(savedState);
-
-    }
-    public void UpdateListingsView(){
-        finish();
-        startActivity(getIntent());
-    }
+    public abstract void UpdateListingsView();
 
     @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        listings = (ArrayList<Listing>)resultData.getSerializable("data");
-        UpdateListingsView();
-    }
+    public abstract void onReceiveResult(int resultCode, Bundle resultData);
 }
