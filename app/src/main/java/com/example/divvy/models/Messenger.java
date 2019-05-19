@@ -34,6 +34,7 @@ public class Messenger extends Observable {
     }
 
     public void sendMessage(Message message) {
+        Log.d("MESSAGE", "SENT");
         if(message != null) socket.emit("messagedetection", MessageFactory.toJsonFile(message));
     }
 
@@ -62,6 +63,7 @@ public class Messenger extends Observable {
         messageListener = args -> {
             JSONObject data = (JSONObject) args[0];
             try {
+                Log.d("MESSAGE", "RECEIVED");
                 this.setChanged();
                 this.notifyObservers(MessageFactory.create((JSONObject) data.get("senderNickname")));
             }catch(Exception e){
