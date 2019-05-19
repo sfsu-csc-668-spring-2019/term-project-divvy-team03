@@ -12,7 +12,7 @@ import com.example.divvy.models.Listing;
 import java.util.ArrayList;
 
 
-public class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
+public abstract class DisplayListingsController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
 
     ArrayList<Listing> listings;
     NetworkReceiver mReceiver;
@@ -31,14 +31,8 @@ public class DisplayListingsController extends AppCompatActivity implements Netw
         this.onSaveInstanceState(savedState);
 
     }
-    public void UpdateListingsView(){
-        finish();
-        startActivity(getIntent());
-    }
+    public abstract void UpdateListingsView();
 
     @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        listings = (ArrayList<Listing>)resultData.getSerializable("data");
-        UpdateListingsView();
-    }
+    public abstract void onReceiveResult(int resultCode, Bundle resultData);
 }

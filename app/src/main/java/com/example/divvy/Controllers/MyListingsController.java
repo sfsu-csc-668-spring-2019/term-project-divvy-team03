@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class MyListingsController extends DisplayListingsController implements NetworkReceiver.DataReceiver{
+public class MyListingsController extends DisplayListingsController{
     private NetworkReceiver mReceiver;
     public final String MY_LISTING_CODE = "mylistings";
     private RecyclerView recyclerView;
@@ -25,7 +25,7 @@ public class MyListingsController extends DisplayListingsController implements N
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         super.onCreate(savedInstanceState);
-        mReceiver = new NetworkReceiver(null,this);
+        mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()),this);
         setContentView(R.layout.listings_view);
         NavBarController.setUpListners(findViewById(R.id.navigation), this);
         if(intent.getSerializableExtra("data") != null) {
@@ -39,6 +39,12 @@ public class MyListingsController extends DisplayListingsController implements N
     }
 
     @Override
+    public void UpdateListingsView() {
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
@@ -47,14 +53,7 @@ public class MyListingsController extends DisplayListingsController implements N
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        super.onReceiveResult(resultCode, resultData);
         listings = (ArrayList<Listing>)resultData.get("data");
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        runOnUiThread(new Runnable(){
-            public void run() {
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
+        UpdateListingsView();
     }
 }

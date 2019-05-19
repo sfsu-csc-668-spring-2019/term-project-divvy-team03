@@ -12,13 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.example.divvy.GetListingsService;
 import com.example.divvy.R;
+import com.example.divvy.models.Listing;
 import com.example.divvy.models.RecyclerViewAdapter;
 import com.google.gson.Gson;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public class SearchController extends DisplayListingsController {
 
     public static final String SEARCH_RESULTS = "search_results";
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +60,9 @@ public class SearchController extends DisplayListingsController {
                 e.printStackTrace();
             }
         }
-        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
+        recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        recyclerView.setAdapter(adapter);
+        UpdateListingsView();
     }
 
     @Override
@@ -70,6 +73,18 @@ public class SearchController extends DisplayListingsController {
         editor.putString(SEARCH_RESULTS,listingsJSONString);
         System.out.println("sharedPref : " + getSharedPreferences(SEARCH_RESULTS,MODE_PRIVATE).getString(SEARCH_RESULTS,""));
         editor.apply();
+    }
+
+    @Override
+    public void UpdateListingsView() {
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        listings = (ArrayList<Listing>)resultData.get("data");
+        UpdateListingsView();
     }
 
     @Override
