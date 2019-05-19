@@ -40,10 +40,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".httprequest"
-            android:exported="false" />
-        <service android:name=".GetListingsService" />
+        <service android:name=".ListingService" />
         <service android:name = "CreateRatingService"/>
         <service android:name=".GetRatingService"/>
         <service

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.divvy.Controllers.DetailedListingController;
 import com.example.divvy.Controllers.ImageSelector;
-import com.example.divvy.GetListingsService;
+import com.example.divvy.ListingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
@@ -83,7 +83,7 @@ public class ViewHolderFactory {
             view_listing_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GetListingsService.GetListingById(v.getContext(),mReceiver,listing_id);
+                    ListingService.GetListingById(v.getContext(),mReceiver,listing_id);
                 }
             });
         }

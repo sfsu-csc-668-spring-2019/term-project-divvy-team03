@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.divvy.GetListingsService;
+import com.example.divvy.ListingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
         displayListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver,LoginAuthenticator.getInstance().getUser(MainActivity.this));
+                ListingService.GetListingsByUsername(MainActivity.this,mReceiver,LoginAuthenticator.getInstance().getUser(MainActivity.this));
             }
         });
         Button search = findViewById(R.id.go_to_search);

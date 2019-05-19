@@ -91,16 +91,17 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
-        String response = resultData.getString("response");
-        if( response != null && response.equals("FAIL")){
+        HashMap<String,String> response = (HashMap<String,String>)resultData.getSerializable("response");
+        if( response == null){
             // FAILED TO LOG IN
         }else{
             // SUCCESS
             LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
-            authenticator.LogInUser(response,this);
-            Intent intent = new Intent(this,MyListingsController.class);
+            authenticator.LogInUser(response.get("username"),this);
+            Intent intent = new Intent(this,UserProfileActivity.class);
             System.out.println("logged in" + authenticator.getUser(this));
             intent.putExtra("username",authenticator.getUser(this));
+            intent.putExtra("profImage", response.get("profImage"));
             startActivity(intent);
         }
     }

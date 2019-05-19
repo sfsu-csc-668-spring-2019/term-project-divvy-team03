@@ -1,5 +1,8 @@
 package com.example.divvy.Controllers;
 
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -47,7 +50,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
         btnLinkToLoginPage = findViewById(R.id.button_LogInLink);
         editTextUserName = findViewById(R.id.editText_UserName);
 
-        mReceiver = new NetworkReceiver(null,this);
+        mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()),this);
 
         createListeners();
         //
@@ -174,12 +177,17 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         System.out.println("Reg result: " + resultData.getString("response"));
-        String response = resultData.getString("resposne");
+        String response = resultData.getString("response");
         if(response != null && response.equals("OK")){
             //SUCCESS DO STUFF HERE
-            Toast.makeText(getApplicationContext(),"Success!.", Toast.LENGTH_SHORT).show();
+            // go back to the login activity
+            finish();
+            Intent intent = new Intent(this, UserLoginController.class);
+            startActivity(intent);
         }else{
             //REGISTRATION FAILED
+            System.out.println("Failed to reg");
+            Toast.makeText(this,"Reg failed",Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.divvy.ListingService;
 import com.example.divvy.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +69,7 @@ public class Listing implements Serializable {
             Log.d("Listing JSON", "Error adding data to Listing JSON");
         }
         System.out.println(data.toString());
-        Intent intent = new Intent(currentContext, httprequest.class);
+        Intent intent = new Intent(currentContext, ListingService.class);
         intent.putExtra("data", data.toString());
         intent.putExtra("type", httprequest.POST_CODE);
         intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");

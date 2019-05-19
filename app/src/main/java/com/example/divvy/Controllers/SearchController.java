@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import com.example.divvy.GetListingsService;
+import com.example.divvy.ListingService;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.RecyclerViewAdapter;
@@ -35,7 +35,7 @@ public class SearchController extends DisplayListingsController {
             public void onClick(View v) {
                 String query = queryView.getText().toString();
                 System.out.println(query);
-                GetListingsService.GetListingsBySearch(SearchController.this,mReceiver,query);
+                ListingService.GetListingsBySearch(SearchController.this,mReceiver,query);
                 /*InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -53,7 +53,7 @@ public class SearchController extends DisplayListingsController {
         if(sharedPreferences.contains(SEARCH_RESULTS)){
            String search_results = sharedPreferences.getString(SEARCH_RESULTS,"");
             try {
-               listings = GetListingsService.convertDataToListings(search_results);
+               listings = ListingService.convertDataToListings(search_results);
                System.out.println("retreived listings" + search_results);
                System.out.println("listings size:" + listings.size());
             } catch (JSONException e) {

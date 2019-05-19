@@ -1,19 +1,14 @@
 package com.example.divvy.Controllers;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.divvy.GetListingsService;
+import com.example.divvy.ListingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.RecyclerViewAdapter;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -29,6 +24,7 @@ public class MyListingsController extends DisplayListingsController{
         if(intent.getSerializableExtra("data") != null) {
             listings = (ArrayList<Listing>) intent.getSerializableExtra("data");
         }
+        UpdateListings();
 
 
     }
@@ -43,7 +39,7 @@ public class MyListingsController extends DisplayListingsController{
     protected void onResume() {
         super.onResume();
         LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
-        GetListingsService.GetListingsByUsername(this,mReceiver,authenticator.getUser(this));
+        ListingService.GetListingsByUsername(this,mReceiver,authenticator.getUser(this));
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
         recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -55,4 +51,12 @@ public class MyListingsController extends DisplayListingsController{
         listings = (ArrayList<Listing>)resultData.get("data");
         UpdateListingsView();
     }
+
+    private void UpdateListings(){
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
 }
