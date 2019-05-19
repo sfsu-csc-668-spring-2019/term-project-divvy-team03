@@ -35,6 +35,7 @@ public class Messenger extends Observable {
 
     public void sendMessage(Message message) {
         Log.d("MESSAGE", "SENT");
+        System.out.println(MessageFactory.toJsonFile(message));
         if(message != null) socket.emit("messagedetection", MessageFactory.toJsonFile(message));
     }
 
@@ -50,7 +51,7 @@ public class Messenger extends Observable {
             //socket = IO.socket("http://34.226.139.149:3000?"+ params).connect();
            // System.out.println("http://34.226.139.149?" + params);
 
-            socket.emit("join", username);
+           // socket.emit("join", username);
             socket.on("message", messageListener);
             return true;
         } catch (Exception e) {
@@ -61,7 +62,9 @@ public class Messenger extends Observable {
 
     private void setUpChannels() {
         messageListener = args -> {
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args);
             JSONObject data = (JSONObject) args[0];
+            System.out.println("############################ " + data);
             try {
                 Log.d("MESSAGE", "RECEIVED");
                 this.setChanged();
