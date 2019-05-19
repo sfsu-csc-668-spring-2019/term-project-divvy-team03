@@ -68,9 +68,9 @@ public class Messenger extends Observable {
             try {
                 Log.d("MESSAGE", "RECEIVED");
                 this.setChanged();
-                this.notifyObservers(MessageFactory.create((JSONObject) data.get("senderNickname")));
+                this.notifyObservers(MessageFactory.create( data));
             }catch(Exception e){
-
+                e.printStackTrace();
             }
 
         };
