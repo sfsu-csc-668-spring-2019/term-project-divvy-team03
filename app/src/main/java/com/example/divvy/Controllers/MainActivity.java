@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
 
     private void startDisplayUser(){
         Intent i = new Intent(this, UserProfileActivity.class);
+        i.putExtra("username", "anton");
         startActivity(i);
     }
 

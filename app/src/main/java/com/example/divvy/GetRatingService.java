@@ -52,7 +52,7 @@ public class GetRatingService extends IntentService {
             JSONObject jsonObject = (JSONObject) array.get(i);
             Review review = new Review(
                     jsonObject.getInt("rating_id"),
-                    jsonObject.getDouble("rating"),
+                    (float)jsonObject.getDouble("rating"),
                     jsonObject.getString("user_rating"),
                     jsonObject.getString("comments"),
                     jsonObject.getString("user_rated"),
@@ -69,7 +69,7 @@ public class GetRatingService extends IntentService {
         data.put("username", owner);
         i.putExtra("data", data);
         i.putExtra("type", httprequest.GET_CODE);
-        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchRatingByUserRating");
+        i.putExtra("uri", httprequest.ROOT_ADDRESS + "/searchRatingByUserRated");
         i.putExtra("receiver", receiver);
         context.startService(i);
     }

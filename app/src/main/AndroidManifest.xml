@@ -18,7 +18,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.UserSignUpController"
         android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.DisplayListingsController"
+        <activity android:name=".Controllers.UserLoginController"
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.SearchController"
             android:screenOrientation="portrait"/>
@@ -44,8 +44,8 @@
             android:name=".httprequest"
             android:exported="false" />
         <service android:name=".GetListingsService" />
-        <service android:name = ".RatingService$CreateRatingService"/>
-        <service android:name=".RatingService$GetRatingService"/>
+        <service android:name = "CreateRatingService"/>
+        <service android:name=".GetRatingService"/>
         <service
             android:name=".RegService"/>
         <service
