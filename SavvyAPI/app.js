@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //important.. this line creates a connection to use static files such as html saved in the
 //folder public
 
-app.use(express.static('./images'));
+app.use(express.static('./uploads'));
 
 app.use(morgan('short'))
 
@@ -43,31 +43,30 @@ app.use(rating)
 //socket config
 io.on('connection', (socket) => {
     var room = '';
-    //    console.log (room + "here room")
     room = socket.handshake['query']['room'];
-    //    console.log("room=" + room)
-    socket.join(room, () => {
-    let rooms = Object.keys(socket.rooms);
-    console.log(rooms); // [ <socket.id>, 'room 237' ]
-    io.to('room').emit('a new user has joined the room'); // broadcast to everyone in the room
-  });
 
-/*    socket.on('join', function(userNickname) {
-        console.log(userNickname + " : has joined " + socket.room);
-        io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
-    })*/
+    socket.join(room, () => {
+        let rooms = Object.keys(socket.rooms);
+        console.log(rooms);
+        io.to('room').emit('a new user has joined the room');
+    });
+
+    /*    socket.on('join', function(userNickname) {
+            console.log(userNickname + " : has joined " + socket.room);
+            io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
+        })*/
 
     socket.on('messagedetection', (message) => {
         console.log(JSON.stringify(message))
         Chat.create([room, message["senderNickname"], message["message"]])
-        //let message = { "message": messageContent, "senderNickname": senderNickname }
+            //let message = { "message": messageContent, "senderNickname": senderNickname }
         io.to(room).emit('message', message)
     })
 
     socket.on('disconnect', function() {
         console.log('user has left ')
         socket.removeAllListeners(room);
-         socket.leave(room)
+        socket.leave(room)
         io.to(room).emit("userdisconnect", ' user has left')
     })
 })

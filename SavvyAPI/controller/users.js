@@ -28,24 +28,6 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json());
 router.use(cookieParser());
 router.use(cors());
-// /**
-//  * @return
-//  * 
-//  */
-
-// /**
-//  * @method
-//  * stores the image to uploads and creates metadata of the image
-//  */
-// let storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, __basedir + '/uploads/')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-//     }
-// });
-
 
 // let upload = multer({ storage: storage });
 
@@ -67,16 +49,24 @@ function base64_decode(base64str, file) {
 }
 
 // convert image to base64 encoded string
-var base64str = base64_encode('kitten.jpg');
-console.log(base64str);
+//var base64str = base64_encode('kitten.jpg');
+//console.log(base64str);
 // convert base64 string back to image 
-base64_decode(base64str, 'copy.jpg');
+//base64_decode(base64str, '../uploads/');
 
-router.post('/reg', upload.single('profile'), (request, response) => {
-    const file_name = request.file.filename
-    const values = [
-        ...Object.keys(request.body).map(key => request.body[key]),
-        file_name
+/*router.post('/image', (request, response) => {
+    const image = request.body.file;
+    const name = request.body.name
+    base64_decode(image, __basedir + '/uploads/' + name + '.png');
+    resizeBy.send("done");
+})*/
+
+router.post('/reg', (request, response) => {
+    const profImage = request.body.username + '.png';
+    const image = request.body.file
+    base64_decode(image, __basedir + '/uploads/' + profImage);
+    const values = [request.body.username, request.body.email, request.body.password, request.body.first_name,
+        request.body.last_name, request.body.city, request.body.descr, profImage
     ];
     User.create(values)
         .then(_ => {
