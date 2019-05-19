@@ -26,6 +26,9 @@ public class NavBarController {
                     case R.id.navigation_notifications:
                         LoginAuthenticator.getInstance().LogoutUser(context);
                         return true;
+                    case R.id.search:
+                        intent = new Intent(context, SearchController.class);
+                        break;
                 }
                 context.startActivity(intent);
                 return true;

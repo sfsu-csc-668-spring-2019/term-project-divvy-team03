@@ -59,6 +59,7 @@ public class CreateReviewActivity extends AppCompatActivity{
                     username,
                     format.format(new Date()));
             CreateRatingService.createReviewByUsername(this, review);
+            finish();
         });
 
     }

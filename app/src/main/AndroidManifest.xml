@@ -44,8 +44,8 @@
             android:name=".httprequest"
             android:exported="false" />
         <service android:name=".GetListingsService" />
-        <service android:name = ".RatingService$CreateRatingService"/>
-        <service android:name=".RatingService$GetRatingService"/>
+        <service android:name = ".CreateRatingService"/>
+        <service android:name=".GetRatingService"/>
         <service
             android:name=".RegService"/>
         <service
