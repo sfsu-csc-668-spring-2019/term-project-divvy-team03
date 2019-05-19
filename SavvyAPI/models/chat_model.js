@@ -12,7 +12,7 @@ export default class Chat extends ActiveRecord {
     // Other Listing specific logic goes here
     static findBy(name, num) {
         if (num == 1) {
-            return [`status = true`];
+            return [`1 = 1`];
         }
     }
 }
