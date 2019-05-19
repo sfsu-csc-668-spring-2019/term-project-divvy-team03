@@ -23,7 +23,7 @@ router.use(cookieParser());
 router.use(cors());
 
 router.get('/chatbyID', (request, response) => {
-    Chat.find(request.query.like, 1)
+    Chat.find(request.query.id, 1)
         .then(rows => {
             response.send(rows)
         }, error => response.sendStatus(422));

@@ -30,6 +30,9 @@ app.use(user)
 const listings = require('./controller/listing.js')
 app.use(listings)
 
+const chat = require('./controller/chat.js')
+app.use(chat)
+
 const listingGroup = require('./controller/listing_group')
 app.use(listingGroup)
 
@@ -43,23 +46,28 @@ io.on('connection', (socket) => {
     //    console.log (room + "here room")
     room = socket.handshake['query']['room'];
     //    console.log("room=" + room)
-    socket.join(room);
+    socket.join(room, () => {
+    let rooms = Object.keys(socket.rooms);
+    console.log(rooms); // [ <socket.id>, 'room 237' ]
+    io.to('room').emit('a new user has joined the room'); // broadcast to everyone in the room
+  });
 
-    socket.on('join', function(userNickname) {
+/*    socket.on('join', function(userNickname) {
         console.log(userNickname + " : has joined " + socket.room);
         io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
-    })
+    })*/
 
-    socket.on('messagedetection', (senderNickname, messageContent) => {
-        console.log(JSON.stringify(senderNickname))
-        Chat.create([room, senderNickname["senderNickname"], senderNickname["message"]])
-        let message = { "message": messageContent, "senderNickname": senderNickname }
+    socket.on('messagedetection', (message) => {
+        console.log(JSON.stringify(message))
+        Chat.create([room, message["senderNickname"], message["message"]])
+        //let message = { "message": messageContent, "senderNickname": senderNickname }
         io.to(room).emit('message', message)
     })
 
     socket.on('disconnect', function() {
         console.log('user has left ')
-        socket.leave(room)
+        socket.removeAllListeners(room);
+         socket.leave(room)
         io.to(room).emit("userdisconnect", ' user has left')
             //      room = '';
             //      console.log(room + "after logout")
