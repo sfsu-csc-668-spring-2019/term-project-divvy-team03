@@ -47,4 +47,8 @@ public class LoginAuthenticator {
      SharedPreferences pref = context.getSharedPreferences("LoginState",Context.MODE_PRIVATE);
         return pref.getString("username","");
     }
+    public boolean LoggedIn(Context context){
+        SharedPreferences pref = context.getSharedPreferences("LoginState",Context.MODE_PRIVATE);
+        return !pref.getString("username","").equals("");
+    }
 }

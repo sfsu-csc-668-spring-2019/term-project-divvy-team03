@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.divvy.CreateRatingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.httprequest;
 
@@ -87,7 +88,7 @@ public class Review implements Serializable {
             System.err.println("Error constructing review JSON");
         }
         System.out.println(data.toString());
-        Intent intent = new Intent(currentContext, httprequest.class);
+        Intent intent = new Intent(currentContext, CreateRatingService.class);
         intent.putExtra("data", data.toString());
         intent.putExtra("type", httprequest.POST_CODE);
         intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/rate");

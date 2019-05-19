@@ -77,9 +77,6 @@ public class CreateReviewActivity extends AppCompatActivity implements NetworkRe
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if(resultCode == httprequest.SUCCESS_CODE){
             finish();
-            Intent intent = new Intent(this, UserProfileActivity.class);
-            intent.putExtra("owner", targetUser);
-            startActivity(intent);
         }else if(resultCode == httprequest.FAIL_CODE){
             Toast.makeText(this, "Failed to create review", Toast.LENGTH_LONG).show();
         }

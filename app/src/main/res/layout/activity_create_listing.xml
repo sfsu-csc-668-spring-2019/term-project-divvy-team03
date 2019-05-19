@@ -36,15 +36,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Listing Name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/create_grp_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Group Size"
-            android:inputType="number" />
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/create_list_desc"
@@ -52,7 +44,7 @@
             android:layout_height="150dp"
             android:ems="10"
             android:hint="Description"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textCapSentences"
             android:lines="8"
             android:maxLines="10" />
 

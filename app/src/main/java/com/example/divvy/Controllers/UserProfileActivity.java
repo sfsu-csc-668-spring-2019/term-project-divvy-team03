@@ -31,7 +31,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private TextView usernameView;
     private ImageView image;
     private RatingBar ratingBar;
-    private Button review_button;
+    private Button profile_button;
     private BottomNavigationView navigation;
 
     private String owner;
@@ -43,18 +43,17 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        owner = getIntent().getStringExtra("owner");
-        setUpUi();
-        setUpListeners();
         reviewsList = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
-        //username = getIntent().getExtras().getString(MainActivity.USERNAME);
-        GetRatingService.GetReviewsByUsername(this, mReceiver, owner);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        owner = getIntent().getStringExtra("owner");
+        setUpUi();
+        setUpListeners();
+        GetRatingService.GetReviewsByUsername(this, mReceiver, owner);
     }
 
     private void setUpUi() {
@@ -62,7 +61,12 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         usernameView = findViewById(R.id.username);
         usernameView.setText(owner);
         image = findViewById(R.id.user_image);
-        review_button = findViewById(R.id.review_button);
+        profile_button = findViewById(R.id.profile_button);
+        if(owner.equals(LoginAuthenticator.getInstance().getUser(this))){
+            profile_button.setText("View My Listings");
+        }else{
+            profile_button.setText("Leave A Review");
+        }
         navigation = findViewById(R.id.navigation);
         AsyncTask i = new ImageSelector.ImageRetrieverTask(image);
         Object[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
@@ -75,9 +79,15 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     }
 
     private void setUpListeners(){
-        review_button.setOnClickListener(view -> {
-            Intent intent = new Intent(this, CreateReviewActivity.class);
-            intent.putExtra("targetUser", owner);
+
+        profile_button.setOnClickListener(view -> {
+            Intent intent;
+            if(owner.equals(LoginAuthenticator.getInstance().getUser(this))){
+                intent = new Intent(this,MyListingsController.class);
+            }else {
+                intent = new Intent(this, CreateReviewActivity.class);
+                intent.putExtra("targetUser", owner);
+            }
             startActivity(intent);
         });
 

@@ -34,9 +34,6 @@ public class CreateListingController extends AppCompatActivity {
                 //make request to send data to backend
                 EditText title = findViewById(R.id.create_list_name);
                 EditText desc = findViewById(R.id.create_list_desc);
-                EditText capacity = findViewById(R.id.create_grp_size);
-                Log.d("capacity", capacity.toString());
-                Integer size = Integer.parseInt(capacity.getText().toString());
                 listing = new Listing(
                         title.getText().toString(),
                         desc.getText().toString(),

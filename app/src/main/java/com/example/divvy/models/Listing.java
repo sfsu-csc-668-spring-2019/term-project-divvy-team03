@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.divvy.Controllers.LoginAuthenticator;
 import com.example.divvy.ListingService;
 import com.example.divvy.httprequest;
 import org.json.JSONException;
@@ -60,7 +61,7 @@ public class Listing implements Serializable {
     public void postData(Context currentContext){
         JSONObject data = new JSONObject();
         try {
-            data.put("username", getOwner());
+            data.put("username", LoginAuthenticator.getInstance().getUser(currentContext));
             data.put("descr", descr);
             data.put("title", title);
             //change to owner_id

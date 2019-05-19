@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.divvy.Controllers.DetailedListingController;
 import com.example.divvy.Controllers.ImageSelector;
+import com.example.divvy.Controllers.UserProfileActivity;
 import com.example.divvy.ListingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
@@ -79,6 +80,14 @@ public class ViewHolderFactory {
             mReceiver = new NetworkReceiver(null ,this);
             title = listing.findViewById(R.id.listing_frag_title);
             owner = listing.findViewById(R.id.listing_frag_owner);
+            owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), UserProfileActivity.class);
+                    intent.putExtra("owner", owner.getText().toString());
+                    v.getContext().startActivity(intent);
+                }
+            });
             view_listing_text = listing.findViewById(R.id.view_listing_txt_btn);
             view_listing_text.setOnClickListener(new View.OnClickListener() {
                 @Override

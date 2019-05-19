@@ -49,7 +49,6 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
             }
         });
 
-
         btnLinkToRegister = (Button) findViewById(R.id.button_signUp);
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +60,16 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
         // End setting up references here.
     }
 
-    private boolean submitLoginRequest(){
-        // Get the text from the views,
-        String username = inputUsername.getText().toString();
-        String password = inputPassword.getText().toString();
-
-        return false;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(LoginAuthenticator.getInstance().LoggedIn(this)){
+            finish();
+            Intent intent = new Intent(this, UserProfileActivity.class);
+            intent.putExtra("owner",LoginAuthenticator.getInstance().getUser(this));
+            System.out.println("Owner: " + LoginAuthenticator.getInstance().getUser(this));
+            startActivity(intent);
+        }
     }
 
     private void switchToSignUpView(){
@@ -99,8 +102,7 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
             LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
             authenticator.LogInUser(response.get("username"),this);
             Intent intent = new Intent(this,UserProfileActivity.class);
-            System.out.println("logged in" + authenticator.getUser(this));
-            intent.putExtra("username",authenticator.getUser(this));
+            intent.putExtra("owner",authenticator.getUser(this));
             intent.putExtra("profImage", response.get("profImage"));
             startActivity(intent);
         }

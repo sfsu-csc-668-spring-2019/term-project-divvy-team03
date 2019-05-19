@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.HttpUrl;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -55,25 +57,6 @@ public class httprequest{
         }
 
     }
-    public static String get2(Map<String,String> params, String uri) throws IOException {
-        HttpUrl.Builder httpBuilder = HttpUrl.parse(uri).newBuilder();
-        if (params != null) {
-            for(Map.Entry<String, String> param : params.entrySet()) {
-                httpBuilder.addQueryParameter(param.getKey(),param.getValue());
-            }
-        }
-        String url = httpBuilder.build().toString();
-        System.out.println(url);
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-
-    }
     public static String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -84,7 +67,30 @@ public class httprequest{
             return response.body().string();
         }
     }
+    public static String imagePost(String url, File image) throws IOException {
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("username", "aw2")
+                .addFormDataPart("email", "test.com")
+                .addFormDataPart("password", "123")
+                .addFormDataPart("first_name", "hey")
+                .addFormDataPart("last_name", "heyy")
+                .addFormDataPart("city", "test")
+                .addFormDataPart("descr", "crazy and tired")
+                .addFormDataPart("profile", "profile.png",
+                        RequestBody.create(MediaType.parse("multipart/form-data"),
+                                image))
+                .build();
 
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
+    }
 
     /*
      The reason for this is because we iterate over a map to get params for our get request.
@@ -121,4 +127,5 @@ public class httprequest{
         }
         return linkedMap;
     }
+
 }
