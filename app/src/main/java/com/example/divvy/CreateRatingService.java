@@ -25,16 +25,21 @@ public class CreateRatingService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         int type = intent.getIntExtra("type",-1);
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        Bundle bundle = new Bundle();
         System.out.println(intent.getStringExtra("uri"));
         System.out.println(intent.getStringExtra("data"));
         try {
             String response = httprequest.post(intent.getStringExtra("uri"), intent.getStringExtra("data"));
-            bundle.putString("response",response);
+            int resultCode;
+            if(response.equals("OK")){
+                resultCode = httprequest.SUCCESS_CODE;
+            }else{
+                resultCode = httprequest.FAIL_CODE;
+            }
+            // not returning bundle data
+            receiver.send(resultCode,null);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        receiver.send(1,bundle);
     }
 
 }

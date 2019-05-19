@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.httprequest;
 
 import org.json.JSONException;
@@ -74,7 +75,7 @@ public class Review implements Serializable {
 
     public String getDate(){ return this.date;}
 
-    public String postData(Context currentContext){
+    public String postData(Context currentContext, NetworkReceiver receiver){
         JSONObject data = new JSONObject();
         try{
             data.put("rating",rating);
@@ -90,6 +91,7 @@ public class Review implements Serializable {
         intent.putExtra("data", data.toString());
         intent.putExtra("type", httprequest.POST_CODE);
         intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/rate");
+        intent.putExtra("receiver",receiver);
         currentContext.startService(intent);
         return data.toString();
     }

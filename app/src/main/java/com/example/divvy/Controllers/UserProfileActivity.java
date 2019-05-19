@@ -34,7 +34,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private Button review_button;
     private BottomNavigationView navigation;
 
-    private String username = "username";
+    private String owner;
     private List<Review> reviewsList;
     private RecyclerViewAdapter reviewAdapter;
     private NetworkReceiver mReceiver;
@@ -43,12 +43,13 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        owner = getIntent().getStringExtra("owner");
         setUpUi();
         setUpListeners();
         reviewsList = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
         //username = getIntent().getExtras().getString(MainActivity.USERNAME);
-        GetRatingService.GetReviewsByUsername(this, mReceiver, "anton");
+        GetRatingService.GetReviewsByUsername(this, mReceiver, owner);
     }
 
     @Override
@@ -59,6 +60,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private void setUpUi() {
         recyclerView = findViewById(R.id.reviews);
         usernameView = findViewById(R.id.username);
+        usernameView.setText(owner);
         image = findViewById(R.id.user_image);
         review_button = findViewById(R.id.review_button);
         navigation = findViewById(R.id.navigation);
@@ -75,7 +77,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     private void setUpListeners(){
         review_button.setOnClickListener(view -> {
             Intent intent = new Intent(this, CreateReviewActivity.class);
-            intent.putExtra("username", username);
+            intent.putExtra("targetUser", owner);
             startActivity(intent);
         });
 

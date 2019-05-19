@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
         mReceiver = new NetworkReceiver(null, this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //REMOVE THIS AFTER TESTING
+        LogInFakeUser();
         Button createListingButton = findViewById(R.id.create_listing_btn);
         createListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
         displayListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver,"alex");
+                GetListingsService.GetListingsByUsername(MainActivity.this,mReceiver,LoginAuthenticator.getInstance().getUser(MainActivity.this));
             }
         });
         Button search = findViewById(R.id.go_to_search);
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
 
     private void startDisplayUser(){
         Intent i = new Intent(this, UserProfileActivity.class);
-        i.putExtra("username", "anton");
+        i.putExtra("owner", "anton");
         startActivity(i);
     }
 
@@ -86,5 +88,10 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
         Intent i = new Intent(this, MyListingsController.class);
         i.putExtra("data", resultData.getSerializable("data"));
         startActivity(i);
+    }
+
+    public void LogInFakeUser(){
+        LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
+        authenticator.LogInUser("alex", this);
     }
 }

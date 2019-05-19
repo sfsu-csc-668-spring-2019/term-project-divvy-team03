@@ -18,24 +18,19 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class MyListingsController extends DisplayListingsController{
-    private NetworkReceiver mReceiver;
     public final String MY_LISTING_CODE = "mylistings";
     private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = getIntent();
         super.onCreate(savedInstanceState);
-        mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()),this);
+        Intent intent = getIntent();
         setContentView(R.layout.listings_view);
         NavBarController.setUpListners(findViewById(R.id.navigation), this);
         if(intent.getSerializableExtra("data") != null) {
             listings = (ArrayList<Listing>) intent.getSerializableExtra("data");
         }
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        recyclerView = findViewById(R.id.listings_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+
     }
 
     @Override
@@ -49,6 +44,10 @@ public class MyListingsController extends DisplayListingsController{
         super.onResume();
         LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
         GetListingsService.GetListingsByUsername(this,mReceiver,authenticator.getUser(this));
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        recyclerView = findViewById(R.id.listings_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

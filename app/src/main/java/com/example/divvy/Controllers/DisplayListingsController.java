@@ -23,14 +23,6 @@ public abstract class DisplayListingsController extends AppCompatActivity implem
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Bundle savedState = new Bundle();
-        savedState.putSerializable("data",listings);
-        this.onSaveInstanceState(savedState);
-
-    }
     public abstract void UpdateListingsView();
 
     @Override
