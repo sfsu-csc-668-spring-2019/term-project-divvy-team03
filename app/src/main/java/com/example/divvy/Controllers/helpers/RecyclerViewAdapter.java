@@ -1,4 +1,4 @@
-package com.example.divvy.models;
+package com.example.divvy.Controllers.helpers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

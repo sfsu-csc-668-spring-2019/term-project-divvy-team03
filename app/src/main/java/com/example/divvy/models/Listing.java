@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.divvy.Controllers.LoginAuthenticator;
-import com.example.divvy.ListingService;
-import com.example.divvy.NetworkReceiver;
-import com.example.divvy.httprequest;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
+import com.example.divvy.Controllers.Services.ListingService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.Services.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 

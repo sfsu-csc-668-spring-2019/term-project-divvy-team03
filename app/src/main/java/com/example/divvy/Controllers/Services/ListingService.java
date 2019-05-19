@@ -1,4 +1,4 @@
-package com.example.divvy;
+package com.example.divvy.Controllers.Services;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -16,11 +16,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
-import static com.example.divvy.httprequest.GET_CODE;
-import static com.example.divvy.httprequest.POST_CODE;
-import static com.example.divvy.httprequest.get;
+import static com.example.divvy.Controllers.Services.httprequest.GET_CODE;
+import static com.example.divvy.Controllers.Services.httprequest.POST_CODE;
+import static com.example.divvy.Controllers.Services.httprequest.get;
 
 public class ListingService extends IntentService {
     public ListingService(){

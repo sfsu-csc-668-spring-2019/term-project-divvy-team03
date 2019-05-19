@@ -1,7 +1,6 @@
 package com.example.divvy.Controllers;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -10,17 +9,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.divvy.CreateRatingService;
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
-import com.example.divvy.httprequest;
+import com.example.divvy.Controllers.Services.httprequest;
 import com.example.divvy.models.Review;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class CreateReviewActivity extends AppCompatActivity implements NetworkReceiver.DataReceiver {
+public class CreateReviewController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
 
     private EditText comment_text_field;
     private Button sendButton;

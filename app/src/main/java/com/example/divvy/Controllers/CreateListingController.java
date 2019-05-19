@@ -2,18 +2,16 @@ package com.example.divvy.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.divvy.NetworkReceiver;
-import com.example.divvy.httprequest;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.Services.httprequest;
 import com.example.divvy.models.Listing;
 import com.example.divvy.R;
 

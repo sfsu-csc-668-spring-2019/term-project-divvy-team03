@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.divvy.ListingService;
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.Services.ListingService;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
-import com.example.divvy.models.RecyclerViewAdapter;
+import com.example.divvy.Controllers.helpers.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 

@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
 import com.example.divvy.R;
-import com.example.divvy.RegService;
-import com.example.divvy.httprequest;
+import com.example.divvy.Controllers.Services.RegService;
+import com.example.divvy.Controllers.Services.httprequest;
 import com.example.divvy.models.User;
 
 import org.json.JSONException;

@@ -5,8 +5,7 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.divvy.NetworkReceiver;
-import com.example.divvy.R;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
 import com.example.divvy.models.Listing;
 
 import java.util.ArrayList;
