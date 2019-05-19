@@ -52,6 +52,11 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
         setUpListeners();
         messageList = new ArrayList<>();
         username = LoginAuthenticator.getInstance().getUser(this);
+        try{
+            messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
+        }catch (Exception e){
+            messenger = new Messenger(username, this, new Long("1"));
+        }
     }
 
     @Override
@@ -118,11 +123,6 @@ public class MessagingActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        try{
-            messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
-        }catch (Exception e){
-            messenger = new Messenger(username, this, new Long("1"));
-        }
     }
 
     @Override
