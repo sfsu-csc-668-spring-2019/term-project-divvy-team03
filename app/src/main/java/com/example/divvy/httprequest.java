@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.HttpUrl;
@@ -53,7 +55,25 @@ public class httprequest extends IntentService{
         }
 
     }
+    public static String get2(Map<String,String> params, String uri) throws IOException {
+        HttpUrl.Builder httpBuilder = HttpUrl.parse(uri).newBuilder();
+        if (params != null) {
+            for(Map.Entry<String, String> param : params.entrySet()) {
+                httpBuilder.addQueryParameter(param.getKey(),param.getValue());
+            }
+        }
+        String url = httpBuilder.build().toString();
+        System.out.println(url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
 
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
+
+    }
     public static String post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -80,13 +100,47 @@ public class httprequest extends IntentService{
             }
         }
         else if(type == POST_CODE){
-            System.out.println(intent.getStringExtra("uri"));
-            System.out.println(intent.getStringExtra("data"));
             try {
                 System.out.println("Output post: " + post(intent.getStringExtra("uri"), intent.getStringExtra("data")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /*
+     The reason for this is because we iterate over a map to get params for our get request.
+     We found out pretty later on that the order of our params arent in the order send them.
+     (We originally were sending them in hashmaps). To fix this, we decided to use linkedhashmap
+     which keeps the order of insertion. Android doesn't like linkedhashmaps and will convert them to
+     regular hashmaps when they are passed through intents. The workaround was to convert these linkedhashmaps
+     to two arraylists: keys and values, then pass these to the service that makes the call, and convert
+     them back into a linkedhashmap.
+
+     tldr; this lets us pass hashmap data through android intents while keeping the order of insertion.
+    */
+
+    // This method converts a linkedhashmap into an arraylist of key and values
+    public static ArrayList<ArrayList<String>> convertLinkedHashMapToList(LinkedHashMap<String,String> map){
+        ArrayList<String> keys = new ArrayList<>();
+        ArrayList<String> values = new ArrayList<>();
+        for (Map.Entry<String,String> entry: map.entrySet()){
+            keys.add(entry.getKey());
+            values.add(entry.getValue());
+        }
+        ArrayList<ArrayList<String>> keyvalues = new ArrayList<>();
+        keyvalues.add(keys);
+        keyvalues.add(values);
+        return keyvalues;
+    }
+    // This method converts an Arraylist of keys and value arraylists into a linkedhashmap
+    public static LinkedHashMap<String,String> convertListToLinkedHashMap(ArrayList<ArrayList<String>> keyvalues){
+        LinkedHashMap<String,String> linkedmap = new LinkedHashMap<>();
+        ArrayList<String> keys = keyvalues.get(0);
+        ArrayList<String> values = keyvalues.get(1);
+        for(int i =0; i < keys.size(); i++){
+            linkedmap.put(keys.get(i),values.get(i));
+        }
+        return linkedmap;
     }
 }

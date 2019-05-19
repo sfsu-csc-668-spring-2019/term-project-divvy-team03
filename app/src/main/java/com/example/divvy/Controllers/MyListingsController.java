@@ -1,19 +1,14 @@
 package com.example.divvy.Controllers;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.divvy.GetListingsService;
+import com.example.divvy.ListingService;
 import com.example.divvy.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.RecyclerViewAdapter;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -39,7 +34,7 @@ public class MyListingsController extends DisplayListingsController implements N
     protected void onResume() {
         super.onResume();
         LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
-        GetListingsService.GetListingsByUsername(this,mReceiver,authenticator.getUser(this));
+        ListingService.GetListingsByUsername(this,mReceiver,authenticator.getUser(this));
     }
 
     @Override

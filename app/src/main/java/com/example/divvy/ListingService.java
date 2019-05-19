@@ -16,28 +16,44 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
+import static com.example.divvy.httprequest.GET_CODE;
+import static com.example.divvy.httprequest.POST_CODE;
 import static com.example.divvy.httprequest.get;
 
-public class GetListingsService extends IntentService {
-    public GetListingsService(){
+public class ListingService extends IntentService {
+    public ListingService(){
         super("getlistings");
     }
     @Override
     protected void onHandleIntent( @Nullable Intent intent) {
         Bundle bundle = new Bundle();
         ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        try {
-            String data = get((HashMap<String, String>) intent.getSerializableExtra("data"),intent.getStringExtra("uri"));
-            System.err.println(data);
-            ArrayList<Listing> listings = convertDataToListings(data);
-            bundle.putSerializable("data", listings);
-            receiver.send(1, bundle);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        int request_type = intent.getIntExtra("type",-1);
+        String uri = intent.getStringExtra("uri");
+        if(request_type == POST_CODE) {
+            try {
+                System.out.println("Output post: " + httprequest.post(uri, intent.getStringExtra("data")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        else if(request_type == GET_CODE) {
+            try {
+                String data = get((HashMap<String, String>) intent.getSerializableExtra("data"), uri);
+                ArrayList<Listing> listings = convertDataToListings(data);
+                bundle.putSerializable("data", listings);
+                receiver.send(1, bundle);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            System.err.println("Request type unknown");
+        }
+
     }
     public static ArrayList<Listing> convertDataToListings(String s) throws JSONException {
         ArrayList<Listing> listings = new ArrayList<>();
@@ -56,7 +72,7 @@ public class GetListingsService extends IntentService {
     }
     // helper method to call this from any controller.
     public static void GetListingsByUsername(Context context, ResultReceiver receiver, String owner){
-        Intent i = new Intent(context, GetListingsService.class);
+        Intent i = new Intent(context, ListingService.class);
         HashMap<String,String> data = new HashMap<>();
         data.put("username", "alex");
         i.putExtra("data",data);
@@ -66,7 +82,7 @@ public class GetListingsService extends IntentService {
         context.startService(i);
     }
     public static void GetListingsBySearch(Context context, ResultReceiver receiver, String query){
-        Intent i = new Intent(context, GetListingsService.class);
+        Intent i = new Intent(context, ListingService.class);
         HashMap<String,String> data = new HashMap<>();
         data.put("like", query);
         i.putExtra("data",data);
@@ -76,7 +92,7 @@ public class GetListingsService extends IntentService {
         context.startService(i);
     }
     public static void GetListingById(Context context, ResultReceiver receiver, Long listing_id){
-        Intent i = new Intent(context, GetListingsService.class);
+        Intent i = new Intent(context, ListingService.class);
         HashMap<String,String> data = new HashMap<>();
         data.put("id", listing_id.toString());
         i.putExtra("data",data);
@@ -85,4 +101,5 @@ public class GetListingsService extends IntentService {
         i.putExtra("receiver", receiver);
         context.startService(i);
     }
+
 }

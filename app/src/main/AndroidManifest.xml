@@ -43,7 +43,7 @@
         <service
             android:name=".httprequest"
             android:exported="false" />
-        <service android:name=".GetListingsService" />
+        <service android:name=".ListingService" />
         <service android:name = ".GetRatingsService"/>
         <service
             android:name=".RegService"/>
