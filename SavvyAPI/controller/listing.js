@@ -63,7 +63,7 @@ router.get('/searchbyusername', (request, response) => {
         }, _ => response.sendStatus(422));
 })
 
-router.get('/searchbyID', (request, response) => {
+router.get('/searchby', (request, response) => {
     Listing.find(request.query.id, 3)
         .then(rows => {
             response.send(rows)

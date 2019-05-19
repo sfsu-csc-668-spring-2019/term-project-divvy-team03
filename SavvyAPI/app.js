@@ -3,7 +3,6 @@ import express from 'express'
 import cors from 'cors'
 const app = express()
 import morgan from 'morgan'
-var bmp = require("bmp-js");
 import Chat from "../SavvyAPI/models/chat_model";
 import http from 'http'
 const server = http.createServer(app),
@@ -37,12 +36,13 @@ app.use(listingGroup)
 const rating = require('./controller/rating')
 app.use(rating)
 
+
 //socket config
 io.on('connection', (socket) => {
     var room = '';
-//    console.log (room + "here room")
-    room =  socket.handshake['query']['room'];
-//    console.log("room=" + room)
+    //    console.log (room + "here room")
+    room = socket.handshake['query']['room'];
+    //    console.log("room=" + room)
     socket.join(room);
 
     socket.on('join', function(userNickname) {
@@ -51,19 +51,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('messagedetection', (senderNickname, messageContent) => {
-         console.log(JSON.stringify(senderNickname))
-//         console.log(JSON.stringify(messageContent))
-          Chat.create([room, senderNickname["senderNickname"], senderNickname["message"]])
-          let message = { "message": messageContent, "senderNickname": senderNickname }
-          io.to(room).emit('message', message)
+        console.log(JSON.stringify(senderNickname))
+        Chat.create([room, senderNickname["senderNickname"], senderNickname["message"]])
+        let message = { "message": messageContent, "senderNickname": senderNickname }
+        io.to(room).emit('message', message)
     })
 
     socket.on('disconnect', function() {
         console.log('user has left ')
         socket.leave(room)
         io.to(room).emit("userdisconnect", ' user has left')
-  //      room = '';
-  //      console.log(room + "after logout")
+            //      room = '';
+            //      console.log(room + "after logout")
     })
 })
 
