@@ -17,7 +17,7 @@ export default class Listing extends ActiveRecord {
         } else if (num == 2) {
             return [`username = '${name}'`]
         } else if (num == 3) {
-            return [`listing_id = '${name}`]
+            return [`listing_id = '${name}'`]
         }
     }
 }
