@@ -17,7 +17,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class httprequest extends IntentService{
+public class httprequest{
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     public static final String ROOT_ADDRESS = "http://ec2-34-226-139-149.compute-1.amazonaws.com";
@@ -30,9 +30,7 @@ public class httprequest extends IntentService{
      *
      *
      */
-    public httprequest(){
-        super("httprequest");
-    }
+
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/login   (get)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/reg     (post)
     //http://ec2-34-226-139-149.compute-1.amazonaws.com/newListing  (post)
@@ -85,28 +83,6 @@ public class httprequest extends IntentService{
         }
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        int type = intent.getIntExtra("type",-1);
-        ResultReceiver receiver = intent.getParcelableExtra("receiver");
-        Bundle bundle = new Bundle();
-        if(type == GET_CODE){
-            try {
-                String data = get((Map<String, String>) intent.getSerializableExtra("data"), "http://ec2-34-226-139-149.compute-1.amazonaws.com/getbyowner");
-                bundle.putString("data", data);
-                receiver.send(1, bundle);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else if(type == POST_CODE){
-            try {
-                System.out.println("Output post: " + post(intent.getStringExtra("uri"), intent.getStringExtra("data")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     /*
      The reason for this is because we iterate over a map to get params for our get request.
@@ -133,14 +109,14 @@ public class httprequest extends IntentService{
         keyvalues.add(values);
         return keyvalues;
     }
-    // This method converts an Arraylist of keys and value arraylists into a linkedhashmap
+    // This method converts an Arraylist of: arraylist of keys and arraylist of values into a linkedhashmap
     public static LinkedHashMap<String,String> convertListToLinkedHashMap(ArrayList<ArrayList<String>> keyvalues){
-        LinkedHashMap<String,String> linkedmap = new LinkedHashMap<>();
+        LinkedHashMap<String,String> linkedMap = new LinkedHashMap<>();
         ArrayList<String> keys = keyvalues.get(0);
         ArrayList<String> values = keyvalues.get(1);
-        for(int i =0; i < keys.size(); i++){
-            linkedmap.put(keys.get(i),values.get(i));
+        for(int i = 0; i < keys.size(); i++){
+            linkedMap.put(keys.get(i),values.get(i));
         }
-        return linkedmap;
+        return linkedMap;
     }
 }
