@@ -28,61 +28,49 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json());
 router.use(cookieParser());
 router.use(cors());
-/**
- * @return
- * 
- */
+// /**
+//  * @return
+//  * 
+//  */
 
-/**
- * @method
- * stores the image to uploads and creates metadata of the image
- */
-let storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, __basedir + '/uploads/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
-
-
-let upload = multer({ storage: storage });
-
-/**
- * @method
- * @param
- * this method receives an image via post request and then saves it to 
- * uploads folder and also saves the image info to the image table in Mysql
- */
-// router.post('/profileImage', upload.single('image'), (req, res) => {
-//     /* message: "Error! in image upload."
-//      if (!req.file) {
-//          console.log("No file received");
-//          message = "Error! in image upload."
-//          res.render('index', { message: message, status: 'danger' });
-
-//      } else {*/
-//     const username = req.body.username
-//     const email = req.body.email
-//     const password = req.body.password
-//     const first_name = req.body.first_name
-//     const last_name = req.body.last_name
-//     const city = req.body.city
-//     const descr = req.body.descr
-//     const profImage = req.file.image
+// /**
+//  * @method
+//  * stores the image to uploads and creates metadata of the image
+//  */
+// let storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, __basedir + '/uploads/')
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//     }
+// });
 
 
-//     var insertimage = "INSERT INTO user (username, email, password, first_name, last_name, city, descr, profImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-//     db.query(insertimage, [username, email, password, first_name, last_name, city, descr, profImage], (err, result) => {
-//         if (err) {
-//             console.log("failed to insert new image: " + err)
-//             res.sendStatus(500)
-//         } else {
-//             console.log('inserted data');
-//         }
-//     });
-// })
+// let upload = multer({ storage: storage });
+
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
+// function to create file from base64 encoded string
+function base64_decode(base64str, file) {
+    // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+    var bitmap = new Buffer(base64str, 'base64');
+    // write buffer to file
+    fs.writeFileSync(file, bitmap);
+    console.log('******** File created from base64 encoded string ********');
+}
+
+// convert image to base64 encoded string
+var base64str = base64_encode('kitten.jpg');
+console.log(base64str);
+// convert base64 string back to image 
+base64_decode(base64str, 'copy.jpg');
 
 router.post('/reg', upload.single('profile'), (request, response) => {
     const file_name = request.file.filename

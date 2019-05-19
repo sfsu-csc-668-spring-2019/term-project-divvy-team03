@@ -45,13 +45,8 @@ io.on('connection', (socket) => {
     //    console.log("room=" + room)
     socket.join(room);
 
-    socket.on('join', function(userNickname) {
-        console.log(userNickname + " : has joined " + socket.room);
-        io.to(room).emit('user joined the chat', userNickname + " : has joined the chat ");
-    })
-
-    socket.on('messagedetection', (senderNickname, messageContent) => {
-        console.log(JSON.stringify(senderNickname))
+    socket.on('messagedetection', (message) => {
+        console.log(JSON.stringify(message))
         Chat.create([room, senderNickname["senderNickname"], senderNickname["message"]])
         let message = { "message": messageContent, "senderNickname": senderNickname }
         io.to(room).emit('message', message)
@@ -61,8 +56,6 @@ io.on('connection', (socket) => {
         console.log('user has left ')
         socket.leave(room)
         io.to(room).emit("userdisconnect", ' user has left')
-            //      room = '';
-            //      console.log(room + "after logout")
     })
 })
 
