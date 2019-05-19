@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 const app = express()
 import morgan from 'morgan'
+import Chat from "../SavvyAPI/models/chat_model";
 import http from 'http'
 const server = http.createServer(app),
     io = require('socket.io').listen(server);
@@ -48,7 +49,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('messagedetection', (senderNickname, messageContent) => {
-        console.log(senderNickname + " : " + messageContent)
+        Chat.find([room, senderNickname, messageContent])
+        console.log("Room: " + room + " senderNickname: " + senderNickname + "message: " + messageContent)
         let message = { "message": messageContent, "senderNickname": senderNickname }
         io.to(room).emit('message', message)
     })
