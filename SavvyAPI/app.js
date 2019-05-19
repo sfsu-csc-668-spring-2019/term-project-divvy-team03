@@ -37,8 +37,9 @@ app.use(rating)
 
 //socket config
 io.on('connection', (socket) => {
-    console.log('user connected')
-    var room = socket.handshake['query']['room'];
+    var room = '';
+    console.log (room + "here room")
+    room =  socket.handshake['query']['room'];
     console.log("room=" + room)
     socket.join(room);
 
@@ -57,7 +58,8 @@ io.on('connection', (socket) => {
         console.log('user has left ')
         socket.leave(room)
         io.to(room).emit("userdisconnect", ' user has left')
-
+        room = '';
+        console.log(room + "after logout")
     })
 })
 
