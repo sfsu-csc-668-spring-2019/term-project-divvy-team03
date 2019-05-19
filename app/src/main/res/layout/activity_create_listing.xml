@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Listing Name"
+            android:hint="Listing Name (min 4 char)"
             android:inputType="textCapWords" />
 
         <EditText
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:ems="10"
-            android:hint="Description"
+            android:hint="Description (min 20 char)"
             android:inputType="textMultiLine|textCapSentences"
             android:lines="8"
             android:maxLines="10" />

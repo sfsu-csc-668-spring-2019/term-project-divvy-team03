@@ -72,7 +72,7 @@ public class ViewHolderFactory {
     }
 
     public static class ListingListViewHolder extends MyViewHolder implements NetworkReceiver.DataReceiver {
-        TextView title, owner, view_listing_text;
+        TextView title, owner, descr, view_listing_text;
         NetworkReceiver mReceiver;
         long listing_id;
         public ListingListViewHolder(@NonNull View listing) {
@@ -80,6 +80,7 @@ public class ViewHolderFactory {
             mReceiver = new NetworkReceiver(null ,this);
             title = listing.findViewById(R.id.listing_frag_title);
             owner = listing.findViewById(R.id.listing_frag_owner);
+            descr = listing.findViewById(R.id.frag_list_descr);
             owner.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,6 +102,7 @@ public class ViewHolderFactory {
             Listing listing = (Listing) o;
             this.title.setText(listing.getTitle());
             this.owner.setText(listing.getOwner());
+            this.descr.setText(listing.getDescr());
             listing_id = listing.getListingid();
         }
         // DataReceiver

@@ -36,11 +36,16 @@ public class SearchController extends DisplayListingsController {
                 String query = queryView.getText().toString();
                 System.out.println(query);
                 ListingService.GetListingsBySearch(SearchController.this,mReceiver,query);
-                /*InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                // closes keyboard
+                try {
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);*/
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                } catch (Exception e) {
+                    // keyboard wasnt open
+                }
             }
         });
 

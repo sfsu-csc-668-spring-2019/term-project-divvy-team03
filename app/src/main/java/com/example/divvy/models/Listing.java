@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.divvy.Controllers.LoginAuthenticator;
 import com.example.divvy.ListingService;
+import com.example.divvy.NetworkReceiver;
 import com.example.divvy.httprequest;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,12 +59,12 @@ public class Listing implements Serializable {
     public void setListingid(int listingid) {
         this.listing_id = listingid;
     }
-    public void postData(Context currentContext){
+    public void postData(Context currentContext, NetworkReceiver receiver){
         JSONObject data = new JSONObject();
         try {
             data.put("username", LoginAuthenticator.getInstance().getUser(currentContext));
-            data.put("descr", descr);
             data.put("title", title);
+            data.put("descr", descr);
             //change to owner_id
         }
         catch(JSONException e) {
@@ -74,6 +75,7 @@ public class Listing implements Serializable {
         intent.putExtra("data", data.toString());
         intent.putExtra("type", httprequest.POST_CODE);
         intent.putExtra("uri", httprequest.ROOT_ADDRESS + "/newListing");
+        intent.putExtra("receiver", receiver);
         currentContext.startService(intent);
     }
     public String toString(){

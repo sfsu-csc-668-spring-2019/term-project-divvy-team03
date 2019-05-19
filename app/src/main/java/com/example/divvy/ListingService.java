@@ -34,7 +34,14 @@ public class ListingService extends IntentService {
         String uri = intent.getStringExtra("uri");
         if(request_type == POST_CODE) {
             try {
-                System.out.println("Output post: " + httprequest.post(uri, intent.getStringExtra("data")));
+                String response = httprequest.post(uri, intent.getStringExtra("data"));
+                int result_code;
+                if(response.equals("OK")){
+                    result_code = httprequest.SUCCESS_CODE;
+                }else{
+                    result_code = httprequest.FAIL_CODE;
+                }
+                receiver.send(result_code, null);
             } catch (IOException e) {
                 e.printStackTrace();
             }
