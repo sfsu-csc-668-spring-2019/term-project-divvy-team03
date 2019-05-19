@@ -6,13 +6,13 @@ export default class Chat extends ActiveRecord {
     }
 
     static columns() {
-        return ['idchat', 'sender', 'message'];
+        return ['idchat', 'sender', 'message', 'date'];
     }
 
     // Other Listing specific logic goes here
     static findBy(name, num) {
         if (num == 1) {
-            return [`1 = 1`];
+            return [`idchat = '${name}'`];
         }
     }
 }
