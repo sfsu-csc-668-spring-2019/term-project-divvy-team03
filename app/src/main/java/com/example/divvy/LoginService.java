@@ -35,8 +35,8 @@ public class LoginService extends IntentService {
                         (ArrayList< ArrayList<String>>)intent.getSerializableExtra("data"));
         try {
             String data = httprequest.get( hashMap, intent.getStringExtra("uri"));
-            String username = convertDataToUsername(data);
-            bundle.putString("response",username);
+            HashMap<String,String> user = convertDataToUsername(data);
+            bundle.putSerializable("response",user);
             receiver.send(1, bundle);
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,13 +52,15 @@ public class LoginService extends IntentService {
         i.putExtra("receiver", receiver);
         context.startService(i);
     }
-    public static String convertDataToUsername(String data) throws JSONException {
+    public static HashMap<String,String> convertDataToUsername(String data) throws JSONException {
         JSONArray array = new JSONArray(data);
+        HashMap<String, String> userMap = new HashMap<>();
         if(array.length() != 0) {
             JSONObject jsonObject = (JSONObject) array.get(0);
-            return jsonObject.getString("username");
+             userMap.put("username", jsonObject.getString("username"));
+             userMap.put("profImage", jsonObject.getString("profImage"));
         }
-        return "FAIL";
+        return userMap;
     }
     public static ArrayList<ArrayList<String>> convertLinkedHashMapToList(LinkedHashMap<String,String> map){
         ArrayList<String> keys = new ArrayList<>();

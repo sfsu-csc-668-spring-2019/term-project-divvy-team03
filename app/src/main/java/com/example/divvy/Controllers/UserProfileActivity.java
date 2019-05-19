@@ -45,12 +45,13 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
         setUpUi();
         setUpListeners();
         reviewsList = new ArrayList<>();
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
-        //username = getIntent().getExtras().getString(MainActivity.USERNAME);
-        GetRatingsService.GetReviewsByUsername(this, mReceiver, "anton");
+        GetRatingsService.GetReviewsByUsername(this, mReceiver, username);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
         usernameView = findViewById(R.id.username);
         image = findViewById(R.id.user_image);
         review_button = findViewById(R.id.review_button);
+        usernameView.setText(username);
         AsyncTask i = new ImageSelector.ImageRetrieverTask(image);
         Object[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
         i.execute(images);

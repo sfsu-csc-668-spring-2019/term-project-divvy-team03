@@ -30,6 +30,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.CreateReviewActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Controllers.UserSignUpController"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.UserLoginController"
             android:screenOrientation="portrait">
             <intent-filter>

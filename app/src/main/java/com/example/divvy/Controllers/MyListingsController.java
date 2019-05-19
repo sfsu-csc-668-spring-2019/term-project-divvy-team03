@@ -24,16 +24,15 @@ public class MyListingsController extends DisplayListingsController implements N
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         super.onCreate(savedInstanceState);
+        if(listings == null) {
+            listings = new ArrayList<>();
+        }
         mReceiver = new NetworkReceiver(null,this);
         setContentView(R.layout.listings_view);
         if(intent.getSerializableExtra("data") != null) {
             listings = (ArrayList<Listing>) intent.getSerializableExtra("data");
         }
-
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
-        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        UpdateListings();
     }
 
     @Override
@@ -47,7 +46,14 @@ public class MyListingsController extends DisplayListingsController implements N
     public void onReceiveResult(int resultCode, Bundle resultData) {
         super.onReceiveResult(resultCode, resultData);
         listings = (ArrayList<Listing>)resultData.get("data");
-        finish();
-        startActivity(getIntent());
+        UpdateListings();
     }
+
+    private void UpdateListings(){
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
+        RecyclerView recyclerView = findViewById(R.id.listings_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
 }
