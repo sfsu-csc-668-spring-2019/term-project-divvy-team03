@@ -8,6 +8,11 @@
         android:title="Create"/>
 
     <item
+    android:id="@+id/search"
+    android:icon="@drawable/mag"
+    android:title="Search"/>
+
+    <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home"/>
