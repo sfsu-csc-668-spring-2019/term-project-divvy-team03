@@ -34,12 +34,9 @@ public class Messenger extends Observable {
     }
 
     public void sendMessage(Message message) {
-        if(message != null) socket.emit("messagedetection", message.toJsonFile());
+        if(message != null) socket.emit("messagedetection", MessageFactory.toJsonFile(message));
     }
 
-    public void sendImage(Message image){
-        if(image != null) socket.emit("imagedetection", image.toJsonFile());
-    }
     private boolean setUpSocket() {
         try {
             IO.Options opts = new IO.Options();
