@@ -3,18 +3,16 @@ package com.example.divvy.Controllers;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.divvy.LoginService;
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.Services.LoginService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
-import com.example.divvy.httprequest;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -65,7 +63,7 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
         super.onResume();
         if(LoginAuthenticator.getInstance().LoggedIn(this)){
             finish();
-            Intent intent = new Intent(this, UserProfileActivity.class);
+            Intent intent = new Intent(this, UserProfileViewController.class);
             intent.putExtra("owner",LoginAuthenticator.getInstance().getUser(this));
             System.out.println("Owner: " + LoginAuthenticator.getInstance().getUser(this));
             startActivity(intent);
@@ -101,7 +99,7 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
             // SUCCESS
             LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
             authenticator.LogInUser(response.get("username"),this);
-            Intent intent = new Intent(this,UserProfileActivity.class);
+            Intent intent = new Intent(this, UserProfileViewController.class);
             intent.putExtra("owner",authenticator.getUser(this));
             intent.putExtra("profImage", response.get("profImage"));
             startActivity(intent);

@@ -31,23 +31,23 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.CreateListingController"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.MessagingActivity"
+        <activity android:name=".Controllers.MessagingController"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.UserProfileActivity"
+        <activity android:name=".Controllers.UserProfileViewController"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Controllers.CreateReviewActivity"
+        <activity android:name=".Controllers.CreateReviewController"
             android:screenOrientation="portrait"/>
         <activity android:name=".Controllers.MainActivity"
             android:screenOrientation="portrait">
         </activity>
 
-        <service android:name=".ListingService" />
-        <service android:name = "CreateRatingService"/>
-        <service android:name=".GetRatingService"/>
+        <service android:name=".Controllers.Services.ListingService" />
+        <service android:name = ".Controllers.Services.CreateRatingService"/>
+        <service android:name=".Controllers.Services.GetRatingService"/>
         <service
-            android:name=".RegService"/>
+            android:name=".Controllers.Services.RegService"/>
         <service
-            android:name=".LoginService"/>
+            android:name=".Controllers.Services.LoginService"/>
     </application>
 
 </manifest>

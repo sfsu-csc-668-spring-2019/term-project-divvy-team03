@@ -1,10 +1,10 @@
-package com.example.divvy.Controllers;
+package com.example.divvy.Controllers.helpers;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.example.divvy.models.User;
+import com.example.divvy.Controllers.UserLoginController;
 
 //SINGLETON
 public class LoginAuthenticator {

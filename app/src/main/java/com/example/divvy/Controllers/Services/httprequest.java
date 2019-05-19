@@ -1,4 +1,4 @@
-package com.example.divvy;
+package com.example.divvy.Controllers.Services;
 
 
 import android.app.IntentService;

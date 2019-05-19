@@ -1,4 +1,4 @@
-package com.example.divvy;
+package com.example.divvy.Controllers.Services;
 
 import android.os.Bundle;
 import android.os.Handler;

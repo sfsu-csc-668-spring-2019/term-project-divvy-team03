@@ -15,17 +15,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.divvy.GetRatingService;
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.Services.GetRatingService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
-import com.example.divvy.models.RecyclerViewAdapter;
+import com.example.divvy.Controllers.helpers.RecyclerViewAdapter;
 import com.example.divvy.models.Review;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserProfileActivity extends AppCompatActivity implements NetworkReceiver.DataReceiver{
+public class UserProfileViewController extends AppCompatActivity implements NetworkReceiver.DataReceiver{
 
     private RecyclerView recyclerView;
     private TextView usernameView;
@@ -68,7 +69,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
             profile_button.setText("Leave A Review");
         }
         navigation = findViewById(R.id.navigation);
-        AsyncTask i = new ImageSelector.ImageRetrieverTask(image);
+        AsyncTask i = new ImageSelect.ImageRetrieverTask(image);
         Object[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
         i.execute(images);
         ratingBar = findViewById(R.id.ratingBar);
@@ -85,7 +86,7 @@ public class UserProfileActivity extends AppCompatActivity implements NetworkRec
             if(owner.equals(LoginAuthenticator.getInstance().getUser(this))){
                 intent = new Intent(this,MyListingsController.class);
             }else {
-                intent = new Intent(this, CreateReviewActivity.class);
+                intent = new Intent(this, CreateReviewController.class);
                 intent.putExtra("targetUser", owner);
             }
             startActivity(intent);

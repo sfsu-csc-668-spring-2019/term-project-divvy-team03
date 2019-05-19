@@ -1,4 +1,4 @@
-package com.example.divvy;
+package com.example.divvy.Controllers.Services;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
-
-import com.example.divvy.models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class LoginService extends IntentService {
 

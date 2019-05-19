@@ -1,4 +1,4 @@
-package com.example.divvy;
+package com.example.divvy.Controllers.Services;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.divvy.httprequest.get;
+import static com.example.divvy.Controllers.Services.httprequest.get;
 
 public class GetRatingService extends IntentService {
 

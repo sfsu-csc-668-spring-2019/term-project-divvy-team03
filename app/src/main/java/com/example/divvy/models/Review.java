@@ -3,19 +3,15 @@ package com.example.divvy.models;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 
-import com.example.divvy.CreateRatingService;
-import com.example.divvy.NetworkReceiver;
-import com.example.divvy.httprequest;
+import com.example.divvy.Controllers.Services.CreateRatingService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.Services.httprequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
 
 public class Review implements Serializable {
     int reviewid;

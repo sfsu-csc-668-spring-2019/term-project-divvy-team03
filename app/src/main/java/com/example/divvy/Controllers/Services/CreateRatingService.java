@@ -1,20 +1,11 @@
-package com.example.divvy;
+package com.example.divvy.Controllers.Services;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import com.example.divvy.models.Review;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class CreateRatingService extends IntentService {
     public CreateRatingService() {
