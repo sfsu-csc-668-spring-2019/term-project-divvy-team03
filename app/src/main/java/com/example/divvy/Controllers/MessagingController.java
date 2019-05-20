@@ -57,6 +57,8 @@ public class MessagingController extends AppCompatActivity implements Observer, 
         setUpUi();
         setUpListeners();
         messageList = new ArrayList<>();
+        Intent intent = getIntent();
+        listingName.setText(intent.getStringExtra("title"));
         username = LoginAuthenticator.getInstance().getUser(this);
         messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
