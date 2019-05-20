@@ -35,7 +35,7 @@
                 android:layout_weight="0"
                 android:orientation="vertical">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/imageButton"
                     android:layout_width="75dp"
                     android:layout_height="75dp"

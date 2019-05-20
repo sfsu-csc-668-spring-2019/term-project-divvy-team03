@@ -86,7 +86,7 @@ public class ViewHolderFactory {
 
     public static class ListingListViewHolder extends MyViewHolder implements NetworkReceiver.DataReceiver {
         TextView title, owner, descr, view_listing_text;
-        ImageButton imageButton;
+        ImageView imageButton;
         NetworkReceiver mReceiver;
         long listing_id;
         public ListingListViewHolder(@NonNull View listing) {
