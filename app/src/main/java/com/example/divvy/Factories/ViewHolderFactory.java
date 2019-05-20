@@ -3,12 +3,14 @@ package com.example.divvy.Factories;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.divvy.Controllers.DetailedListingController;
 import com.example.divvy.Controllers.ImageSelect;
+import com.example.divvy.Controllers.Services.httprequest;
 import com.example.divvy.Controllers.UserProfileViewController;
 import com.example.divvy.Controllers.Services.ListingService;
 import com.example.divvy.Controllers.Services.NetworkReceiver;
@@ -83,6 +86,7 @@ public class ViewHolderFactory {
 
     public static class ListingListViewHolder extends MyViewHolder implements NetworkReceiver.DataReceiver {
         TextView title, owner, descr, view_listing_text;
+        ImageButton imageButton;
         NetworkReceiver mReceiver;
         long listing_id;
         public ListingListViewHolder(@NonNull View listing) {
@@ -91,6 +95,7 @@ public class ViewHolderFactory {
             title = listing.findViewById(R.id.listing_frag_title);
             owner = listing.findViewById(R.id.listing_frag_owner);
             descr = listing.findViewById(R.id.frag_list_descr);
+            imageButton = listing.findViewById(R.id.imageButton);
             owner.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,6 +119,9 @@ public class ViewHolderFactory {
             this.owner.setText(listing.getOwner());
             this.descr.setText(listing.getDescr());
             listing_id = listing.getListingid();
+            AsyncTask i = new ImageSelect.ImageRetrieverTask(imageButton);
+            Object[] images = {httprequest.ROOT_ADDRESS + "/" + listing.getOwner() + ".png"};
+            i.execute(images);
         }
         // DataReceiver
         @Override

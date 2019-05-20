@@ -79,6 +79,7 @@ public class MessagingController extends AppCompatActivity implements Observer, 
         NavBarController.setUpListners(findViewById(R.id.navigation), this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        listingName.setText(getIntent().getExtras().getString("title"));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         clearImageButton();
     }
