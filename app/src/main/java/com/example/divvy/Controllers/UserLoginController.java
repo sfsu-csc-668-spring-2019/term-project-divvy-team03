@@ -1,14 +1,18 @@
 package com.example.divvy.Controllers;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.divvy.Controllers.Services.LoginService;
 import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.Services.httprequest;
 import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 
@@ -30,7 +34,7 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login_view);
-        mReceiver = new NetworkReceiver(null,this);
+        mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()),this);
         inputUsername = (EditText) findViewById(R.id.editText_login);
         inputPassword = (EditText) findViewById(R.id.editText_password);
 
@@ -93,9 +97,10 @@ public class UserLoginController extends AppCompatActivity implements NetworkRec
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         HashMap<String,String> response = (HashMap<String,String>)resultData.getSerializable("response");
-        if( response == null){
+        if( resultCode == httprequest.FAIL_CODE){
             // FAILED TO LOG IN
-        }else{
+            Toast.makeText(this, "Failed to login", Toast.LENGTH_SHORT).show();
+        }else if(resultCode == httprequest.SUCCESS_CODE){
             // SUCCESS
             LoginAuthenticator authenticator = LoginAuthenticator.getInstance();
             authenticator.LogInUser(response.get("username"),this);

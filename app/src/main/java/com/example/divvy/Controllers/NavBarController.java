@@ -1,5 +1,6 @@
 package com.example.divvy.Controllers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
@@ -27,6 +28,7 @@ public class NavBarController {
                     intent = new Intent(context, SearchController.class);
                     break;
             }
+            ((Activity)context).finish();
             context.startActivity(intent);
             return true;
         });

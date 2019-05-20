@@ -1,5 +1,6 @@
 package com.example.divvy.Factories;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -131,6 +132,15 @@ public class ViewHolderFactory {
         public ReviewViewHolder(@NonNull View listing) {
             super(listing);
             username = listing.findViewById(R.id.review_username);
+            username.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), UserProfileViewController.class);
+                    intent.putExtra("owner", username.getText().toString());
+                    ((Activity)v.getContext()).finish();
+                    v.getContext().startActivity(intent);
+                }
+            });
             date = listing.findViewById(R.id.date);
             ratingBar = listing.findViewById(R.id.rating_bar);
             comment = listing.findViewById(R.id.comment);

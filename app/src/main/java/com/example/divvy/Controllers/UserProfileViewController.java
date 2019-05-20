@@ -8,10 +8,12 @@ import android.os.Looper;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -75,6 +77,8 @@ public class UserProfileViewController extends AppCompatActivity implements Netw
         i.execute(images);
         ratingBar = findViewById(R.id.ratingBar);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        DividerItemDecoration itemDecor = new DividerItemDecoration(this, LinearLayout.VERTICAL);
+        recyclerView.addItemDecoration(itemDecor);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
