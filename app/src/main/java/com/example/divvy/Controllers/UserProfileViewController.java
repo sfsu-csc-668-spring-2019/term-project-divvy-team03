@@ -8,15 +8,18 @@ import android.os.Looper;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.divvy.Controllers.Services.GetRatingService;
 import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.Services.httprequest;
 import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 import com.example.divvy.Controllers.helpers.RecyclerViewAdapter;
@@ -70,10 +73,12 @@ public class UserProfileViewController extends AppCompatActivity implements Netw
         }
         navigation = findViewById(R.id.navigation);
         AsyncTask i = new ImageSelect.ImageRetrieverTask(image);
-        Object[] images = {"https://www.latimes.com/resizer/LtMM4EEcUqh0cQvysx4WA5nF1n0=/800x0/www.trbimg.com/img-5cb65af2/turbine/la-1555454704-9i89jpnpmo-snap-image"};
+        Object[] images = {httprequest.ROOT_ADDRESS + "/" +owner + ".png"};
         i.execute(images);
         ratingBar = findViewById(R.id.ratingBar);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        DividerItemDecoration itemDecor = new DividerItemDecoration(this, LinearLayout.VERTICAL);
+        recyclerView.addItemDecoration(itemDecor);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 

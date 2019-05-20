@@ -23,7 +23,6 @@ public class DetailedListingController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         listing = ((ArrayList<Listing>)intent.getSerializableExtra("data")).get(0);
-        System.out.println("Detailed listings: " + listing.toString());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_listings_controller);
         setUI();
@@ -49,6 +48,11 @@ public class DetailedListingController extends AppCompatActivity {
         messagingButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, MessagingController.class);
             intent.putExtra("id", listing.getListingid());
+            startActivity(intent);
+        });
+        ownerText.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UserProfileViewController.class);
+            intent.putExtra("owner", ownerText.getText().toString());
             startActivity(intent);
         });
     }

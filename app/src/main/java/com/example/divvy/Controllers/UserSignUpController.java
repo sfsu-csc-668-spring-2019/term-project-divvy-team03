@@ -1,8 +1,11 @@
 package com.example.divvy.Controllers;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.divvy.Controllers.Services.NetworkReceiver;
@@ -23,6 +27,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import static com.example.divvy.Controllers.ImageSelect.encodeImage;
+import static com.example.divvy.Controllers.ImageSelect.getBitmap;
+
 public class UserSignUpController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
     // Buttons specific to sign up view
     private final String rootUrl = "http://ec2-34-226-139-149.compute-1.amazonaws.com";
@@ -33,6 +40,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
     private EditText editTextUserName;
     private EditText editTextRegisterEmail;
     private EditText editTextMakePassword;
+    private ImageButton imageButton;
     private Button btnLinkToLoginPage;
     //
 
@@ -49,7 +57,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
         editTextMakePassword = findViewById(R.id.editText_makePassword);
         btnLinkToLoginPage = findViewById(R.id.button_LogInLink);
         editTextUserName = findViewById(R.id.editText_UserName);
-
+        imageButton = findViewById(R.id.add_image_button);
         mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()),this);
 
         createListeners();
@@ -87,6 +95,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
         createdUser.setUserEmail(editTextRegisterEmail.getText().toString());
         createdUser.setUserName(editTextUserName.getText().toString());
         createdUser.setUserCity("San Francisco");
+        createdUser.setImage(encodeImage(((BitmapDrawable)imageButton.getDrawable()).getBitmap()));
         return createdUser;
     }
     public JSONObject createSignUpJSON(User newUser){
@@ -99,6 +108,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
                 json.put("first_name", newUser.getUserFirstName());
                 json.put("last_name", newUser.getUserLastName());
                 json.put("city", newUser.getUserCity());
+                json.put("file", newUser.getImage());
                 json.put("descr", "spicy");
 
                 return json;
@@ -163,7 +173,14 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
 
            }
        });
+
+       imageButton.setOnClickListener(view -> {
+           ImageSelect.selectImage(this);
+       });
     }
+
+
+
     private void signUpButtonHander(){
         if(validateForm()){
             User createdUser = createNewUserObject();
@@ -183,11 +200,26 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
             // go back to the login activity
             finish();
             Intent intent = new Intent(this, UserLoginController.class);
+            Toast.makeText(this,"Register Success",Toast.LENGTH_LONG).show();
             startActivity(intent);
         }else{
             //REGISTRATION FAILED
             System.out.println("Failed to reg");
-            Toast.makeText(this,"Reg failed",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Register failed",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // TODO: Create BitmapLoader class?
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            if(data != null){
+                imageButton.setImageBitmap(getBitmap(data, this));
+            }else{
+                Log.d("ERROR: ", "Unable to get image for uploading");
+            }
+
         }
     }
 }

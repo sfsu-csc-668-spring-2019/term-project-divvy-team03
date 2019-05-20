@@ -33,8 +33,14 @@ public class LoginService extends IntentService {
         try {
             String data = httprequest.get( hashMap, intent.getStringExtra("uri"));
             HashMap<String,String> user = convertDataToUsername(data);
+            int resultCode;
+            if(user.containsKey("username")){
+                resultCode = httprequest.SUCCESS_CODE;
+            }else{
+                resultCode = httprequest.FAIL_CODE;
+            }
             bundle.putSerializable("response",user);
-            receiver.send(1, bundle);
+            receiver.send(resultCode, bundle);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

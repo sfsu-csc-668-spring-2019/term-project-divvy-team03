@@ -1,8 +1,10 @@
 package com.example.divvy.Controllers;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 
 import com.example.divvy.Controllers.Services.ListingService;
 import com.example.divvy.Controllers.helpers.LoginAuthenticator;
@@ -43,6 +45,8 @@ public class MyListingsController extends DisplayListingsController{
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(listings);
         recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration itemDecor = new DividerItemDecoration(this, LinearLayout.VERTICAL);
+        recyclerView.addItemDecoration(itemDecor);
         recyclerView.setAdapter(adapter);
     }
 

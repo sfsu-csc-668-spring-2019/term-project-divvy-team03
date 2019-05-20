@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.PersistableBundle;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+
 import com.example.divvy.Controllers.Services.ListingService;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
@@ -67,6 +70,8 @@ public class SearchController extends DisplayListingsController {
         }
         recyclerView = findViewById(R.id.listings_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration itemDecor = new DividerItemDecoration(this, LinearLayout.VERTICAL);
+        recyclerView.addItemDecoration(itemDecor);
         UpdateListingsView();
     }
 
