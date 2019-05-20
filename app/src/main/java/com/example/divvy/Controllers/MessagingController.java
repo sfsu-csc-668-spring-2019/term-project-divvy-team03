@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.divvy.Controllers.Services.ChatHistoryService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
 import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 import com.example.divvy.models.Message;
@@ -32,7 +36,7 @@ import static com.example.divvy.Controllers.ImageSelect.encodeImage;
 import static com.example.divvy.Controllers.ImageSelect.getBitmap;
 import static com.example.divvy.Controllers.ImageSelect.selectImage;
 
-public class MessagingController extends AppCompatActivity implements Observer {
+public class MessagingController extends AppCompatActivity implements Observer,  NetworkReceiver.DataReceiver {
 
     private EditText textField;
     private Button sendButton;
@@ -42,6 +46,7 @@ public class MessagingController extends AppCompatActivity implements Observer {
     private String username;
     private List<Message> messageList;
     private RecyclerViewAdapter chatBoxAdapter;
+    private NetworkReceiver mReceiver;
 
     private Messenger messenger;
 
@@ -53,11 +58,9 @@ public class MessagingController extends AppCompatActivity implements Observer {
         setUpListeners();
         messageList = new ArrayList<>();
         username = LoginAuthenticator.getInstance().getUser(this);
-        try{
-            messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
-        }catch (Exception e){
-            messenger = new Messenger(username, this, new Long("1"));
-        }
+        messenger = new Messenger(username, this, getIntent().getExtras().getLong("id"));
+        mReceiver = new NetworkReceiver(new Handler(Looper.getMainLooper()), this);
+        ChatHistoryService.GetChatHistoryById(this, mReceiver,  getIntent().getExtras().getLong("id"));
     }
 
     @Override
@@ -129,7 +132,6 @@ public class MessagingController extends AppCompatActivity implements Observer {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // TODO: Create BitmapLoader class?
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
             if(data != null){
                 addImageButton.setImageBitmap(getBitmap(data, this));
@@ -142,5 +144,11 @@ public class MessagingController extends AppCompatActivity implements Observer {
         }
     }
 
-
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        messageList = (ArrayList<Message>) resultData.getSerializable("data");
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(messageList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
 }

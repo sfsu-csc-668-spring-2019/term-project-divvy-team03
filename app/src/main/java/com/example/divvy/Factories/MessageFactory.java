@@ -11,6 +11,7 @@ import org.json.JSONObject;
 public class MessageFactory {
 
     public static Message create(JSONObject data){
+        JSONObject d = data;
         try {
             if (data.has("image")) {
                 return new Message(data.getString("message"), data.getString("senderNickname"), data.getString("image"));
@@ -18,7 +19,15 @@ public class MessageFactory {
                 return new Message(data.getString("message"), data.getString("senderNickname"));
             }
         }catch(JSONException e){
-            Log.d("ERROR: ", e.toString());
+            try {
+                if (data.has("image")) {
+                    return new Message(data.getString("message"), data.getString("sender"), data.getString("image"));
+                } else {
+                    return new Message(data.getString("message"), data.getString("sender"));
+                }
+            }catch (Exception e1){
+                e1.printStackTrace();
+            }
         }
         return null;
     }
