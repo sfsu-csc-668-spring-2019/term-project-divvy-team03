@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.divvy.ListingService;
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.Services.ListingService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
         displayListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListingService.GetListingsByUsername(MainActivity.this,mReceiver,LoginAuthenticator.getInstance().getUser(MainActivity.this));
+                ListingService.GetListingsByUsername(MainActivity.this,mReceiver, LoginAuthenticator.getInstance().getUser(MainActivity.this));
             }
         });
         Button search = findViewById(R.id.go_to_search);
@@ -73,12 +74,12 @@ public class MainActivity extends AppCompatActivity implements NetworkReceiver.D
     }
 
     private void startMessagingActivity(){
-        Intent i = new Intent(this, MessagingActivity.class);
+        Intent i = new Intent(this, MessagingController.class);
         startActivity(i);
     }
 
     private void startDisplayUser(){
-        Intent i = new Intent(this, UserProfileActivity.class);
+        Intent i = new Intent(this, UserProfileViewController.class);
         i.putExtra("owner", "anton");
         startActivity(i);
     }

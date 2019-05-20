@@ -24,7 +24,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ImageSelector {
+public class ImageSelect {
 
     private static double MAX_LINEAR_DIMENSION = 500;
 

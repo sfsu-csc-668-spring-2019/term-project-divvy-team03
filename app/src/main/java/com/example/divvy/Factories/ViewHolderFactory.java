@@ -12,10 +12,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.divvy.Controllers.DetailedListingController;
-import com.example.divvy.Controllers.ImageSelector;
-import com.example.divvy.Controllers.UserProfileActivity;
-import com.example.divvy.ListingService;
-import com.example.divvy.NetworkReceiver;
+import com.example.divvy.Controllers.ImageSelect;
+import com.example.divvy.Controllers.UserProfileViewController;
+import com.example.divvy.Controllers.Services.ListingService;
+import com.example.divvy.Controllers.Services.NetworkReceiver;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.Message;
@@ -67,7 +67,7 @@ public class ViewHolderFactory {
             Message message = (Message) o;
             this.username.setText(message.getSender());
             this.message.setText(message.getMessage());
-            this.image.setImageBitmap(ImageSelector.decodeImage(message.getImage()));
+            this.image.setImageBitmap(ImageSelect.decodeImage(message.getImage()));
         }
     }
 
@@ -84,7 +84,7 @@ public class ViewHolderFactory {
             owner.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), UserProfileActivity.class);
+                    Intent intent = new Intent(v.getContext(), UserProfileViewController.class);
                     intent.putExtra("owner", owner.getText().toString());
                     v.getContext().startActivity(intent);
                 }

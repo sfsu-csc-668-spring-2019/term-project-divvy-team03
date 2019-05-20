@@ -16,22 +16,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 import com.example.divvy.models.Message;
 import com.example.divvy.Factories.MessageFactory;
 import com.example.divvy.models.Messenger;
-import com.example.divvy.models.RecyclerViewAdapter;
+import com.example.divvy.Controllers.helpers.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static com.example.divvy.Controllers.ImageSelector.encodeImage;
-import static com.example.divvy.Controllers.ImageSelector.getBitmap;
-import static com.example.divvy.Controllers.ImageSelector.selectImage;
+import static com.example.divvy.Controllers.ImageSelect.encodeImage;
+import static com.example.divvy.Controllers.ImageSelect.getBitmap;
+import static com.example.divvy.Controllers.ImageSelect.selectImage;
 
-public class MessagingActivity extends AppCompatActivity implements Observer {
+public class MessagingController extends AppCompatActivity implements Observer {
 
     private EditText textField;
     private Button sendButton;

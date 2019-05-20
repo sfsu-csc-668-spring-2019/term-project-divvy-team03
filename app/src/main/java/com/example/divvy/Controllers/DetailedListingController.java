@@ -47,7 +47,7 @@ public class DetailedListingController extends AppCompatActivity {
 
     public void setUpListeners(){
         messagingButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, MessagingActivity.class);
+            Intent intent = new Intent(this, MessagingController.class);
             intent.putExtra("id", listing.getListingid());
             startActivity(intent);
         });

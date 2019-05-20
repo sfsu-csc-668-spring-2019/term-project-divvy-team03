@@ -1,13 +1,11 @@
 package com.example.divvy;
 
+import com.example.divvy.Controllers.Services.httprequest;
+
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 

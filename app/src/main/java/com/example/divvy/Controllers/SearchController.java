@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import com.example.divvy.ListingService;
+import com.example.divvy.Controllers.Services.ListingService;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
-import com.example.divvy.models.RecyclerViewAdapter;
+import com.example.divvy.Controllers.helpers.RecyclerViewAdapter;
 import com.google.gson.Gson;
 import org.json.JSONException;
 
