@@ -27,8 +27,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import static com.example.divvy.Controllers.ImageSelector.encodeImage;
-import static com.example.divvy.Controllers.ImageSelector.getBitmap;
+import static com.example.divvy.Controllers.ImageSelect.encodeImage;
+import static com.example.divvy.Controllers.ImageSelect.getBitmap;
 
 public class UserSignUpController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
     // Buttons specific to sign up view
@@ -175,7 +175,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
        });
 
        imageButton.setOnClickListener(view -> {
-           ImageSelector.selectImage(this);
+           ImageSelect.selectImage(this);
        });
     }
 
