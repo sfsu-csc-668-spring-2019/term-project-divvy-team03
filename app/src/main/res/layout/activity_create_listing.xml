@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateListing">
+    tools:context=".Controllers.CreateListingController">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,30 +31,22 @@
             app:layout_constraintVertical_bias="0.100000024" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/create_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Listing Name"
-            android:inputType="textPersonName" />
+            android:hint="Listing Name (min 4 char)"
+            android:inputType="textCapWords" />
 
         <EditText
-            android:id="@+id/editText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Group Size"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editText9"
+            android:id="@+id/create_list_desc"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:ems="10"
-            android:hint="Description"
-            android:lines= "8"
-            android:maxLines="10"
-            android:inputType="textMultiLine" />
+            android:hint="Description (min 20 char)"
+            android:inputType="textMultiLine|textCapSentences"
+            android:lines="8"
+            android:maxLines="10" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,18 +56,30 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/create_list_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancel" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/create_list_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Submit" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
 
 </android.support.constraint.ConstraintLayout>

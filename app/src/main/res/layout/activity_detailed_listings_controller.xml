@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controllers.DetailedListingController">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_face" />
+
+    <TextView
+        android:id="@+id/owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Owner"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
+    <TextView
+        android:id="@+id/detailed_list_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Description:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messaging_button" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="15dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ante in nibh mauris cursus mattis molestie a iaculis. Sit amet nisl suscipit adipiscing bibendum est. Aliquam id diam maecenas ultricies mi eget. Faucibus scelerisque eleifend donec pretium vulputate sapien. Ut consequat semper viverra nam libero. Porttitor rhoncus dolor purus non enim. Potenti nullam ac tortor vitae purus faucibus ornare. Sodales neque sodales ut etiam sit amet nisl purus. Semper risus in hendrerit gravida rutrum quisque non tellus orci.  Etiam sit amet nisl purus. Elementum nibh tellus molestie nunc non bland. Etiam sit amet nisl purus. Elementum nibh tellus molestie nunc non blandit massa. A diam sollicitudin tempor id eu nisl nunc. Sem viverra aliquet eget sit amet. Tellus id interdum velit laoreet. Odio eu feugiat pretium nibh ipsum consequat nisl vel pretium. In aliquam sem fringilla ut morbi tincidunt augue interdum. Aliquam etiam erat velit scelerisque in dictum non consectetur a. Arcu cursus euismod quis viverra nibh cras. Ultricies tristique nulla aliquet enim. Mi in nulla posuere sollicitudin aliquam ultrices sagittis. Fames ac turpis egestas integer eget aliquet nibh praesent. Id leo in vitae turpis massa sed. Nunc vel risus commodo viverra maecenas accumsan lacus vel. Adipiscing diam donec adipiscing tristique risus nec feugiat in. Aliquam nulla facilisi cras fermentum odio eu feugiat pretium."
+        android:textColor="@android:color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailed_list_desc" />
+
+    <Button
+        android:id="@+id/messaging_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Messaging"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/owner" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
+</android.support.constraint.ConstraintLayout>
