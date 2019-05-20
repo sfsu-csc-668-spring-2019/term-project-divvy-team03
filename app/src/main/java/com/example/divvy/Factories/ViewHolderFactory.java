@@ -1,6 +1,7 @@
 package com.example.divvy.Factories;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.divvy.Controllers.DetailedListingController;
@@ -16,6 +18,7 @@ import com.example.divvy.Controllers.ImageSelect;
 import com.example.divvy.Controllers.UserProfileViewController;
 import com.example.divvy.Controllers.Services.ListingService;
 import com.example.divvy.Controllers.Services.NetworkReceiver;
+import com.example.divvy.Controllers.helpers.LoginAuthenticator;
 import com.example.divvy.R;
 import com.example.divvy.models.Listing;
 import com.example.divvy.models.Message;
@@ -39,9 +42,10 @@ public class ViewHolderFactory {
     }
 
     public static abstract class MyViewHolder extends RecyclerView.ViewHolder {
-
+        View view;
         MyViewHolder(View view) {
             super(view);
+            this.view = view;
 
         }
 
@@ -68,6 +72,11 @@ public class ViewHolderFactory {
             this.username.setText(message.getSender());
             this.message.setText(message.getMessage());
             this.image.setImageBitmap(ImageSelect.decodeImage(message.getImage()));
+            if(message.getSender().equals(LoginAuthenticator.getInstance().getUser(this.view.getContext()))){
+                this.username.setTextColor(Color.RED);
+            }else{
+                this.username.setTextColor(Color.BLUE);
+            }
         }
     }
 
