@@ -2,6 +2,7 @@ package com.example.divvy.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import static com.example.divvy.Controllers.ImageSelector.encodeImage;
 import static com.example.divvy.Controllers.ImageSelector.getBitmap;
 
 public class UserSignUpController extends AppCompatActivity implements NetworkReceiver.DataReceiver {
@@ -93,6 +95,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
         createdUser.setUserEmail(editTextRegisterEmail.getText().toString());
         createdUser.setUserName(editTextUserName.getText().toString());
         createdUser.setUserCity("San Francisco");
+        createdUser.setImage(encodeImage(((BitmapDrawable)imageButton.getDrawable()).getBitmap()));
         return createdUser;
     }
     public JSONObject createSignUpJSON(User newUser){
@@ -105,6 +108,7 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
                 json.put("first_name", newUser.getUserFirstName());
                 json.put("last_name", newUser.getUserLastName());
                 json.put("city", newUser.getUserCity());
+                json.put("file", newUser.getImage());
                 json.put("descr", "spicy");
 
                 return json;
@@ -196,11 +200,12 @@ public class UserSignUpController extends AppCompatActivity implements NetworkRe
             // go back to the login activity
             finish();
             Intent intent = new Intent(this, UserLoginController.class);
+            Toast.makeText(this,"Register Success",Toast.LENGTH_LONG).show();
             startActivity(intent);
         }else{
             //REGISTRATION FAILED
             System.out.println("Failed to reg");
-            Toast.makeText(this,"Reg failed",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Register failed",Toast.LENGTH_LONG).show();
         }
     }
 

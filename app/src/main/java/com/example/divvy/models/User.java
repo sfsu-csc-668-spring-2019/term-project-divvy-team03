@@ -17,6 +17,7 @@ public class User {
         private String fullName;
         private String userCity;
         private String emailAddress;
+        private String image;
         public User(){
           /*
             Default Constructor
@@ -53,6 +54,8 @@ public class User {
             }
             return "";
         }
+        public String getImage() {return this.image;}
+        public void setImage(String image) {this.image = image;}
         public void setUserCity(String cityName){
             this.fullName = cityName;
         }
