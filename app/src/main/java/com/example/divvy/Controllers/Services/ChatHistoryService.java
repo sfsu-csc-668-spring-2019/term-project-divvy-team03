@@ -50,7 +50,7 @@ public class ChatHistoryService extends IntentService {
     public static ArrayList<Message> convertDataToMessages(String s) throws JSONException {
         ArrayList<Message> messages = new ArrayList<>();
         JSONArray array = new JSONArray(s);
-        for (int i = 0; i < array.length(); i++) {
+        for (int i = array.length() - 1; i >= 0; i--) {
             JSONObject jsonObject = (JSONObject) array.get(i);
             Message message = MessageFactory.create(jsonObject);
             messages.add(message);
