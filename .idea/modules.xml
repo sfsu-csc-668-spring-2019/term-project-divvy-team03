@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/term-project-divvy-team03/frontend.iml" filepath="$PROJECT_DIR$/term-project-divvy-team03/frontend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/term-project-divvy-team03/frontend.iml" filepath="$PROJECT_DIR$/term-project-divvy-team03/frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/term-project-divvy-team03.iml" filepath="$PROJECT_DIR$/.idea/term-project-divvy-team03.iml" />
     </modules>
   </component>
 </project>
